@@ -33,14 +33,14 @@ php:
   - '7.2'
 
 script: >
-    bash get_tancredi.sh
-    mkdir tancredi
-    tar xzpf tancredi-vendor.tar.gz -C tancredi --strip-components 1
-    cd tancredi
+    bash get_tancredi.sh;
+    mkdir tancredi;
+    tar xzpf tancredi-vendor.tar.gz -C tancredi --strip-components 1;
+    cd tancredi;
     curl -sS https://getcomposer.org/installer | php ;
     php composer.phar install;
-    cd ..
-    tar czpf tancredi.tar.gz tancredi
+    cd ..;
+    tar czpf tancredi.tar.gz tancredi ;
 
     docker run -ti --name makerpms ${EVARS}
     --hostname b${TRAVIS_BUILD_NUMBER}.nethserver.org
