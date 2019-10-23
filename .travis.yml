@@ -39,6 +39,7 @@ script: >
     cd tancredi;
     curl -sS https://getcomposer.org/installer | php ;
     php composer.phar install;
+    rm -f composer.phar;
     cd ..;
     tar czpf tancredi.tar.gz tancredi ;
 

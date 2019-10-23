@@ -9,8 +9,6 @@ BuildArch: noarch
 
 BuildRequires: nethserver-devtools
 
-Requires: nethserver-rh-php72-php-fpm
-
 %description
 Tancredi provisioning engine packaging and configuration
 
