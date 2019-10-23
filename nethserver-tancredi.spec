@@ -17,7 +17,7 @@ Tancredi provisioning engine packaging and configuration
 %setup -D -T -b 1
 
 %build
-#perl createlinks
+perl createlinks
 
 %install
 rm -rf %{buildroot}
@@ -28,6 +28,9 @@ mkdir -p %{buildroot}/usr/share/nethvoice/
 cp -a %{_builddir}/tancredi %{buildroot}/usr/share/nethvoice/
 
 %{genfilelist} %{buildroot} \
+--dir /usr/share/nethvoice/tancredi/data/scopes 'attr(0770,root,asterisk)' \
+--dir /usr/share/nethvoice/tancredi/data/token 'attr(0770,root,asterisk)' \
+--dir /usr/share/nethvoice/tancredi/data/first_access_tokens 'attr(0770,root,asterisk)' \
 > %{name}-%{version}-filelist
 
 %clean
@@ -35,5 +38,6 @@ rm -rf %{buildroot}
 
 %files -f %{name}-%{version}-filelist
 %defattr(-,root,root)
-#%dir %{_nseventsdir}/%{name}-update
+%dir %{_nseventsdir}/%{name}-update
+
 
