@@ -9,4 +9,5 @@ event_actions($event, qw(
 
 event_services($event ,qw(
     httpd reload
+    rh-php56-php-fpm restart
 ));
