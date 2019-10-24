@@ -15,6 +15,8 @@ Tancredi provisioning engine packaging and configuration
 %prep
 %setup
 %setup -D -T -b 1
+rm -fr %{_builddir}/tancredi/composer.json
+rm -fr %{_builddir}/tancredi/composer.lock
 
 %build
 perl createlinks
