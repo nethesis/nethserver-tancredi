@@ -7,7 +7,7 @@ Source: %{name}-%{version}.tar.gz
 Source1: tancredi.tar.gz
 BuildArch: noarch
 
-BuildRequires: nethserver-devtools
+BuildRequires: nethserver-devtools, nethserver-rh-php56-php-fpm, nethserver-httpd
 
 %description
 Tancredi provisioning engine packaging and configuration
@@ -30,9 +30,10 @@ mkdir -p %{buildroot}/usr/share/nethvoice/
 cp -a %{_builddir}/tancredi %{buildroot}/usr/share/nethvoice/
 
 %{genfilelist} %{buildroot} \
---dir /usr/share/nethvoice/tancredi/data/scopes 'attr(0770,root,asterisk)' \
---dir /usr/share/nethvoice/tancredi/data/token 'attr(0770,root,asterisk)' \
---dir /usr/share/nethvoice/tancredi/data/first_access_tokens 'attr(0770,root,asterisk)' \
+--dir /usr/share/nethvoice/tancredi/data/scopes 'attr(0770,root,apache)' \
+--dir /usr/share/nethvoice/tancredi/data/token 'attr(0770,root,apache)' \
+--dir /usr/share/nethvoice/tancredi/data/first_access_tokens 'attr(0770,root,apache)' \
+--dir /var/log/tancredi 'attr(0770,root,apache)' \
 > %{name}-%{version}-filelist
 
 %clean

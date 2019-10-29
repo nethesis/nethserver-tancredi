@@ -1,0 +1,8 @@
+/var/log/tancredi/tancredi.log
+/var/log/tancredi/www-error.log {
+   missingok
+   rotate 1
+   compress
+   weekly
+   create 0640 asterisk asterisk
+}
