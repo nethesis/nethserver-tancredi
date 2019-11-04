@@ -41,8 +41,6 @@ mkdir -p root/var/lib/tancredi/{first_access_tokens,scopes,templates-custom,toke
     --dir /var/log/tancredi 'attr(0770,root,apache)' \
     > filelist
 
-grep noreplace filelist
-
 %files -f filelist
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
