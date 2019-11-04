@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bats
 
 #
 # Copyright (C) 2019 Nethesis S.r.l.
@@ -20,10 +20,6 @@
 # along with NethServer.  If not, see COPYING.
 #
 
-if ! which bats &>/dev/null; then
-    echo "The bats command is missing. You can install it with:"
-    echo "    yum --enablerepo=epel install bats"
-    exit 1
-fi
-
-bats bats/
+setup () {
+    load tancredi_client
+}
