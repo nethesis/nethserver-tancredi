@@ -4,6 +4,10 @@ setup () {
     load tancredi_client
 }
 
+@test "Reset storage dir" {
+    find /var/lib/tancredi -type f -delete
+}
+
 @test "Create new model" {
     run POST /tancredi/api/v1/models <<EOF
 {

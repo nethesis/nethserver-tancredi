@@ -10,7 +10,7 @@ xcurl () {
     shift
     curl \
         -H 'Accept: application/json, application/problem+json' \
-        -v -X ${verb} "${@}" "${tancredi_base_url}${path}" 2>&1
+        -v -X ${verb} "${@}" "${tancredi_base_url}${path}"
 }
 
 GET () {
@@ -33,7 +33,7 @@ PATCH () {
 }
 
 assert_http_code () {
-    grep -q -E "^< HTTP/1\\.1 $1" <<<"$output"
+    grep -E "^<" <<<"$output" 1>&2 && grep -q -E "^< HTTP/1\\.1 $1" <<<"$output"
 }
 
 assert_http_header () {
