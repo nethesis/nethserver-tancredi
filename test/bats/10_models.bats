@@ -20,6 +20,7 @@ setup () {
 }
 EOF
     assert_http_code "201"
+    assert_http_header "Location" "/tancredi/api/v1/models/acme19_2"
 }
 
 @test "Delete existing free model" {

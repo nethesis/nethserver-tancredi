@@ -33,13 +33,23 @@ PATCH () {
 }
 
 assert_http_code () {
-    grep -E "^<" <<<"$output" 1>&2 && grep -q -E "^< HTTP/1\\.1 $1" <<<"$output"
+    if ! grep -q -E "^< HTTP/1\\.1 $1" <<<"$output"; then
+        grep -E "^<" <<<"$output" 1>&2
+        return 1
+    fi
 }
 
 assert_http_header () {
-    grep -q -F "< ${1}: ${2}" <<<"$output"
+    if ! grep -q -F "< ${1}: ${2}" <<<"$output"; then
+        grep -E "^<" <<<"$output" 1>&2
+        return 1
+    fi
 }
 
 assert_http_body () {
     sed -n '$ p' <<<"$output" | grep -q -F $1
+    if [[ $? != 0 ]]; then
+        grep -E "^{" <<<"$output" 1>&2
+        return 1
+    fi
 }
