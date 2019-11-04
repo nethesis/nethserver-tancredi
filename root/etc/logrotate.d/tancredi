@@ -1,8 +1,9 @@
 /var/log/tancredi/tancredi.log
-/var/log/tancredi/www-error.log {
+/var/log/tancredi/slow.log
+/var/log/tancredi/error.log {
    missingok
    rotate 1
    compress
    weekly
-   create 0640 asterisk asterisk
+   create 0644 apache apache
 }

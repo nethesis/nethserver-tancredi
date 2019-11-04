@@ -1,6 +1,8 @@
 
 ---
-language: ruby
+language: php
+php:
+    - "5.6"
 services:
     - docker
 branches:
@@ -23,26 +25,11 @@ env:
         -e NSVER
         -e ENDPOINTS_PACK
         "
-before_install:
-    - sudo apt-get -qq update
-    - sudo apt-get install -y php-cli git
 
-language: php
-
-php:
-  - '7.2'
+before_script:
+    - bash prep-sources.sh
 
 script: >
-    bash get_tancredi.sh;
-    mkdir tancredi;
-    tar xzpf tancredi-vendor.tar.gz -C tancredi --strip-components 1;
-    cd tancredi;
-    curl -sS https://getcomposer.org/installer | php ;
-    php composer.phar install;
-    rm -f composer.phar;
-    cd ..;
-    tar czpf tancredi.tar.gz tancredi ;
-
     docker run -ti --name makerpms ${EVARS}
     --hostname b${TRAVIS_BUILD_NUMBER}.nethserver.org
     --volume $PWD:/srv/makerpms/src:ro ${DOCKER_IMAGE} makerpms-travis -s *.spec
