@@ -45,6 +45,7 @@ mkdir -p root/var/lib/tancredi/{first_access_tokens,scopes,templates-custom,toke
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
 %doc tancredi/docs
+%doc test
 %license LICENSE
 
 
