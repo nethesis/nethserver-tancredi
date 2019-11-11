@@ -24,13 +24,13 @@ setup () {
     load tancredi_client
 }
 
-@test "Retrieve the empty phones collection" {
+@test "GET /tancredi/api/v1/phones (success)" {
     run GET /tancredi/api/v1/phones
     assert_http_code "200"
     assert_http_body_re "^\[\]$"
 }
 
-@test "Add a phone" {
+@test "POST /tancredi/api/v1/phones (01-23-45-67-89-AB, success)" {
     run POST /tancredi/api/v1/phones <<EOF
 {
     "mac": "01-23-45-67-89-AB",
@@ -47,13 +47,13 @@ EOF
     assert_http_header "Location" "/tancredi/api/v1/phones/01-23-45-67-89-AB"
 }
 
-@test "Retrieve the phone" {
+@test "GET /tancredi/api/v1/phones/01-23-45-67-89-AB (success)" {
     run GET /tancredi/api/v1/phones/01-23-45-67-89-AB
     assert_http_code "200"
     assert_http_body "Адриан Нестор"
 }
 
-@test "Try to create a phone with an already used MAC address" {
+@test "POST /tancredi/api/v1/phones (01-23-45-67-89-AB, failed/conflict)" {
     run POST /tancredi/api/v1/phones <<EOF
 {
     "mac": "01-23-45-67-89-AB",
@@ -73,13 +73,13 @@ EOF
     assert_http_body "already"
 }
 
-@test "Delete the phone" {
+@test "DELETE /tancredi/api/v1/phones/01-23-45-67-89-AB (success)" {
     run DELETE /tancredi/api/v1/phones/01-23-45-67-89-AB
     assert_http_code "204"
-    assert_http_body_re "^$"
+    assert_http_body_empty
 }
 
-@test "Delete non existing phone" {
+@test "DELETE /tancredi/api/v1/phones/01-23-45-67-89-AB (failed/not found)" {
     run DELETE /tancredi/api/v1/phones/01-23-45-67-89-AB
     assert_http_code "404"
     assert_http_header "Content-Type" "application/problem+json"

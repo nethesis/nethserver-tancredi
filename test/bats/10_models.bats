@@ -28,7 +28,7 @@ setup () {
     find /var/lib/tancredi -type f -delete
 }
 
-@test "Create new model" {
+@test "POST /tancredi/api/v1/models (acme19_2, success)" {
     run POST /tancredi/api/v1/models <<EOF
 {
     "name": "acme19_2",
@@ -43,12 +43,12 @@ EOF
     assert_http_header "Location" "/tancredi/api/v1/models/acme19_2"
 }
 
-@test "Delete existing free model" {
+@test "DELETE /tancredi/api/v1/models/acme19_2 (success)" {
     run DELETE /tancredi/api/v1/models/acme19_2
     assert_http_code "204"
 }
 
-@test "Re-create new model after delete" {
+@test "POST /tancredi/api/v1/models (acme19_2)" {
     run POST /tancredi/api/v1/models <<EOF
 {
     "name": "acme19_2",
@@ -63,14 +63,14 @@ EOF
     assert_http_header "Location" "/tancredi/api/v1/models/acme19_2"
 }
 
-@test "Get the new model" {
+@test "GET /tancredi/api/v1/models/acme19_2 (success)" {
     run GET /tancredi/api/v1/models/acme19_2
     assert_http_code "200"
     assert_http_body '"name":"acme19_2"'
     assert_http_body '"var1":"value1"'
 }
 
-@test "Change the new model" {
+@test "PATCH /tancredi/api/v1/models/acme19_2 (success)" {
     run PATCH /tancredi/api/v1/models/acme19_2 <<EOF
 {
     "display_name": "Acme IP phone v19 rev. 2 (changed)",
@@ -89,7 +89,7 @@ EOF
     assert_http_body '"display_name":"Acme IP phone v19 rev. 2 (changed)"'
 }
 
-@test "Read-only attribute cannot be PATCHed" {
+@test "PATCH /tancredi/api/v1/models/acme19_2 (failed/readonly)" {
     run PATCH /tancredi/api/v1/models/acme19_2 <<EOF
 {
     "name": "acme19_2-renamed",
@@ -106,4 +106,3 @@ EOF
     assert_http_code "200"
     assert_http_body '"display_name":"Acme IP phone v19 rev. 2 (changed)"'
 }
-
