@@ -45,12 +45,12 @@ DELETE () {
 
 POST () {
     xcurl POST $1 \
-        -d @- -H 'Content-Type: application/json'
+        -d @- -H 'Content-Type: application/json; charset=UTF-8'
 }
 
 PATCH () {
     xcurl PATCH $1 \
-        -d @- -H 'Content-Type: application/json'
+        -d @- -H 'Content-Type: application/json; charset=UTF-8'
 }
 
 assert_http_code () {
