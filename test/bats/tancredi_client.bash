@@ -29,8 +29,9 @@ xcurl () {
     path=$1
     shift
     curl \
-        -H 'Accept: application/json, application/problem+json' \
-        -v -X ${verb} "${@}" "${tancredi_base_url}${path}"
+      -s -i \
+      -H 'Accept: application/json, application/problem+json' \
+      -X "${verb}" "${@}" "${tancredi_base_url}${path}"
 }
 
 GET () {
@@ -53,31 +54,43 @@ PATCH () {
 }
 
 assert_http_code () {
-    if ! grep -q -E "^< HTTP/1\\.1 $1" <<<"$output"; then
-        grep -E "^<" <<<"$output" 1>&2
+    if ! grep -q -F "HTTP/1.1 $1" <<<"${lines[0]}"; then
+        echo "${lines[0]}" 1>&2
         return 1
     fi
+    return 0
 }
 
 assert_http_header () {
-    if ! grep -q -F "< ${1}: ${2}" <<<"$output"; then
-        grep -E "^<" <<<"$output" 1>&2
+    sed '/^$/q' <<<"$output" | grep -q -F "${1}: ${2}" || :
+    if [[ ${PIPESTATUS[1]} != 0 ]]; then
         return 1
     fi
+    return 0
 }
 
 assert_http_body () {
-    sed -n '$ p' <<<"$output" | grep -q -F "$1" || :
+    sed -n -r '/^\s*$/,$ p' <<<"$output" | grep -q -F "$1" || :
     if [[ ${PIPESTATUS[1]} != 0 ]]; then
         sed -n '$ p' <<<"$output" 1>&2
         return 1
     fi
+    return 0
 }
 
 assert_http_body_re () {
-    sed -n '$ p' <<<"$output" | grep -q -E "$1" || :
+    sed -n -r '/^\s*$/,$ p' <<<"$output" | grep -q -E "$1" || :
     if [[ ${PIPESTATUS[1]} != 0 ]]; then
         sed -n '$ p' <<<"$output" 1>&2
         return 1
     fi
+    return 0
+}
+
+assert_http_body_empty () {
+    sed -n -r '/^\s*$/,$ p' <<<"$output" | grep -E '\w' || :
+    if [[ ${PIPESTATUS[1]} == 0 ]]; then
+        return 1
+    fi
+    return 0
 }
