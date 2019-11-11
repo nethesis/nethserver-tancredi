@@ -64,6 +64,7 @@ assert_http_code () {
 assert_http_header () {
     sed '/^$/q' <<<"$output" | grep -q -F "${1}: ${2}" || :
     if [[ ${PIPESTATUS[1]} != 0 ]]; then
+        echo "$output" 1>&2
         return 1
     fi
     return 0
@@ -72,7 +73,7 @@ assert_http_header () {
 assert_http_body () {
     sed -n -r '/^\s*$/,$ p' <<<"$output" | grep -q -F "$1" || :
     if [[ ${PIPESTATUS[1]} != 0 ]]; then
-        sed -n '$ p' <<<"$output" 1>&2
+        echo "$output" 1>&2
         return 1
     fi
     return 0
@@ -81,7 +82,7 @@ assert_http_body () {
 assert_http_body_re () {
     sed -n -r '/^\s*$/,$ p' <<<"$output" | grep -q -E "$1" || :
     if [[ ${PIPESTATUS[1]} != 0 ]]; then
-        sed -n '$ p' <<<"$output" 1>&2
+        echo "$output" 1>&2
         return 1
     fi
     return 0
@@ -90,6 +91,7 @@ assert_http_body_re () {
 assert_http_body_empty () {
     sed -n -r '/^\s*$/,$ p' <<<"$output" | grep -E '\w' || :
     if [[ ${PIPESTATUS[1]} == 0 ]]; then
+        echo "$output" 1>&2
         return 1
     fi
     return 0
