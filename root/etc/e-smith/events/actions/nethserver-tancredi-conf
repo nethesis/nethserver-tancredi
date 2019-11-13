@@ -1,0 +1,13 @@
+#!/bin/bash
+
+root_db_pwd=$(perl -e "use NethServer::Password; print NethServer::Password::store('mysql')")
+db_pwd=$(perl -e "use NethServer::Password; print NethServer::Password::store('tancrediDBPass')")
+
+mysql -u root -p$root_db_pwd <<EOF
+USE mysql;
+
+GRANT SELECT on asterisk.ampusers TO 'tancredi'@'localhost' identified by '$db_pwd';
+
+FLUSH privileges;
+EOF
+

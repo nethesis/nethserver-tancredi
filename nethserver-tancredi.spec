@@ -7,7 +7,7 @@ Source: %{name}-%{version}.tar.gz
 Source1: tancredi.tar.gz
 BuildArch: noarch
 
-BuildRequires: nethserver-devtools
+BuildRequires: nethserver-devtools, rsync
 Requires: nethserver-rh-php56-php-fpm
 Requires: nethserver-httpd
 
@@ -23,7 +23,7 @@ perl createlinks
 
 mkdir -p root/usr/share/tancredi/data
 mv tancredi/public root/usr/share/tancredi/
-mv tancredi/src root/usr/share/tancredi/
+rsync -a tancredi/src root/usr/share/tancredi/
 mv tancredi/vendor root/usr/share/tancredi/
 mv tancredi/data/templates root/usr/share/tancredi/data/
 mv tancredi/data/patterns.d root/usr/share/tancredi/data/

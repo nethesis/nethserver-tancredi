@@ -2,13 +2,16 @@
 
 class NethVoiceAuth
 {
-    private $secret = NULL;
-    private $static_token = NULL;
-    private $dbh = NULL;
+    private $secret;
+    private $static_token;
+    private $dbh;
 
-    public function __construct($config = null) {
-        $config['secret'] ? $this->secret = $config['secret'] : null;
-        $config['static_token'] ? $this->static_token = $config['static_token'] : null;
+    public function __construct($config) {
+        if (!is_array($config) or !array_key_exists('secret',$config) or !array_key_exists('static_token',$config)) {
+            throw new RuntimeException('Wrong or missing configuration');
+        }
+        $this->secret = $config['secret'];
+        $this->static_token = $config['static_token'];
         $this->dbh = new \PDO(
             $config['auth_nethvoice_dbengine'] . ':dbname=' . $config['auth_nethvoice_dbname'] .';host=' . $config['auth_nethvoice_dbhost'],
             $config['auth_nethvoice_dbuser'],
@@ -24,9 +27,9 @@ class NethVoiceAuth
             // Local autentication for NethCTI success
             $response = $next($request, $response);
 	} elseif ($request->hasHeader('Secretkey') and !empty($this->secret)) {
-	    $stmt = $this->dbh->prepare("SELECT * FROM ampusers WHERE sections LIKE '%*%' AND username = ?");
-	    $stmt->execute(array($request->getHeaderLine('User')));
-	    $user = $stmt->fetchAll();
+            $stmt = $this->dbh->prepare("SELECT * FROM ampusers WHERE sections LIKE '%*%' AND username = ?");
+            $stmt->execute(array($request->getHeaderLine('User')));
+            $user = $stmt->fetchAll();
             $password_sha1 = $user[0]['password_sha1'];
             $username = $user[0]['username'];
 

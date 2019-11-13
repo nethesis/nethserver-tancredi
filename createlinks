@@ -9,6 +9,7 @@ event_templates($event, qw(
 
 event_actions($event, qw(
     initialize-default-databases 00
+    nethserver-tancredi-conf 60
 ));
 
 event_services($event ,qw(
