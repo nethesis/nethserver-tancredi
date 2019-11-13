@@ -1,7 +1,7 @@
 {
 use NethServer::Password;
 our $secretkey = NethServer::Password::store('nethvoice');
-out $tancrediDBPass = NethServer::Password::store('tancrediDBPass');
+our $tancrediDBPass = NethServer::Password::store('tancrediDBPass');
 our $CTIStaticToken = NethServer::Password->new('TancrediCTIStaticToken',{'length' => 32})->save()->getAscii();
 '';
 }
