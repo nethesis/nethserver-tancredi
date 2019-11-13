@@ -2,7 +2,8 @@
 nethserver-tancredi
 ===================
 
-Download the latest version of Tancredi and prepare an RPM for NethServer.
+Download the latest version of [Tancredi](https://nethesis.github.io/tancredi/)
+and prepare an RPM for NethServer.
 
 API tests
 ---------
