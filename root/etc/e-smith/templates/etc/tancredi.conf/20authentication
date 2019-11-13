@@ -1,0 +1,16 @@
+{
+use NethServer::Password;
+our $secretkey = NethServer::Password::store('nethvoice');
+our $CTIStaticToken = NethServer::Password->new('TancrediCTIStaticToken',{'length' => 32})->save()->getAscii();
+'';
+}
+
+auth_class = "NethVoiceAuth"
+secret = "{{ $secretkey }}"
+auth_nethvoice_dbuser = "{`/usr/bin/scl enable rh-php56 -- php -r "include_once('/etc/freepbx.conf');global \\\\\\\$amp_conf; echo \\\\\\\$amp_conf['AMPDBUSER'];"`}"
+auth_nethvoice_dbpass = "{`/usr/bin/scl enable rh-php56 -- php -r "include_once('/etc/freepbx.conf');global \\\\\\\$amp_conf; echo \\\\\\\$amp_conf['AMPDBPASS'];"`}"
+auth_nethvoice_dbhost = "{`/usr/bin/scl enable rh-php56 -- php -r "include_once('/etc/freepbx.conf');global \\\\\\\$amp_conf; echo \\\\\\\$amp_conf['AMPDBHOST'];"`}"
+auth_nethvoice_dbname = "{`/usr/bin/scl enable rh-php56 -- php -r "include_once('/etc/freepbx.conf');global \\\\\\\$amp_conf; echo \\\\\\\$amp_conf['AMPDBNAME'];"`}"
+auth_nethvoice_dbengine = "{`/usr/bin/scl enable rh-php56 -- php -r "include_once('/etc/freepbx.conf');global \\\\\\\$amp_conf; echo \\\\\\\$amp_conf['AMPDBENGINE'];"`}"
+static_token = "{{ $CTIStaticToken }}"
+
