@@ -5,9 +5,10 @@ Release: 1%{?dist}
 License: GPL
 Source: %{name}-%{version}.tar.gz
 Source1: tancredi.tar.gz
+Source2: NethVoiceAuth.php
 BuildArch: noarch
 
-BuildRequires: nethserver-devtools, rsync
+BuildRequires: nethserver-devtools
 Requires: nethserver-rh-php56-php-fpm
 Requires: nethserver-httpd
 
@@ -23,10 +24,11 @@ perl createlinks
 
 mkdir -p root/usr/share/tancredi/data
 mv tancredi/public root/usr/share/tancredi/
-rsync -a tancredi/src root/usr/share/tancredi/
+mv tancredi/src root/usr/share/tancredi/
 mv tancredi/vendor root/usr/share/tancredi/
 mv tancredi/data/templates root/usr/share/tancredi/data/
 mv tancredi/data/patterns.d root/usr/share/tancredi/data/
+cp %{S:2} root/usr/share/tancredi/src/Entity/
 
 mkdir -p root/var/lib/tancredi/{first_access_tokens,scopes,templates-custom,tokens}
 
