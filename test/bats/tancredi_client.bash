@@ -22,6 +22,12 @@
 
 tancredi_base_url=http://127.0.0.1
 
+secret=$(perl -mNethServer::Password -e "print NethServer::Password::store('nethvoice')")
+tancrediDBPass=$(perl -mNethServer::Password -e "print NethServer::Password::store('tancrediDBPass')")
+User="admin"
+fpbxPasswordHash=$(mysql asterisk -utancredi -p$tancrediDBPass -B --silent -e "SELECT password_sha1 FROM ampusers WHERE username = '$User'")
+SecretKey=$(echo -n "${User}${fpbxPasswordHash}${secret}" | sha1sum | awk '{print $1}')
+
 xcurl () {
     local verb
     verb=$1
@@ -29,8 +35,11 @@ xcurl () {
     path=$1
     shift
     curl \
-        -H 'Accept: application/json, application/problem+json' \
-        -v -X ${verb} "${@}" "${tancredi_base_url}${path}"
+      -s -i \
+      -H 'Accept: application/json, application/problem+json' \
+      -H "User: ${User}" \
+      -H "SecretKey: ${SecretKey}" \
+      -X "${verb}" "${@}" "${tancredi_base_url}${path}"
 }
 
 GET () {
@@ -44,32 +53,54 @@ DELETE () {
 
 POST () {
     xcurl POST $1 \
-        -d @- -H 'Content-Type: application/json'
+        -d @- -H 'Content-Type: application/json; charset=UTF-8'
 }
 
 PATCH () {
     xcurl PATCH $1 \
-        -d @- -H 'Content-Type: application/json'
+        -d @- -H 'Content-Type: application/json; charset=UTF-8'
 }
 
 assert_http_code () {
-    if ! grep -q -E "^< HTTP/1\\.1 $1" <<<"$output"; then
-        grep -E "^<" <<<"$output" 1>&2
+    if ! grep -q -F "HTTP/1.1 $1" <<<"${lines[0]}"; then
+        echo "${lines[0]}" 1>&2
         return 1
     fi
+    return 0
 }
 
 assert_http_header () {
-    if ! grep -q -F "< ${1}: ${2}" <<<"$output"; then
-        grep -E "^<" <<<"$output" 1>&2
+    sed '/^$/q' <<<"$output" | grep -q -F "${1}: ${2}" || :
+    if [[ ${PIPESTATUS[1]} != 0 ]]; then
+        echo "$output" 1>&2
         return 1
     fi
+    return 0
 }
 
 assert_http_body () {
-    sed -n '$ p' <<<"$output" | grep -q -F $1
-    if [[ $? != 0 ]]; then
-        grep -E "^{" <<<"$output" 1>&2
+    sed -n -r '/^\s*$/,$ p' <<<"$output" | grep -q -F "$1" || :
+    if [[ ${PIPESTATUS[1]} != 0 ]]; then
+        echo "$output" 1>&2
         return 1
     fi
+    return 0
+}
+
+assert_http_body_re () {
+    sed -n -r '/^\s*$/,$ p' <<<"$output" | grep -q -E "$1" || :
+    if [[ ${PIPESTATUS[1]} != 0 ]]; then
+        echo "$output" 1>&2
+        return 1
+    fi
+    return 0
+}
+
+assert_http_body_empty () {
+    sed -n -r '/^\s*$/,$ p' <<<"$output" | grep -E '\w' || :
+    if [[ ${PIPESTATUS[1]} == 0 ]]; then
+        echo "$output" 1>&2
+        return 1
+    fi
+    return 0
 }
