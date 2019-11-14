@@ -13,8 +13,8 @@ class NethVoiceAuth
         $this->secret = $config['secret'];
         $this->static_token = $config['static_token'];
         $this->dbh = new \PDO(
-            $config['auth_nethvoice_dbengine'] . ':dbname=' . $config['auth_nethvoice_dbname'] .';host=' . $config['auth_nethvoice_dbhost'],
-            $config['auth_nethvoice_dbuser'],
+            'mysql:dbname=asterisk;host=localhost',
+            'tancredi',
             $config['auth_nethvoice_dbpass']
         );
     }
