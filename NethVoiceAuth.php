@@ -5,7 +5,7 @@ class NethVoiceAuth
     private $config;
 
     public function __construct($config) {
-        if (!is_array($config) or !array_key_exists('secret',$config) or !array_key_exists('static_token',$config)) {
+        if (!is_array($config) || !array_key_exists('secret',$config) || !array_key_exists('static_token',$config)) {
             throw new RuntimeException('Wrong or missing configuration');
         }
         $this->config = $config;
@@ -15,10 +15,10 @@ class NethVoiceAuth
     {
         if ($request->isOptions()) {
             $response = $next($request, $response);
-        } elseif ($request->hasHeader('Authentication:Static') and !empty($this->config['static_token']) and ($request->getHeaderLine('HTTP_HOST') === '127.0.0.1' or $request->getHeaderLine('HTTP_HOST') === 'localhost') and $request->getHeaderLine('Authentication:Static') === $this->config['static_token']) {
+        } elseif ($request->hasHeader('Authentication') && !empty($this->config['static_token']) && ($request->getHeaderLine('HTTP_HOST') === '127.0.0.1' || $request->getHeaderLine('HTTP_HOST') === 'localhost') && $request->getHeaderLine('Authentication') === 'static '.$this->config['static_token']) {
             // Local autentication for NethCTI success
             $response = $next($request, $response);
-	} elseif ($request->hasHeader('Secretkey') and !empty($this->config['secret'])) {
+	} elseif ($request->hasHeader('Secretkey') && !empty($this->config['secret'])) {
             $dbh = new \PDO(
                 'mysql:dbname=asterisk;host=localhost',
                 'tancredi',
