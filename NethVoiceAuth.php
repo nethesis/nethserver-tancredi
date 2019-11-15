@@ -44,7 +44,8 @@ class NethVoiceAuth
             if ($request->getHeaderLine('Secretkey') != $hash) {
                 $results = array(
                     'type' => 'https://nethesis.github.io/tancredi/problems#forbidden',
-                    'title' => 'Access to resource is forbidden with current client privileges'
+                    'title' => 'Access to resource is forbidden with current client privileges',
+                    'detail' => 'Wrong password or wrong secret key'
                 );
                 $response = $response->withJson($results, 403);
                 $response = $response->withHeader('Content-Type', 'application/problem+json');
@@ -55,7 +56,8 @@ class NethVoiceAuth
         } else {
             $results = array(
                 'type' => 'https://nethesis.github.io/tancredi/problems#forbidden',
-                'title' => 'Forbidden',
+                'title' => 'Access to resource is forbidden with current client privileges',
+                'detail' => 'Missing SecretKey header or missing secret in configuration',
                 'Secretkey' => $request->getHeaderLine('Secretkey'),
                 'secret' => $request->getHeaderLine($this->config['secret'])
             );
