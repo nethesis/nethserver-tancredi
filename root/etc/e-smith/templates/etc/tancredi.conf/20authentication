@@ -1,13 +1,13 @@
 {
 use NethServer::Password;
-our $secretkey = NethServer::Password::store('nethvoice');
-our $tancrediDBPass = NethServer::Password::store('tancrediDBPass');
-our $CTIStaticToken = NethServer::Password->new('TancrediCTIStaticToken',{'length' => 32})->save()->getAscii();
+our $SecretKey = NethServer::Password::store('nethvoice');
+our $TancrediDBPass = NethServer::Password::store('TancrediDBPass');
+our $TancrediCTIStaticToken = NethServer::Password->new('TancrediCTIStaticToken',{'length' => 32})->save()->getAscii();
 '';
 }
 
 auth_class = "NethVoiceAuth"
-secret = "{{ $secretkey }}"
-auth_nethvoice_dbpass = "{{ $tancrediDBPass }}"
-static_token = "{{ $CTIStaticToken }}"
+secret = "{{ $SecretKey }}"
+auth_nethvoice_dbpass = "{{ $TancrediDBPass }}"
+static_token = "{{ $TancrediCTIStaticToken }}"
 
