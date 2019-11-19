@@ -106,3 +106,14 @@ EOF
     assert_http_code "200"
     assert_http_body '"display_name":"Acme IP phone v19 rev. 2 (changed)"'
 }
+
+@test "GET /tancredi/api/v1/models/acme19_2/version/original" {
+    skip
+    run GET /tancredi/api/v1/models/acme19_2/version/original
+    assert_http_code "200"
+}
+
+@test "GET /tancredi/api/v1/models/acme19_2/version/original (failed/not-found)" {
+    run GET /tancredi/api/v1/models/acme19_2/version/original
+    assert_http_code "404"
+}
