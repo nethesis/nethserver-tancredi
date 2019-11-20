@@ -51,3 +51,4 @@ mkdir -p root/var/lib/tancredi/{first_access_tokens,scopes,templates-custom,toke
 %license LICENSE
 
 
+%changelog
