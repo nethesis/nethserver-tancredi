@@ -108,12 +108,12 @@ EOF
 }
 
 @test "GET /tancredi/api/v1/models/acme19_2/version/original" {
-    skip
+    skip "Not implemented"
     run GET /tancredi/api/v1/models/acme19_2/version/original
     assert_http_code "200"
 }
 
-@test "GET /tancredi/api/v1/models/acme19_2/version/original (failed/not-found)" {
-    run GET /tancredi/api/v1/models/acme19_2/version/original
+@test "GET /tancredi/api/v1/models/acme19_2/version/1 (failed/not-found)" {
+    run GET /tancredi/api/v1/models/acme19_2/version/1
     assert_http_code "404"
 }
