@@ -38,10 +38,15 @@ setup () {
     assert_http_code "200"
 }
 
-@test "Authenticated GET /models (failed/forbidden)" {
-    run GET -H "User: expect-fail" -H "SecretKey: expect-fail" /tancredi/api/v1/models
+@test "Authenticated GET /models (failed/forbidden1)" {
+    run GET -H "User: expect-fail" -H "Secretkey: expect-fail" /tancredi/api/v1/models
     assert_http_code "403"
     assert_http_body "problems#forbidden"
+}
+
+@test "Authenticated GET /models (failed/forbidden2)" {
+    run GET -H "User: expect-fail" -H "SecretKey: expect-fail" /tancredi/api/v1/models
+    assert_http_code "403"
     assert_http_body "problems#forbidden"
 }
 
