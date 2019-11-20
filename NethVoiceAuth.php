@@ -38,7 +38,15 @@ class NethVoiceAuth
 
             // check the user is valid and is an admin (sections = *)
             if (!$username) {
-                return $response->withJson(['error' => 'Forbidden: invalid user'], 403);
+                $results = array(
+                    'type' => 'https://nethesis.github.io/tancredi/problems#forbidden',
+                    'title' => 'Access to resource is forbidden with current client privileges',
+                    'detail' => 'Invalid user'
+                );
+                $response = $response->withJson($results, 403);
+                $response = $response->withHeader('Content-Type', 'application/problem+json');
+                $response = $response->withHeader('Content-Language', 'en');
+                return $response;
             }
             $hash = sha1($username . $password_sha1 . $this->config['secret']);
             if ($request->getHeaderLine('Secretkey') != $hash) {
