@@ -10,6 +10,7 @@ BuildArch: noarch
 BuildRequires: nethserver-devtools
 Requires: nethserver-rh-php56-php-fpm
 Requires: nethserver-httpd
+Requires: nethserver-freepbx
 
 %description
 Tancredi provisioning engine packaging and configuration
