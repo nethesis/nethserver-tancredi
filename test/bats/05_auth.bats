@@ -27,7 +27,7 @@ setup () {
 @test "Authenticated GET /models" {
     local secret tancrediDBPass User fpbxPasswordHash SecretKey
     secret=$(perl -mNethServer::Password -e "print NethServer::Password::store('nethvoice')")
-    tancrediDBPass=$(perl -mNethServer::Password -e "print NethServer::Password::store('tancrediDBPass')")
+    tancrediDBPass=$(perl -mNethServer::Password -e "print NethServer::Password::store('TancrediDBPass')")
     User="admin"
     if [[ -x /usr/bin/mysql ]]; then
         fpbxPasswordHash=$(mysql asterisk -utancredi -p$tancrediDBPass -B --silent -e "SELECT password_sha1 FROM ampusers WHERE username = '$User'")
