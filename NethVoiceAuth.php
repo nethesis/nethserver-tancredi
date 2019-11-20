@@ -36,6 +36,8 @@ class NethVoiceAuth
             $password_sha1 = $user[0]['password_sha1'];
             $username = $user[0]['username'];
 
+            $hash = sha1($username . $password_sha1 . $this->config['secret']);
+
             // check the user is valid and is an admin (sections = *)
             if (!$username) {
                 $results = array(
@@ -46,10 +48,7 @@ class NethVoiceAuth
                 $response = $response->withJson($results, 403);
                 $response = $response->withHeader('Content-Type', 'application/problem+json');
                 $response = $response->withHeader('Content-Language', 'en');
-                return $response;
-            }
-            $hash = sha1($username . $password_sha1 . $this->config['secret']);
-            if ($request->getHeaderLine('Secretkey') != $hash) {
+            } elseif ($request->getHeaderLine('Secretkey') != $hash) {
                 $results = array(
                     'type' => 'https://nethesis.github.io/tancredi/problems#forbidden',
                     'title' => 'Access to resource is forbidden with current client privileges',
