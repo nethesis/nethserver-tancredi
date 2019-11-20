@@ -23,39 +23,39 @@
 tancredi_base_url=http://127.0.0.1
 
 xcurl () {
-    local verb
-    verb=$1
-    shift
-    path=$1
-    shift
+    local argv
+    argv=("${@}")
+    argv[$((${#argv[@]} - 1))]="${tancredi_base_url}${argv[-1]}"
     curl \
       -s -i \
       -H 'Accept: application/json, application/problem+json' \
-      -X "${verb}" "${@}" "${tancredi_base_url}${path}"
+      -X "${argv[@]}"
 }
 
 GET () {
-    xcurl GET "$1"
+    xcurl GET "${@}"
 }
 
 
 DELETE () {
-    xcurl DELETE "$1"
+    xcurl DELETE "${@}"
 }
 
 POST () {
-    xcurl POST $1 \
-        -d @- -H 'Content-Type: application/json; charset=UTF-8'
+    xcurl POST \
+        -d @- -H 'Content-Type: application/json; charset=UTF-8' \
+        "${@}"
 }
 
 PATCH () {
-    xcurl PATCH $1 \
-        -d @- -H 'Content-Type: application/json; charset=UTF-8'
+    xcurl PATCH \
+        -d @- -H 'Content-Type: application/json; charset=UTF-8' \
+        "${@}"
 }
 
 assert_http_code () {
     if ! grep -q -F "HTTP/1.1 $1" <<<"${lines[0]}"; then
-        echo "${lines[0]}" 1>&2
+        echo "$output" 1>&2
         return 1
     fi
     return 0

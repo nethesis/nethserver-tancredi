@@ -3,11 +3,18 @@
 use esmith::Build::CreateLinks qw(:all);
 my $event = 'nethserver-tancredi-update';
 
+event_templates($event, qw(
+    /etc/tancredi.conf
+));
+
 event_actions($event, qw(
     initialize-default-databases 00
+    nethserver-tancredi-conf 60
 ));
 
 event_services($event ,qw(
     httpd reload
     rh-php56-php-fpm restart
 ));
+
+
