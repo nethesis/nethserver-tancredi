@@ -4,10 +4,16 @@ class NethVoiceAuth
 {
     private $config;
 
+    /**
+     * @throws \RuntimeException
+     */
     public function __construct($config)
     {
-        if (!is_array($config) || !array_key_exists('secret', $config) || !array_key_exists('static_token', $config)) {
-            throw new RuntimeException('Wrong or missing configuration');
+        if ( ! is_array($config)
+            || ! $config['secret']
+            || ! $config['static_token']
+            ) {
+            throw new \RuntimeException('Bad NethVoiceAuth configuration', 1574245361);
         }
         $this->config = $config;
     }
@@ -16,15 +22,23 @@ class NethVoiceAuth
     {
         if ($request->isOptions()) {
             $response = $next($request, $response);
-        } elseif ($request->hasHeader('Authentication')
-            && !empty($this->config['static_token']) 
-            && ($request->getHeaderLine('HTTP_HOST') === '127.0.0.1'
-            || $request->getHeaderLine('HTTP_HOST') === 'localhost')
-            && $request->getHeaderLine('Authentication') === 'static '.$this->config['static_token']
-        ) {
-            // Local autentication for NethCTI success
-            $response = $next($request, $response);
-        } elseif ($request->hasHeader('Secretkey') && !empty($this->config['secret'])) {
+        } elseif ($request->hasHeader('Authentication')) {
+            if($request->getHeaderLine('Authentication') === ('static ' . $this->config['static_token'])
+                && ($request->getHeaderLine('HTTP_HOST') === '127.0.0.1' || $request->getHeaderLine('HTTP_HOST') === 'localhost')
+            ) {
+                // Local autentication for NethCTI success
+                $response = $next($request, $response);
+            } else {
+                $results = array(
+                    'type' => 'https://nethesis.github.io/tancredi/problems#forbidden',
+                    'title' => 'Access to resource is forbidden with current client privileges',
+                    'detail' => 'Invalid client credentials'
+                );
+                $response = $response->withJson($results, 403);
+                $response = $response->withHeader('Content-Type', 'application/problem+json');
+                $response = $response->withHeader('Content-Language', 'en');
+            }
+        } elseif ($request->hasHeader('Secretkey') && $request->hasHeader('User')) {
             $dbh = new \PDO(
                 'mysql:dbname=asterisk;host=localhost',
                 'tancredi',
@@ -36,37 +50,24 @@ class NethVoiceAuth
             $password_sha1 = $user[0]['password_sha1'];
             $username = $user[0]['username'];
 
-            $hash = sha1($username . $password_sha1 . $this->config['secret']);
-
             // check the user is valid and is an admin (sections = *)
-            if (!$username) {
-                $results = array(
-                    'type' => 'https://nethesis.github.io/tancredi/problems#forbidden',
-                    'title' => 'Access to resource is forbidden with current client privileges',
-                    'detail' => 'Invalid user'
-                );
-                $response = $response->withJson($results, 403);
-                $response = $response->withHeader('Content-Type', 'application/problem+json');
-                $response = $response->withHeader('Content-Language', 'en');
-            } elseif ($request->getHeaderLine('Secretkey') != $hash) {
-                $results = array(
-                    'type' => 'https://nethesis.github.io/tancredi/problems#forbidden',
-                    'title' => 'Access to resource is forbidden with current client privileges',
-                    'detail' => 'Wrong password or wrong secret key'
-                );
-                $response = $response->withJson($results, 403);
-                $response = $response->withHeader('Content-Type', 'application/problem+json');
-                $response = $response->withHeader('Content-Language', 'en');
-            } else {
+            if (isset($username, $password_sha1) && $request->getHeaderLine('Secretkey') === sha1($username . $password_sha1 . $this->config['secret'])) {
                 $response = $next($request, $response);
+            } else {
+                $results = array(
+                    'type' => 'https://nethesis.github.io/tancredi/problems#forbidden',
+                    'title' => 'Access to resource is forbidden with current client privileges',
+                    'detail' => 'Invalid client credentials'
+                );
+                $response = $response->withJson($results, 403);
+                $response = $response->withHeader('Content-Type', 'application/problem+json');
+                $response = $response->withHeader('Content-Language', 'en');
             }
         } else {
             $results = array(
                 'type' => 'https://nethesis.github.io/tancredi/problems#forbidden',
                 'title' => 'Access to resource is forbidden with current client privileges',
-                'detail' => 'Missing SecretKey header or missing secret in configuration',
-                'Secretkey' => $request->getHeaderLine('Secretkey'),
-                'secret' => $request->getHeaderLine($this->config['secret'])
+                'detail' => 'Invalid NethVoiceAuth authentication headers',
             );
             $response = $response->withJson($results, 403);
             $response = $response->withHeader('Content-Type', 'application/problem+json');
