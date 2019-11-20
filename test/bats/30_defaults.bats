@@ -24,19 +24,19 @@ setup () {
     load tancredi_client
 }
 
-@test "DELETE /defaults (failed/unallowed)" {
-    run DELETE /defaults
+@test "DELETE /tancredi/api/v1/defaults (failed/unallowed)" {
+    run DELETE /tancredi/api/v1/defaults
     assert_http_code "405"
 }
 
-@test "GET /defaults (success)" {
-    run GET /defaults
+@test "GET /tancredi/api/v1/defaults (success)" {
+    run GET /tancredi/api/v1/defaults
     assert_http_code "200"
     assert_http_body_re "^\{"
 }
 
-@test "PATCH /defaults (success/set)" {
-    run PATCH /defaults <<EOF
+@test "PATCH /tancredi/api/v1/defaults (success/set)" {
+    run PATCH /tancredi/api/v1/defaults <<EOF
 {
     "var1": "value1",
     "var2": "value2"
@@ -44,14 +44,14 @@ setup () {
 EOF
     assert_http_code "204"
 
-    run GET /defaults
+    run GET /tancredi/api/v1/defaults
     assert_http_code "200"
     assert_http_body "value1"
     assert_http_body "value2"
 }
 
-@test "PATCH /defaults (success/unset)" {
-    run PATCH /defaults <<EOF
+@test "PATCH /tancredi/api/v1/defaults (success/unset)" {
+    run PATCH /tancredi/api/v1/defaults <<EOF
 {
     "var1": "valore1",
     "var2": null
@@ -59,7 +59,7 @@ EOF
 EOF
     assert_http_code "204"
 
-    run GET /defaults
+    run GET /tancredi/api/v1/defaults
     assert_http_code "200"
     assert_http_body "valore1"
     ! assert_http_body "value2"
