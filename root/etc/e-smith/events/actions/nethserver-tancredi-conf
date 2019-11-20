@@ -1,7 +1,7 @@
 #!/bin/bash
 
 root_db_pwd=$(perl -e "use NethServer::Password; print NethServer::Password::store('mysql')")
-db_pwd=$(perl -e "use NethServer::Password; print NethServer::Password::store('tancrediDBPass')")
+db_pwd=$(perl -e "use NethServer::Password; print NethServer::Password::store('TancrediDBPass')")
 
 mysql -u root -p$root_db_pwd <<EOF
 USE mysql;
