@@ -28,6 +28,7 @@ mv tancredi/src root/usr/share/tancredi/
 mv tancredi/vendor root/usr/share/tancredi/
 mv tancredi/data/templates root/usr/share/tancredi/data/
 mv tancredi/data/patterns.d root/usr/share/tancredi/data/
+mv tancredi/data/scopes root/usr/share/tancredi/data/
 cp NethVoiceAuth.php root/usr/share/tancredi/src/Entity/
 
 mkdir -p root/var/lib/tancredi/{first_access_tokens,scopes,templates-custom,tokens}
