@@ -5,6 +5,7 @@ my $event = 'nethserver-tancredi-update';
 
 event_templates($event, qw(
     /etc/tancredi.conf
+    /etc/httpd/conf.d/tancredi.conf
 ));
 
 event_actions($event, qw(

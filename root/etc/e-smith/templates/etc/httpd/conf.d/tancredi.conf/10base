@@ -1,0 +1,22 @@
+{
+    use esmith::NetworksDB;
+
+    my $ndb = esmith::NetworksDB->open_ro();
+    my @localAccessSpec = $ndb->local_access_spec();
+    our $localAccess = join(' ',@localAccessSpec);
+
+    our $validFrom = ${'httpd-fpbx'}{'ValidFrom'};
+    $validFrom =~ s/,/ /g;
+
+    $OUT = "";
+}
+
+<Location "/provisioning">
+    ProxyPass "fcgi://127.0.0.1:9605/usr/share/tancredi/public/provisioning.php"
+</Location>
+
+<Location "/tancredi/api/v1">
+    Require ip ${localAccess} ${validFrom}
+    ProxyPass "fcgi://127.0.0.1:9605/usr/share/tancredi/public/api-v1.php"
+</Location>
+
