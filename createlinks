@@ -18,4 +18,8 @@ event_services($event ,qw(
     rh-php56-php-fpm restart
 ));
 
+# expand tancredi httpd template on nethserver-freepbx-httpd-save
+event_templates("nethserver-freepbx-httpd-save", qw(
+    /etc/httpd/conf.d/tancredi.conf
+));
 
