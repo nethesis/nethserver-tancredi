@@ -30,6 +30,8 @@ mv tancredi/data/templates root/usr/share/tancredi/data/
 mv tancredi/data/patterns.d root/usr/share/tancredi/data/
 mv tancredi/data/scopes root/usr/share/tancredi/data/
 cp NethVoiceAuth.php root/usr/share/tancredi/src/Entity/
+rm root/usr/share/tancredi/src/Entity/SampleFilter.php
+cp AsteriskRuntimeFilter.php root/usr/share/tancredi/src/Entity/
 
 mkdir -p root/var/lib/tancredi/{first_access_tokens,scopes,templates-custom,tokens}
 
