@@ -1,12 +1,23 @@
 <?php namespace Tancredi\Entity;
 
+/*
+* AsteriskRuntimeFilter class add astdb variables to scope data
+*
+* call_waiting: call waiting status (1|0)
+* dnd_enable: do not disturb status (1|0)
+* timeout_fwd_enable: call forward on timeout status (1|0)
+* timeout_fwd_target: call forward on timeout target (phone number)
+* busy_fwd_enable: call forward on busy status (1|0)
+* busy_fwd_target: call forward on busy target (phone number)
+* always_fwd_enable: call forward always on status (1|0)
+* always_fwd_target: call forward always on  target (phone number)
+* cftimeout: call forward timeout
+*/
 class AsteriskRuntimeFilter
 {
     private $db;
     private $logger;
-    /**
-     * @throws \RuntimeException
-     */
+
     public function __construct($config,$logger)
     {
         $this->db = new \SQLite3($config['astdb'],SQLITE3_OPEN_READONLY);
