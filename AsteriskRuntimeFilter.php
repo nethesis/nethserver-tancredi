@@ -26,49 +26,60 @@ class AsteriskRuntimeFilter
 
     public function __invoke($variables)
     {
-        if (!empty($variables['mainextension'])) {
-            $extension = $variables['mainextension'];
-        } elseif (!empty($variables['extension'])) {
-            $extension = $variables['extension'];
-        } elseif (!empty($variables['username'])) {
-            $extension = $variables['username'];
-        } else {
-            return $variables;
+        // Get account index
+        $indexes = array();
+        foreach (array_keys($variables) as $key) {
+            if (strpos('account_username_', $key)) {
+                $indexes[] = str_replace('account_username_','',$key);
+            }
         }
+        if (empty($indexes)) $indexes[] = 1;
 
-        $statement = $this->db->prepare('SELECT key,value FROM astdb WHERE key LIKE :key');
-        $statement->bindValue(':key', "%/$extension%");
-
-        $results = $statement->execute();
-
-        $variables['call_waiting'] = 0;
-        $variables['dnd_enable'] = 0;
-        while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
-            if ($row['key'] == "/CW/$extension" && $row['value'] == 'ENABLED') {
-                $variables['call_waiting'] = 1;
+        foreach ($indexes as $index) {
+            if (!empty($variables['mainextension_'.$index])) {
+                $extension = $variables['mainextension_'.$index];
+            } elseif (!empty($variables['extension_'.$index])) {
+                $extension = $variables['extension_'.$index];
+            } elseif (!empty($variables['account_username_'.$index])) {
+                $extension = $variables['account_username_'.$index];
+            } else {
+                return $variables;
             }
 
-            if ($row['key'] == "/CFU/$extension") {
-                $variables['timeout_fwd_target'] = $row['value'];
-                $variables['timeout_fwd_enable'] = (int) !empty($row['value']);
-            }
+            $statement = $this->db->prepare('SELECT key,value FROM astdb WHERE key LIKE :key');
+            $statement->bindValue(':key', "%/$extension%");
 
-            if ($row['key'] == "/CFB/$extension") {
-                $variables['busy_fwd_target'] = $row['value'];
-                $variables['busy_fwd_enable'] = (int) !empty($row['value']);
-            }
+            $results = $statement->execute();
 
-            if ($row['key'] == "/CF/$extension") {
-                $variables['always_fwd_target'] = $row['value'];
-                $variables['always_fwd_enable'] = (int) !empty($row['value']);
-            }
+            $variables['call_waiting'] = 0;
+            $variables['dnd_enable'] = 0;
+            while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
+                if ($row['key'] == "/CW/$extension" && $row['value'] == 'ENABLED') {
+                    $variables['call_waiting_'.$index] = 1;
+                }
 
-            if ($row['key'] == "/AMPUSER/$extension/followme/prering") {
-                $variables['cftimeout'] = $row['value'];
-            }
+                if ($row['key'] == "/CFU/$extension") {
+                    $variables['timeout_fwd_target_'.$index] = $row['value'];
+                    $variables['timeout_fwd_enable_'.$index] = (int) !empty($row['value']);
+                }
 
-            if ($row['key'] == "/DND/$extension" && $row['value'] == 'YES') {
-                $variables['dnd_enable'] = 1;
+                if ($row['key'] == "/CFB/$extension") {
+                    $variables['busy_fwd_target_'.$index] = $row['value'];
+                    $variables['busy_fwd_enable_'.$index] = (int) !empty($row['value']);
+                }
+
+                if ($row['key'] == "/CF/$extension") {
+                    $variables['always_fwd_target_'.$index] = $row['value'];
+                    $variables['always_fwd_enable_'.$index] = (int) !empty($row['value']);
+                }
+
+                if ($row['key'] == "/AMPUSER/$extension/followme/prering") {
+                    $variables['cftimeout_'.$index] = $row['value'];
+                }
+
+                if ($row['key'] == "/DND/$extension" && $row['value'] == 'YES') {
+                    $variables['dnd_enable_'.$index] = 1;
+                }
             }
         }
         $this->logger->debug(__CLASS__ . "Added runtime variables");
