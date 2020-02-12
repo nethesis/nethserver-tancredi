@@ -33,16 +33,16 @@ cp NethVoiceAuth.php root/usr/share/tancredi/src/Entity/
 rm root/usr/share/tancredi/src/Entity/SampleFilter.php
 cp AsteriskRuntimeFilter.php root/usr/share/tancredi/src/Entity/
 
-mkdir -p root/var/lib/tancredi/{first_access_tokens,scopes,templates-custom,tokens}
+mkdir -p root/var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens}
 
 %install
 (cd root; find . -depth -print | cpio -dump %{buildroot})
 %{genfilelist} %{buildroot} \
     --file /etc/tancredi.conf 'attr(0644,root,root) %config(noreplace)' \
-    --dir /var/lib/tancredi/first_access_tokens 'attr(0770,root,apache)' \
-    --dir /var/lib/tancredi/scopes 'attr(0770,root,apache)' \
-    --dir /var/lib/tancredi/templates-custom 'attr(0770,root,apache)' \
-    --dir /var/lib/tancredi/tokens 'attr(0770,root,apache)' \
+    --dir /var/lib/tancredi/data/first_access_tokens 'attr(0770,root,apache)' \
+    --dir /var/lib/tancredi/data/scopes 'attr(0770,root,apache)' \
+    --dir /var/lib/tancredi/data/templates-custom 'attr(0770,root,apache)' \
+    --dir /var/lib/tancredi/data/tokens 'attr(0770,root,apache)' \
     --dir /var/log/tancredi 'attr(0770,root,apache)' \
     > filelist
 
