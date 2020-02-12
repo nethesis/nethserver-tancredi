@@ -4,3 +4,6 @@ loglevel = "DEBUG"
 rw_dir = "/var/lib/tancredi/data/"
 ro_dir = "/usr/share/tancredi/data/"
 
+provisioning_url_path = "/provisioning/"
+api_url_path = "/tancredi/api/v1/"
+
