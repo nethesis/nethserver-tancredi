@@ -4,10 +4,11 @@ Version: 0.0.0
 Release: 1%{?dist}
 License: GPL
 Source: %{name}-%{version}.tar.gz
-Source1: tancredi.tar.gz
+Source1: https://github.com/nethesis/tancredi/archive/23fcd2b1c69ac3faea64b2096fe0f1c24bbd3a42/tancredi.tar.gz
 BuildArch: noarch
 
 BuildRequires: nethserver-devtools
+BuildRequires: rh-php56-php-cli, rh-php56-php-mbstring, rh-php56-php-xml, composer
 Requires: nethserver-rh-php56-php-fpm
 Requires: nethserver-httpd
 Requires: nethserver-freepbx
@@ -17,26 +18,29 @@ Tancredi provisioning engine packaging and configuration
 
 %prep
 %setup -q
-%setup -q -c -D -T -b 1
+%setup -q -D -T -a 1
 
 %build
 perl createlinks
-
-mkdir -p root/usr/share/tancredi/data
-mv tancredi/public root/usr/share/tancredi/
-mv tancredi/src root/usr/share/tancredi/
-mv tancredi/vendor root/usr/share/tancredi/
-mv tancredi/data/templates root/usr/share/tancredi/data/
-mv tancredi/data/patterns.d root/usr/share/tancredi/data/
-mv tancredi/data/scopes root/usr/share/tancredi/data/
-cp NethVoiceAuth.php root/usr/share/tancredi/src/Entity/
-rm root/usr/share/tancredi/src/Entity/SampleFilter.php
-cp AsteriskRuntimeFilter.php root/usr/share/tancredi/src/Entity/
-
-mkdir -p root/var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens}
+(
+    cd tancredi-*
+    scl enable rh-php56 -- /usr/bin/composer diagnose || :
+    scl enable rh-php56 -- /usr/bin/composer install --no-dev
+)
 
 %install
 (cd root; find . -depth -print | cpio -dump %{buildroot})
+(
+    cd tancredi-*
+    rm -v src/Entity/SampleFilter.php
+    mkdir -p %{buildroot}/usr/share/tancredi/data/
+    cp -a {public,src,vendor} %{buildroot}/usr/share/tancredi/
+    cp -a data/{templates,patterns.d,scopes} %{buildroot}/usr/share/tancredi/data/
+)
+install NethVoiceAuth.php %{buildroot}/usr/share/tancredi/src/Entity/
+install AsteriskRuntimeFilter.php %{buildroot}/usr/share/tancredi/src/Entity/
+mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens}
+
 %{genfilelist} %{buildroot} \
     --file /etc/tancredi.conf 'attr(0644,root,root) %config(noreplace)' \
     --dir /var/lib/tancredi/data/first_access_tokens 'attr(0770,root,apache)' \
@@ -49,7 +53,7 @@ mkdir -p root/var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom
 %files -f filelist
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
-%doc tancredi/docs
+%doc tancredi-*/docs
 %doc test
 %doc README.rst
 %license LICENSE

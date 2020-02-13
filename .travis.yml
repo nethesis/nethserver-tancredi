@@ -26,9 +26,6 @@ env:
         -e ENDPOINTS_PACK
         "
 
-before_script:
-    - bash prep-sources.sh
-
 script: >
     docker run -ti --name makerpms ${EVARS}
     --hostname b${TRAVIS_BUILD_NUMBER}.nethserver.org
