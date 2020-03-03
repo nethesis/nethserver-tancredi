@@ -81,7 +81,6 @@ class AsteriskRuntimeFilter
                     $variables['account_dnd_enable_' . $index] = '1';
                 }
             }
-            $this->logger->debug(__CLASS__ . " Added runtime variables " . print_r($variables, 1));
         }
         return $variables;
     }
