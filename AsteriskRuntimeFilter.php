@@ -26,64 +26,63 @@ class AsteriskRuntimeFilter
 
     public function __invoke($variables)
     {
-        // Get account index
-        $indexes = array();
-        foreach (array_keys($variables) as $key) {
-            if (strpos('account_username_', $key)) {
-                $indexes[] = str_replace('account_username_','',$key);
+        foreach (array_keys($variables) as $variable) {
+            if(substr($variable, 0, 18) != 'account_extension_') {
+                // Ignore all variables except those starting with "account_extension_"
+                continue;
             }
-        }
-        if (empty($indexes)) $indexes[] = 1;
 
-        foreach ($indexes as $index) {
-            if (!empty($variables['mainextension_'.$index])) {
-                $extension = $variables['mainextension_'.$index];
-            } elseif (!empty($variables['extension_'.$index])) {
-                $extension = $variables['extension_'.$index];
-            } elseif (!empty($variables['account_username_'.$index])) {
-                $extension = $variables['account_username_'.$index];
-            } else {
-                return $variables;
+            $index = (integer) substr($variable, 18);
+            if($index <= 0) {
+                // index must be a positive integer
+                continue;
+            }
+
+            // Initialize default values
+            $variables['account_call_waiting_' . $index] = '';
+            $variables['account_timeout_fwd_target_' . $index] = '';
+            $variables['account_busy_fwd_target_' . $index] = '';
+            $variables['account_always_fwd_target_' . $index] = '';
+            $variables['account_cftimeout_' . $index] = '';
+            $variables['account_dnd_enable_' . $index] = '';
+
+            $mainextension_match = array();
+            $extension = $variables[$variable];
+            if(preg_match("/^9\d(\d\d\d)$/", $extension, $mainextension_match)) {
+                $extension = $mainextension_match[1];
             }
 
             $statement = $this->db->prepare('SELECT key,value FROM astdb WHERE key LIKE :key');
             $statement->bindValue(':key', "%/$extension%");
-
             $results = $statement->execute();
 
-            $variables['call_waiting'] = 0;
-            $variables['dnd_enable'] = 0;
             while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
                 if ($row['key'] == "/CW/$extension" && $row['value'] == 'ENABLED') {
-                    $variables['call_waiting_'.$index] = 1;
-                }
+                    $variables['account_call_waiting_' . $index] = '1';
+                } 
 
                 if ($row['key'] == "/CFU/$extension") {
-                    $variables['timeout_fwd_target_'.$index] = $row['value'];
-                    $variables['timeout_fwd_enable_'.$index] = (int) !empty($row['value']);
+                    $variables['account_timeout_fwd_target_' . $index] = $row['value'];
                 }
 
                 if ($row['key'] == "/CFB/$extension") {
-                    $variables['busy_fwd_target_'.$index] = $row['value'];
-                    $variables['busy_fwd_enable_'.$index] = (int) !empty($row['value']);
+                    $variables['account_busy_fwd_target_' . $index] = $row['value'];
                 }
 
                 if ($row['key'] == "/CF/$extension") {
-                    $variables['always_fwd_target_'.$index] = $row['value'];
-                    $variables['always_fwd_enable_'.$index] = (int) !empty($row['value']);
+                    $variables['account_always_fwd_target_' . $index] = $row['value'];
                 }
 
                 if ($row['key'] == "/AMPUSER/$extension/followme/prering") {
-                    $variables['cftimeout_'.$index] = $row['value'];
+                    $variables['account_cftimeout_' . $index] = $row['value'];
                 }
 
                 if ($row['key'] == "/DND/$extension" && $row['value'] == 'YES') {
-                    $variables['dnd_enable_'.$index] = 1;
+                    $variables['account_dnd_enable_' . $index] = '1';
                 }
             }
+            $this->logger->debug(__CLASS__ . " Added runtime variables " . print_r($variables, 1));
         }
-        $this->logger->debug(__CLASS__ . "Added runtime variables");
-        $this->db->close();
         return $variables;
     }
 }
