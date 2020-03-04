@@ -48,7 +48,7 @@ class AsteriskRuntimeFilter
 
             $mainextension_match = array();
             $extension = $variables[$variable];
-            if(preg_match("/^9\d(\d\d\d)$/", $extension, $mainextension_match)) {
+            if(preg_match("/^9\d(\d{2,4})$/", $extension, $mainextension_match)) {
                 $extension = $mainextension_match[1];
             }
 
@@ -85,4 +85,3 @@ class AsteriskRuntimeFilter
         return $variables;
     }
 }
-
