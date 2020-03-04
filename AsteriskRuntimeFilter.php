@@ -15,17 +15,18 @@
 */
 class AsteriskRuntimeFilter
 {
-    private $db;
     private $logger;
+    private $config;
 
     public function __construct($config,$logger)
     {
-        $this->db = new \SQLite3($config['astdb'],SQLITE3_OPEN_READONLY);
+        $this->config = $config;
         $this->logger = $logger;
     }
 
     public function __invoke($variables)
     {
+        $db = new \SQLite3($this->config['astdb'],SQLITE3_OPEN_READONLY);
         foreach (array_keys($variables) as $variable) {
             if(substr($variable, 0, 18) != 'account_extension_') {
                 // Ignore all variables except those starting with "account_extension_"
@@ -52,7 +53,7 @@ class AsteriskRuntimeFilter
                 $extension = $mainextension_match[1];
             }
 
-            $statement = $this->db->prepare('SELECT key,value FROM astdb WHERE key LIKE :key');
+            $statement = $db->prepare('SELECT key,value FROM astdb WHERE key LIKE :key');
             $statement->bindValue(':key', "%/$extension%");
             $results = $statement->execute();
 
@@ -82,6 +83,7 @@ class AsteriskRuntimeFilter
                 }
             }
         }
+        $db->close();
         return $variables;
     }
 }
