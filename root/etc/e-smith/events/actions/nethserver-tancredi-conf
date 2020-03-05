@@ -11,3 +11,24 @@ GRANT SELECT on asterisk.ampusers TO 'tancredi'@'localhost' identified by '$db_p
 FLUSH privileges;
 EOF
 
+# set default.ini on first install
+if [[ ! -f /var/lib/tancredi/data/scopes/defaults.ini ]]; then
+    cp /usr/share/tancredi/data/scopes/defaults.ini /var/lib/tancredi/data/scopes/defaults.ini
+
+    # Add variable for UI first configuration
+    echo 'ui_first_config = "1"' >> /var/lib/tancredi/data/scopes/defaults.ini
+
+    # Remove timezone, language and tonezone if they exists
+    sed -i '/^timezone = /d' /var/lib/tancredi/data/scopes/defaults.ini
+    sed -i '/^language = /d' /var/lib/tancredi/data/scopes/defaults.ini
+    sed -i '/^tonezone = /d' /var/lib/tancredi/data/scopes/defaults.ini
+
+    # Add timezone, hardcoded to Europe/Rome, language and tonezone hardcoded to it
+    TIMEZONE="Europe/Rome"
+    LANGUAGE="it"
+    TONEZONE="it"
+    echo 'timezone = "'${TIMEZONE}'"' >> /var/lib/tancredi/data/scopes/defaults.ini
+    echo 'language = "'${LANGUAGE}'"' >> /var/lib/tancredi/data/scopes/defaults.ini
+    echo 'tonezone = "'${TONEZONE}'"' >> /var/lib/tancredi/data/scopes/defaults.ini
+fi
+
