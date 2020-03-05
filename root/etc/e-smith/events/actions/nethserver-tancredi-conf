@@ -14,23 +14,23 @@ EOF
 # set default.ini on first install
 dst_file="/var/lib/tancredi/data/scopes/defaults.ini"
 
-if [[ ! -f $dst_file ]]; then
-    echo "NOTICE: $0 initializing $dst"
-    /bin/cp -v /usr/share/tancredi/data/scopes/defaults.ini $dst_file
+if [[ ! -f ${dst_file} ]]; then
+    echo "NOTICE: $0 initializing ${dst_file}"
+    /bin/cp -v /usr/share/tancredi/data/scopes/defaults.ini ${dst_file}
 
     # Add variable for UI first configuration
-    echo 'ui_first_config = "1"' >> $dst_file
+    echo 'ui_first_config = "1"' >> ${dst_file}
 
     # Remove variables if they exists
-    sed -i '/^timezone = /d' $dst_file
-    sed -i '/^language = /d' $dst_file
-    sed -i '/^tonezone = /d' $dst_file
+    sed -i '/^timezone = /d' ${dst_file}
+    sed -i '/^language = /d' ${dst_file}
+    sed -i '/^tonezone = /d' ${dst_file}
 
     # Add defaults
-    echo 'timezone = "Europe/Rome"' >> $dst_file
-    echo 'language = "it"' >> $dst_file
-    echo 'tonezone = "it"' >> $dst_file
-    echo 'hostname = "'$(hostname)'"' >> $dst_file
-    echo 'provisioning_url_scheme = "https"' >> $dst_file
+    echo 'timezone = "Europe/Rome"' >> ${dst_file}
+    echo 'language = "it"' >> ${dst_file}
+    echo 'tonezone = "it"' >> ${dst_file}
+    echo 'hostname = "'$(hostname)'"' >> ${dst_file}
+    echo 'provisioning_url_scheme = "https"' >> ${dst_file}
 fi
 
