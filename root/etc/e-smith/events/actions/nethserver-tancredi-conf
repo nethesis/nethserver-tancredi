@@ -31,7 +31,7 @@ if [[ ! -f /var/lib/tancredi/data/scopes/defaults.ini ]]; then
     sed -i '/^language = /d' /var/lib/tancredi/data/scopes/defaults.ini
     sed -i '/^tonezone = /d' /var/lib/tancredi/data/scopes/defaults.ini
 
-    # Add timezone, hardcoded to Eurpe/Rome
+    # Add timezone, hardcoded to Europe/Rome
     TIMEZONE="Europe/Rome"
     echo 'timezone = "'${TIMEZONE}'"' >> /var/lib/tancredi/data/scopes/defaults.ini
 
