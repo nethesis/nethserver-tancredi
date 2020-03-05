@@ -12,23 +12,25 @@ FLUSH privileges;
 EOF
 
 # set default.ini on first install
-if [[ ! -f /var/lib/tancredi/data/scopes/defaults.ini ]]; then
-    cp /usr/share/tancredi/data/scopes/defaults.ini /var/lib/tancredi/data/scopes/defaults.ini
+dst_file="/var/lib/tancredi/data/scopes/defaults.ini"
+
+if [[ ! -f $dst_file ]]; then
+    echo "NOTICE: $0 initializing $dst"
+    /bin/cp -v /usr/share/tancredi/data/scopes/defaults.ini $dst_file
 
     # Add variable for UI first configuration
-    echo 'ui_first_config = "1"' >> /var/lib/tancredi/data/scopes/defaults.ini
+    echo 'ui_first_config = "1"' >> $dst_file
 
-    # Remove timezone, language and tonezone if they exists
-    sed -i '/^timezone = /d' /var/lib/tancredi/data/scopes/defaults.ini
-    sed -i '/^language = /d' /var/lib/tancredi/data/scopes/defaults.ini
-    sed -i '/^tonezone = /d' /var/lib/tancredi/data/scopes/defaults.ini
+    # Remove variables if they exists
+    sed -i '/^timezone = /d' $dst_file
+    sed -i '/^language = /d' $dst_file
+    sed -i '/^tonezone = /d' $dst_file
 
-    # Add timezone, hardcoded to Europe/Rome, language and tonezone hardcoded to it
-    TIMEZONE="Europe/Rome"
-    LANGUAGE="it"
-    TONEZONE="it"
-    echo 'timezone = "'${TIMEZONE}'"' >> /var/lib/tancredi/data/scopes/defaults.ini
-    echo 'language = "'${LANGUAGE}'"' >> /var/lib/tancredi/data/scopes/defaults.ini
-    echo 'tonezone = "'${TONEZONE}'"' >> /var/lib/tancredi/data/scopes/defaults.ini
+    # Add defaults
+    echo 'timezone = "Europe/Rome"' >> $dst_file
+    echo 'language = "it"' >> $dst_file
+    echo 'tonezone = "it"' >> $dst_file
+    echo 'hostname = "'$(hostname)'"' >> $dst_file
+    echo 'provisioning_url_scheme = "https"' >> $dst_file
 fi
 
