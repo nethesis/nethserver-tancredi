@@ -22,7 +22,7 @@ if [[ ! -f ${dst_file} ]]; then
     echo 'ui_first_config = "1"' >> ${dst_file}
 
     # Remove variables if they exists
-    for variable in timezone language tonezone hostname provisioning_url_scheme time_format date_format ldap_server ldap_port ldap_tls ldap_user ldap_password ldap_base ldap_name_display ldap_number_attr ldap_mainphone_number_attr ldap_mobilephone_number_attr ldap_otherphone_number_attr ldap_name_attr ldap_number_filter ldap_name_filter adminpw userpw; do
+    for variable in timezone language tonezone hostname provisioning_url_scheme provisioning_freq time_format date_format ldap_server ldap_port ldap_tls ldap_user ldap_password ldap_base ldap_name_display ldap_number_attr ldap_mainphone_number_attr ldap_mobilephone_number_attr ldap_otherphone_number_attr ldap_name_attr ldap_number_filter ldap_name_filter adminpw userpw; do
         sed -i '/^'${variable}' =.*/d' ${dst_file}
     done
 
@@ -32,6 +32,7 @@ if [[ ! -f ${dst_file} ]]; then
     echo 'tonezone = "it"' >> ${dst_file}
     echo 'hostname = "'$(hostname)'"' >> ${dst_file}
     echo 'provisioning_url_scheme = "https"' >> ${dst_file}
+    echo 'provisioning_freq = "Tuesday"' >> ${dst_file}
 
     # Add time_format and date_format
     echo 'time_format = "24"' >> ${dst_file}
