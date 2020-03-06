@@ -33,7 +33,11 @@ if [[ ! -f ${dst_file} ]]; then
     echo 'hostname = "'$(hostname)'"' >> ${dst_file}
     echo 'provisioning_url_scheme = "https"' >> ${dst_file}
 
-    # set ldap defaults
+    # Add time_format and date_format
+    echo 'time_format = "24"' >> ${dst_file}
+    echo 'date_format = "DD/MM/YYYY"' >> ${dst_file}
+
+    # Add ldap defaults
     echo 'ldap_server = "'$(hostname)'"' >> ${dst_file}
     echo 'ldap_port = "10389"' >> ${dst_file}
     echo 'ldap_tls = "none"' >> ${dst_file}
