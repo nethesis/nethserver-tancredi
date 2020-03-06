@@ -33,6 +33,22 @@ if [[ ! -f ${dst_file} ]]; then
     echo 'hostname = "'$(hostname)'"' >> ${dst_file}
     echo 'provisioning_url_scheme = "https"' >> ${dst_file}
 
+    # set ldap defaults
+    echo 'ldap_server = "'$(hostname)'"' >> ${dst_file}
+    echo 'ldap_port = "10389"' >> ${dst_file}
+    echo 'ldap_tls = "none"' >> ${dst_file}
+    echo 'ldap_user = ""' >> ${dst_file}
+    echo 'ldap_password = ""' >> ${dst_file}
+    echo 'ldap_base = ""' >> ${dst_file}
+    echo 'ldap_name_display = "%cn %o"' >> ${dst_file}
+    echo 'ldap_number_attr = "telephoneNumber mobile homePhone"' >> ${dst_file}
+    echo 'ldap_mainphone_number_attr = ""' >> ${dst_file}
+    echo 'ldap_mobilephone_number_attr = ""' >> ${dst_file}
+    echo 'ldap_otherphone_number_attr = ""' >> ${dst_file}
+    echo 'ldap_name_attr = "cn o"' >> ${dst_file}
+    echo 'ldap_number_filter = "(|(telephoneNumber=%)(mobile=%)(homePhone=%))"' >> ${dst_file}
+    echo 'ldap_name_filter = "(|(cn=%)(o=%))"' >> ${dst_file}
+
     # Set default admin and user passwords
     echo 'adminpw = "'$(head /dev/urandom | tr -dc a-z0-9 | head -c 10)'"' >> ${dst_file}
     echo 'userpw = "'$(head /dev/urandom | tr -dc a-z | head -c 6)'"' >> ${dst_file}
