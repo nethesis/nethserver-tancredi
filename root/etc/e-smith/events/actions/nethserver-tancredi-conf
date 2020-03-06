@@ -22,9 +22,9 @@ if [[ ! -f ${dst_file} ]]; then
     echo 'ui_first_config = "1"' >> ${dst_file}
 
     # Remove variables if they exists
-    sed -i '/^timezone = /d' ${dst_file}
-    sed -i '/^language = /d' ${dst_file}
-    sed -i '/^tonezone = /d' ${dst_file}
+    for variable in timezone language tonezone hostname provisioning_url_scheme time_format date_format ldap_server ldap_port ldap_tls ldap_user ldap_password ldap_base ldap_name_display ldap_number_attr ldap_mainphone_number_attr ldap_mobilephone_number_attr ldap_otherphone_number_attr ldap_name_attr ldap_number_filter ldap_name_filter adminpw userpw; do
+        sed -i '/^'${variable}' =.*/d' ${dst_file}
+    done
 
     # Add defaults
     echo 'timezone = "Europe/Rome"' >> ${dst_file}
