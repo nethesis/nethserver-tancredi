@@ -17,6 +17,7 @@ dst_file="/var/lib/tancredi/data/scopes/defaults.ini"
 if [[ ! -f ${dst_file} ]]; then
     echo "NOTICE: $0 initializing ${dst_file}"
     /bin/cp -v /usr/share/tancredi/data/scopes/defaults.ini ${dst_file}
+    chown apache:apache ${dst_file}
 
     # Add variable for UI first configuration
     echo 'ui_first_config = "1"' >> ${dst_file}
