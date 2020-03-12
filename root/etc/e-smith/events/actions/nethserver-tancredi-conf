@@ -33,7 +33,7 @@ if [[ ! -f ${dst_file} ]]; then
     echo 'tonezone = "it"' >> ${dst_file}
     echo 'hostname = "'$(hostname)'"' >> ${dst_file}
     echo 'provisioning_url_scheme = "https"' >> ${dst_file}
-    echo 'provisioning_freq = "Tuesday"' >> ${dst_file}
+    echo 'provisioning_freq = "never"' >> ${dst_file}
 
     # Add time_format and date_format
     echo 'time_format = "24"' >> ${dst_file}
