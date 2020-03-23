@@ -37,7 +37,7 @@ if [[ ! -f ${dst_file} ]]; then
 
     # Add time_format and date_format
     echo 'time_format = "24"' >> ${dst_file}
-    echo 'date_format = "DD/MM/YYYY"' >> ${dst_file}
+    echo 'date_format = "DD MM YY"' >> ${dst_file}
 
     # Add ldap defaults
     echo 'ldap_server = ""' >> ${dst_file}
