@@ -2,7 +2,7 @@ Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
 Version: 0.0.0
 Release: 1%{?dist}
-License: GPL
+License: GPLv3
 Source: %{name}-%{version}.tar.gz
 Source1: https://github.com/nethesis/tancredi/archive/e986a9d37c9b3b9048fef2932cc3dc25940223e7/tancredi.tar.gz
 BuildArch: noarch
@@ -24,6 +24,13 @@ Tancredi provisioning engine packaging and configuration
 perl createlinks
 (
     cd tancredi-*
+    if [[ -n "%{?github_token}" ]]; then
+        scl enable rh-php56 -- /usr/bin/composer config -g github-oauth.github.com "%{github_token}"
+    fi
+    if [[ -n "%{?composer_vendordir}" ]]; then
+        rm -rf vendor
+        ln -sfT %{composer_vendordir} vendor
+    fi
     scl enable rh-php56 -- /usr/bin/composer diagnose || :
     scl enable rh-php56 -- /usr/bin/composer install --no-dev
 )
@@ -34,7 +41,7 @@ perl createlinks
     cd tancredi-*
     rm -v src/Entity/SampleFilter.php
     mkdir -p %{buildroot}/usr/share/tancredi/data/
-    cp -a {public,src,vendor} %{buildroot}/usr/share/tancredi/
+    cp -a {public,src,vendor}/ %{buildroot}/usr/share/tancredi/
     cp -a data/{templates,patterns.d,scopes} %{buildroot}/usr/share/tancredi/data/
 )
 install NethVoiceAuth.php %{buildroot}/usr/share/tancredi/src/Entity/

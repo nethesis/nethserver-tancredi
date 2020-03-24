@@ -8,8 +8,12 @@ services:
 branches:
     only:
         - master
+
+cache:
+    directories:
+    - composer_vendordir
 env:
-   global:
+    global:
     - DEST_ID=nsent
     - NSVER=7
     - DOCKER_IMAGE=nethserver/makerpms:${NSVER}
@@ -26,10 +30,17 @@ env:
         -e ENDPOINTS_PACK
         "
 
+
 script: >
-    docker run -ti --name makerpms ${EVARS}
+    echo "%github_token ${GITHUB_TOKEN}" >> $PWD/.rpmmacros
+    && echo "%composer_vendordir /srv/makerpms/composer_vendordir" >> $PWD/.rpmmacros
+    && mkdir -p composer_vendordir && chmod 1777 composer_vendordir
+    && docker run -ti --name makerpms ${EVARS}
     --hostname b${TRAVIS_BUILD_NUMBER}.nethserver.org
-    --volume $PWD:/srv/makerpms/src:ro ${DOCKER_IMAGE} makerpms-travis -s *.spec
+    --volume $PWD:/srv/makerpms/src:ro
+    --volume $PWD/.rpmmacros:/srv/makerpms/.rpmmacros
+    --volume $PWD/composer_vendordir:/srv/makerpms/composer_vendordir
+    ${DOCKER_IMAGE} makerpms-travis -s *.spec
     && docker commit makerpms nethserver/build
     && docker run -ti ${EVARS}
     -e SECRET
@@ -37,3 +48,4 @@ script: >
     -e AUTOBUILD_SECRET
     -e AUTOBUILD_SECRET_URL
     nethserver/build uploadrpms-travis
+
