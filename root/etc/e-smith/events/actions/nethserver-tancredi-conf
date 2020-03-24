@@ -47,10 +47,9 @@ if [[ ! -f ${dst_file} ]]; then
     echo 'ldap_password = ""' >> ${dst_file}
     echo 'ldap_base = "dc=phonebook,dc=nh"' >> ${dst_file}
     echo 'ldap_name_display = "%cn %o"' >> ${dst_file}
-    echo 'ldap_number_attr = "telephoneNumber mobile homePhone"' >> ${dst_file}
-    echo 'ldap_mainphone_number_attr = ""' >> ${dst_file}
-    echo 'ldap_mobilephone_number_attr = ""' >> ${dst_file}
-    echo 'ldap_otherphone_number_attr = ""' >> ${dst_file}
+    echo 'ldap_mainphone_number_attr = "telephoneNumber"' >> ${dst_file}
+    echo 'ldap_mobilephone_number_attr = "mobile"' >> ${dst_file}
+    echo 'ldap_otherphone_number_attr = "homePhone"' >> ${dst_file}
     echo 'ldap_name_attr = "cn o"' >> ${dst_file}
     echo 'ldap_number_filter = "(|(telephoneNumber=%)(mobile=%)(homePhone=%))"' >> ${dst_file}
     echo 'ldap_name_filter = "(|(cn=%)(o=%))"' >> ${dst_file}
@@ -59,4 +58,3 @@ if [[ ! -f ${dst_file} ]]; then
     echo 'adminpw = "'$(head /dev/urandom | tr -dc a-z0-9 | head -c 10)'"' >> ${dst_file}
     echo 'userpw = "'$(head /dev/urandom | tr -dc a-z | head -c 6)'"' >> ${dst_file}
 fi
-
