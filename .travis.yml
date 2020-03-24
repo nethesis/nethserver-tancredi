@@ -32,7 +32,7 @@ env:
 
 
 script: >
-    echo "%github_token ${GITHUB_TOKEN}" >> $PWD/.rpmmacros
+    echo "%github_token ${GITHUB_TOKEN:-%{nil}}" >> $PWD/.rpmmacros
     && echo "%composer_vendordir /srv/makerpms/composer_vendordir" >> $PWD/.rpmmacros
     && mkdir -p composer_vendordir
     && find composer_vendordir -type d -exec chmod 1777 {} \;
