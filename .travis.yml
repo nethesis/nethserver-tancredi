@@ -8,6 +8,8 @@ services:
 branches:
     only:
         - master
+git:
+    depth: 100
 
 cache:
     directories:
