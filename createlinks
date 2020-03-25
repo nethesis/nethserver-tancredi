@@ -23,3 +23,17 @@ event_templates("nethserver-freepbx-httpd-save", qw(
     /etc/httpd/conf.d/tancredi.conf
 ));
 
+#
+# trusted-networks-modify event
+#
+
+$event = "trusted-networks-modify";
+
+event_templates($event, qw(
+    /etc/httpd/conf.d/tancredi.conf
+));
+
+event_services($event, qw(
+    httpd reload
+));
+
