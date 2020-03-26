@@ -25,11 +25,10 @@ perl createlinks
 (
     cd tancredi-*
     if [[ -n "%{?github_token}" ]]; then
-        scl enable rh-php56 -- /usr/bin/composer config -g github-oauth.github.com "%{github_token}"
+        scl enable rh-php56 -- /usr/bin/composer config github-oauth.github.com "%{github_token}"
     fi
-    if [[ -n "%{?composer_vendordir}" ]]; then
-        rm -rf vendor
-        ln -sfT %{composer_vendordir} vendor
+    if [[ -n "%{?composer_cachedir}" ]]; then
+        scl enable rh-php56 -- /usr/bin/composer config cache-dir "%{composer_cachedir}"
     fi
     scl enable rh-php56 -- /usr/bin/composer diagnose || :
     scl enable rh-php56 -- /usr/bin/composer install --no-dev

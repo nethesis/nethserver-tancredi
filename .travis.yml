@@ -13,7 +13,7 @@ git:
 
 cache:
     directories:
-    - composer_vendordir
+    - composer_cachedir
 env:
     global:
     - DEST_ID=nsent
@@ -35,15 +35,15 @@ env:
 
 script: >
     echo "%github_token ${GITHUB_TOKEN:-%{nil\}}" >> $PWD/.rpmmacros
-    && echo "%composer_vendordir /srv/makerpms/composer_vendordir" >> $PWD/.rpmmacros
-    && mkdir -p composer_vendordir
-    && find composer_vendordir -type d -exec chmod 1777 {} \;
-    && find composer_vendordir -type f -exec chmod 666 {} \;
+    && echo "%composer_cachedir /srv/makerpms/composer_cachedir" >> $PWD/.rpmmacros
+    && mkdir -p composer_cachedir
+    && find composer_cachedir -type d -exec chmod 1777 {} \;
+    && find composer_cachedir -type f -exec chmod 666 {} \;
     && docker run -ti --name makerpms ${EVARS}
     --hostname b${TRAVIS_BUILD_NUMBER}.nethserver.org
     --volume $PWD:/srv/makerpms/src:ro
-    --volume $PWD/.rpmmacros:/srv/makerpms/.rpmmacros
-    --volume $PWD/composer_vendordir:/srv/makerpms/composer_vendordir
+    --volume $PWD/.rpmmacros:/srv/makerpms/.rpmmacros:ro
+    --volume $PWD/composer_cachedir:/srv/makerpms/composer_cachedir
     ${DOCKER_IMAGE} makerpms-travis -s *.spec
     && docker commit makerpms nethserver/build
     && docker run -ti ${EVARS}
