@@ -53,7 +53,7 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
     --dir /var/lib/tancredi/data/scopes 'attr(0770,root,apache)' \
     --dir /var/lib/tancredi/data/templates-custom 'attr(0770,root,apache)' \
     --dir /var/lib/tancredi/data/tokens 'attr(0770,root,apache)' \
-    --dir /var/log/tancredi 'attr(0770,root,apache)' \
+    --dir /var/log/tancredi 'attr(0750,apache,apache)' \
     > filelist
 
 %files -f filelist
