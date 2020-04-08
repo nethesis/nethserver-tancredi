@@ -1,6 +1,5 @@
-logfile = "/var/log/tancredi/tancredi.log"
-loglevel = "DEBUG"
 
+loglevel = "ERROR"
 rw_dir = "/var/lib/tancredi/data/"
 ro_dir = "/usr/share/tancredi/data/"
 
