@@ -1,6 +1,7 @@
-#
-# PHP instance for Tancredi
-#
+
+;
+; PHP instance for Tancredi
+;
 
 [tancredi]
 env[PATH] = '/opt/rh/rh-php56/root/bin:/opt/rh/rh-php56/root/usr/bin:/usr/bin:$PATH'
@@ -28,3 +29,5 @@ php_value[upload_max_filesize] = 2M
 php_value[post_max_size] = 2M
 
 php_admin_flag[expose_php] = off
+
+php_value[date.timezone] = "{ $php{'DateTimezone'} || 'UTC' }"
