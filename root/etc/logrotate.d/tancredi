@@ -2,8 +2,6 @@
 /var/log/tancredi/slow.log
 /var/log/tancredi/error.log {
    missingok
-   rotate 1
-   compress
-   weekly
+   delaycompress
    create 0644 apache apache
 }
