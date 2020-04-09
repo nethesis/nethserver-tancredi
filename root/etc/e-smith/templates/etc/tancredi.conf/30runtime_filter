@@ -1,3 +1,5 @@
+
+; Retrieve some values from the Asterisk database
 runtime_filters = "AsteriskRuntimeFilter"
 astdb = "/var/lib/asterisk/astdb.sqlite3"
 

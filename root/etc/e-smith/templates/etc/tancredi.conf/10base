@@ -1,9 +1,22 @@
-logfile = "/var/log/tancredi/tancredi.log"
-loglevel = "DEBUG"
 
+; Tancredi log verbosity level. Allowed level names are
+;  - DEBUG (default)
+;  - INFO
+;  - WARNING
+;  - ERROR
+; Comment this line for templates development:
+loglevel = "INFO"
+
+; Send messages to our log file
+logfile = "/var/log/tancredi/tancredi.log"
+
+; Directory where Tancredi has Read/Write access
 rw_dir = "/var/lib/tancredi/data/"
+
+; Directory where Tancredi has Read access
 ro_dir = "/usr/share/tancredi/data/"
 
+; provisioning_url_path and api_url_path depends on your web server configuration
 provisioning_url_path = "/provisioning/"
 api_url_path = "/tancredi/api/v1/"
 

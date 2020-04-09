@@ -1,6 +1,7 @@
-#
-# PHP instance for Tancredi
-#
+
+;
+; PHP instance for Tancredi
+;
 
 [tancredi]
 env[PATH] = '/opt/rh/rh-php56/root/bin:/opt/rh/rh-php56/root/usr/bin:/usr/bin:$PATH'
@@ -18,13 +19,15 @@ pm.start_servers = 5
 pm.min_spare_servers = 5
 pm.max_spare_servers = 35
 
-slowlog = /var/log/tancredi/slow.log
+slowlog = /var/opt/rh/rh-php56/log/php-fpm/tancredi-slow.log
 request_slowlog_timeout = 5s
 
-php_admin_value[error_log] = /var/log/tancredi/error.log
+php_admin_value[error_log] = /var/opt/rh/rh-php56/log/php-fpm/tancredi.log
 php_admin_flag[log_errors] = on
 
 php_value[upload_max_filesize] = 2M
 php_value[post_max_size] = 2M
 
 php_admin_flag[expose_php] = off
+
+php_value[date.timezone] = "{ $php{'DateTimezone'} || 'UTC' }"
