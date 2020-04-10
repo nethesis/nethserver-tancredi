@@ -1,13 +1,14 @@
-{
+
+;
+; 20authentication -- Integrate with NethVoice authentication
+;{
 use NethServer::Password;
 our $SecretKey = NethServer::Password::store('nethvoice');
 our $TancrediDBPass = NethServer::Password::store('TancrediDBPass');
 our $TancrediCTIStaticToken = NethServer::Password->new('TancrediCTIStaticToken',{'length' => 32})->save()->getAscii();
 '';
 }
-
 auth_class = "NethVoiceAuth"
 secret = "{{ $SecretKey }}"
 auth_nethvoice_dbpass = "{{ $TancrediDBPass }}"
 static_token = "{{ $TancrediCTIStaticToken }}"
-

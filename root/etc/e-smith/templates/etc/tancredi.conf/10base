@@ -1,4 +1,8 @@
 
+;
+; 10base -- CentOS/NethServer environment
+;
+
 ; Tancredi log verbosity level. Allowed level names are
 ;  - DEBUG (default)
 ;  - INFO
@@ -19,4 +23,3 @@ ro_dir = "/usr/share/tancredi/data/"
 ; provisioning_url_path and api_url_path depends on your web server configuration
 provisioning_url_path = "/provisioning/"
 api_url_path = "/tancredi/api/v1/"
-

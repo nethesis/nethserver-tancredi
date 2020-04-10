@@ -1,5 +1,6 @@
 
-; Retrieve some values from the Asterisk database
+;
+; 30runtime_filter -- Retrieve some values from the Asterisk database
+;
 runtime_filters = "AsteriskRuntimeFilter"
 astdb = "/var/lib/asterisk/astdb.sqlite3"
-
