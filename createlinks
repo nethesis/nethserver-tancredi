@@ -45,7 +45,7 @@ event_templates('nethserver-php-update', qw(
     /etc/opt/rh/rh-php56/php-fpm.d/tancredi.conf
 ));
 
-event_actions('nethserver-php-update', qw(
+event_services('nethserver-php-update', qw(
     rh-php56-php-fpm reload
 ));
 
