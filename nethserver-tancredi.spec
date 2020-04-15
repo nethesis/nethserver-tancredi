@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.0.0
+Version: 1.1.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -66,6 +66,23 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
 
 
 %changelog
+* Wed Apr 15 2020 Davide Principi <davide.principi@nethesis.it> - 1.1.0-1
+- Tancredi v1.0-alpha.1
+-   Fix Snom softkeys (#107,#100)
+-   Fix Gigaset array to string notice (#108)
+-   Adjust log verbosity and information (#106)
+-   Selectable log handler and verbosity (#105)
+-   Fix Snom http password (#102)
+-   Fix log timezone (#103)
+-   Disable Yealink https web UI (#104)
+-   Fix Yealink TLS error 218910881 (#98)
+-   Fix Yealink "var" user password (#99)
+-   Rename jobs and remove extra spaces
+-   Implement build syntax checks (#97)
+-   Fix Yealink macros and DTMF mode translation (#95,#96)
+-   Fix Fanvil TLS 1.2 support (#94)
+- Tancredi beta1 log file issues - Bug nethesis/dev#5773
+
 * Wed Apr 01 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.0.0-1
 - Beta1 release
 
