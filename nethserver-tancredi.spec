@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.0.0
+Version: 1.0.1
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -66,6 +66,12 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
 
 
 %changelog
+* Thu Apr 16 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.0.1-1
+- Tancredi log file issues - Bug nethesis/dev#5773
+- Bump Tancredi version 158f1f4bc5530dbd2dda97df86cc547e3f5aa3cd
+- Fix FPM reload in nethserver-php-update
+- Add tancredi.conf fragment comments
+
 * Wed Apr 01 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.0.0-1
 - Beta1 release
 
