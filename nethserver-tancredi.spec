@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.1.0
+Version: 1.1.1
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -66,6 +66,10 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
 
 
 %changelog
+* Thu Apr 16 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.1.1-1
+- Set Snom backlight_time to 30 seconds
+- Fix Snom admin http password
+
 * Wed Apr 15 2020 Davide Principi <davide.principi@nethesis.it> - 1.1.0-1
 - Tancredi v1.0-alpha.1
 -   Fix Snom softkeys (#107,#100)
