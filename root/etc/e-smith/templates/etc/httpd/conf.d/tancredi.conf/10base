@@ -24,3 +24,5 @@
     ProxyPass "fcgi://127.0.0.1:9605/usr/share/tancredi/public/api-v1.php"
 </Location>
 
+XSendFile on
+XSendFilePath /var/lib/tancredi/data/firmware
