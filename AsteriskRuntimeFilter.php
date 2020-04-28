@@ -54,6 +54,9 @@ class AsteriskRuntimeFilter
             }
 
             $statement = $db->prepare('SELECT key,value FROM astdb WHERE key LIKE :key');
+            if ( $statement === false ) {
+                continue;
+            }
             $statement->bindValue(':key', "%/$extension%");
             $results = $statement->execute();
 
