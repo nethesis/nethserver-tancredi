@@ -27,7 +27,7 @@ class AsteriskRuntimeFilter
     public function __invoke($variables)
     {
         $db = new \SQLite3($this->config['astdb'],SQLITE3_OPEN_READONLY);
-        $db->busyTimeout(5000);
+        $db->busyTimeout(1000);
         foreach (array_keys($variables) as $variable) {
             if(substr($variable, 0, 18) != 'account_extension_') {
                 // Ignore all variables except those starting with "account_extension_"
