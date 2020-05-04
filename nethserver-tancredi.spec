@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.1.1
+Version: 1.1.2
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -68,6 +68,14 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
 
 
 %changelog
+* Mon May 04 2020 Davide Principi <davide.principi@nethesis.it> - 1.1.2-1
+- Avoid filename subtring pattern matching - nethesis/tancredi#127
+- Always set Snom update_policy - nethesis/tancredi#129 
+- Phone firmware distribution - nethesis/dev#5776 
+- New status to set physical phone buttons (toggle queue login/logout) - nethesis/dev#5775
+- Bump tancredi version nethesis/tancredi#27 nethesis/tancredi#29 nethesis/tancredi#30
+- Bump tancredi version nethesis/tancredi@91d1d86544cde00548184b3cfd58c559c53116b8
+
 * Thu Apr 16 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.1.1-1
 - Set Snom backlight_time to 30 seconds
 - Fix Snom admin http password
