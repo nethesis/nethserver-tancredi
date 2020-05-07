@@ -58,3 +58,6 @@ if [[ ! -f ${dst_file} ]]; then
     echo 'adminpw = "'$(head /dev/urandom | tr -dc a-z0-9 | head -c 10)'"' >> ${dst_file}
     echo 'userpw = "'$(head /dev/urandom | tr -dc a-z | head -c 6)'"' >> ${dst_file}
 fi
+
+# Launch upgrades
+/usr/bin/scl enable rh-php56 -- php /usr/share/tancredi/upgrade.php
