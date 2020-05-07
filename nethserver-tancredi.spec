@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.1.2
+Version: 1.2.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -68,6 +68,10 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
 
 
 %changelog
+* Thu May 07 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.2.0-1
+- Tancredi DB upgrade procedure - nethesis/dev#5791
+- Phone firmware distribution - nethesis/dev#5776
+
 * Mon May 04 2020 Davide Principi <davide.principi@nethesis.it> - 1.1.2-1
 - Avoid filename subtring pattern matching - nethesis/tancredi#127
 - Always set Snom update_policy - nethesis/tancredi#129 
