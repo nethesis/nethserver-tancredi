@@ -41,7 +41,7 @@ perl createlinks
     cd tancredi-*
     rm -v src/Entity/SampleFilter.php
     mkdir -p %{buildroot}/usr/share/tancredi/data/
-    cp -a {public,src,vendor}/ %{buildroot}/usr/share/tancredi/
+    cp -a {public,scripts,src,vendor}/ %{buildroot}/usr/share/tancredi/
     cp -a data/{templates,patterns.d,scopes} %{buildroot}/usr/share/tancredi/data/
 )
 install NethVoiceAuth.php %{buildroot}/usr/share/tancredi/src/Entity/
