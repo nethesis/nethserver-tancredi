@@ -61,3 +61,4 @@ fi
 
 # Launch upgrades
 /usr/bin/scl enable rh-php56 -- php /usr/share/tancredi/scripts/upgrade.php
+/usr/bin/scl enable rh-php56 -- su - apache -c "php /usr/share/tancredi/scripts/upgrade.php"
