@@ -1,0 +1,31 @@
+name: Tancredi APIs Test
+
+# Controls when the action will run. Triggers the workflow on pull request for the master branch
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  run-tests:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your under $GITHUB_WORKSPACE
+    - uses: actions/checkout@v2
+      
+     
+    # Install packages needed on runner
+    - name: Install required packages
+      run: sudo apt install -y apache2 bats
+      
+    # download and explode tancredi tarball
+    - name: explode Tancredi
+      run: |
+        wget $(grep Source1 nethserver-tancredi.spec | rev | awk '{print $1}' | rev)
+        mkdir tancredi
+        tar xzpf tancredi.tar.gz -C tancredi --strip-components=1
+        cd tancredi
+        composer install --no-dev
+        
