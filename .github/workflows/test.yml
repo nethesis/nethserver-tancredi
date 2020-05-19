@@ -41,15 +41,17 @@ jobs:
 
     - name: configure httpd
       run: |
-        echo '<Location "/provisioning">' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
-        echo '    ProxyPass "/usr/share/tancredi/public/provisioning.php"' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
-        echo '</Location>' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
-        echo '<Location "/tancredi/api/v1">' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
-        echo '    ProxyPass "/usr/share/tancredi/public/api-v1.php"' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
-        echo '</Location>' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
-        echo 'XSendFile on' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
-        echo 'XSendFilePath /var/lib/tancredi/data/firmware' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
-        sudo service apache2 reload
+        echo '<Location "/provisioning">' | sudo tee -a /etc/apache2/sites-available/tancredi.conf
+        echo '    ProxyPass "/usr/share/tancredi/public/provisioning.php"' | sudo tee -a /etc/apache2/sites-available/tancredi.conf
+        echo '</Location>' | sudo tee -a /etc/apache2/sites-available/tancredi.conf
+        echo '<Location "/tancredi/api/v1">' | sudo tee -a /etc/apache2/sites-available/tancredi.conf
+        echo '    ProxyPass "/usr/share/tancredi/public/api-v1.php"' | sudo tee -a /etc/apache2/sites-available/tancredi.conf
+        echo '</Location>' | sudo tee -a /etc/apache2/sites-available/tancredi.conf
+        echo 'XSendFile on' | sudo tee -a /etc/apache2/sites-available/tancredi.conf
+        echo 'XSendFilePath /var/lib/tancredi/data/firmware' | sudo tee -a /etc/apache2/sites-available/tancredi.conf
+        sudo a2ensite tancredi.conf
+        sudo a2dissite 000-default.conf
+        sudo systemctl restart apache2
 
     - name: run bats
       run: ./run.sh
