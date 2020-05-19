@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 #
-# Copyright (C) 2019 Nethesis S.r.l.
+# Copyright (C) 2020 Nethesis S.r.l.
 # http://www.nethesis.it - nethserver@nethesis.it
 #
 # This script is part of NethServer.
@@ -20,7 +20,28 @@
 # along with NethServer.  If not, see COPYING.
 #
 
-@test "Restore authentication configuration" {
-    sed -i 's/^;auth_class/auth_class/' /etc/tancredi.conf
-    skip
+setup () {
+    load tancredi_client
 }
+
+@test "POST /tancredi/api/v1/firmware (success)" {
+    run POSTFILE -F "firmware=@/etc/hosts" /tancredi/api/v1/firmware
+    assert_http_code "204"
+}
+
+@test "GET /tancredi/api/v1/firmware (success)" {
+    run GET /tancredi/api/v1/firmware
+    assert_http_code "200"
+    assert_http_body_re "^\[{"
+}
+
+@test "DELETE /tancredi/api/v1/firmware (success)" {
+    run DELETE /tancredi/api/v1/firmware/hosts
+    assert_http_code "204"
+}
+
+@test "DELETE /tancredi/api/v1/firmware (failed/not found)" {
+    run DELETE /tancredi/api/v1/firmware/hosts
+    assert_http_code "404"
+}
+

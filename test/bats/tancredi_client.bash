@@ -47,6 +47,11 @@ POST () {
         "${@}"
 }
 
+POSTFILE () {
+    xcurl POST \
+        "${@}"
+}
+
 PATCH () {
     xcurl PATCH \
         -d @- -H 'Content-Type: application/json; charset=UTF-8' \

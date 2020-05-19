@@ -52,6 +52,6 @@ setup () {
 
 @test "Bypass authentication from now on..." {
     # Disable authentication class for subsequent steps
-    sed -i 's/^auth_class/#auth_class/' /etc/tancredi.conf
+    sed -i 's/^auth_class/;auth_class/' /etc/tancredi.conf
     skip
 }

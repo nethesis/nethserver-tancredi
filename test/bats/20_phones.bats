@@ -73,6 +73,19 @@ EOF
     assert_http_body "already"
 }
 
+@test "PATCH /tancredi/api/v1/phones/01-23-45-67-89-AB (success)" {
+    run PATCH /tancredi/api/v1/phones/01-23-45-67-89-AB <<EOF
+{
+    "variables": {
+        "var1": "value1-changed",
+        "var2": "value2"
+    }
+}
+EOF
+    assert_http_code "200"
+    assert_http_body '"var1":"value1-changed"'
+}
+
 @test "DELETE /tancredi/api/v1/phones/01-23-45-67-89-AB (success)" {
     run DELETE /tancredi/api/v1/phones/01-23-45-67-89-AB
     assert_http_code "204"

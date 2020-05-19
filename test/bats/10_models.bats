@@ -80,31 +80,8 @@ EOF
     }
 }
 EOF
-    assert_http_code "204"
-
-    run GET /tancredi/api/v1/models/acme19_2
     assert_http_code "200"
     assert_http_body '"var1":"value1-changed"'
-    assert_http_body '"var2":"value2"'
-    assert_http_body '"display_name":"Acme IP phone v19 rev. 2 (changed)"'
-}
-
-@test "PATCH /tancredi/api/v1/models/acme19_2 (failed/readonly)" {
-    run PATCH /tancredi/api/v1/models/acme19_2 <<EOF
-{
-    "name": "acme19_2-renamed",
-    "display_name": "Acme IP phone v19 rev. 2 (allowed, but not applied)"
-}
-EOF
-    assert_http_code "403"
-    assert_http_header "Content-Type" "application/problem+json"
-    assert_http_header "Content-Language" "en"
-    assert_http_body "http"
-    assert_http_body "read-only"
-
-    run GET /tancredi/api/v1/models/acme19_2
-    assert_http_code "200"
-    assert_http_body '"display_name":"Acme IP phone v19 rev. 2 (changed)"'
 }
 
 @test "GET /tancredi/api/v1/models/acme19_2/version/original" {
