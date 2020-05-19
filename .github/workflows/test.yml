@@ -31,24 +31,24 @@ jobs:
         sudo cp -a {public,scripts,src,vendor}/ /usr/share/tancredi/
         sudo cp -a data/{templates,patterns.d,scopes} /usr/share/tancredi/data/
         sudo mkdir -p /var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens,firmware}
-        sudo echo 'rw_dir = "/var/lib/tancredi/data/"' >> /etc/tancredi.conf
-        sudo echo 'ro_dir = "/usr/share/tancredi/data/"' >> /etc/tancredi.conf
-        sudo echo 'provisioning_url_path = "/provisioning/"' >> /etc/tancredi.conf
-        sudo echo 'api_url_path = "/tancredi/api/v1/"' >> /etc/tancredi.conf
-        sudo echo 'file_reader = "apache"' >> /etc/tancredi.conf
+        echo 'rw_dir = "/var/lib/tancredi/data/"' | sudo tee -a /etc/tancredi.conf
+        echo 'ro_dir = "/usr/share/tancredi/data/"' | sudo tee -a /etc/tancredi.conf
+        echo 'provisioning_url_path = "/provisioning/"' | sudo tee -a /etc/tancredi.conf
+        echo 'api_url_path = "/tancredi/api/v1/"' | sudo tee -a /etc/tancredi.conf
+        echo 'file_reader = "apache"' | sudo tee -a /etc/tancredi.conf
 
         cd ..
 
     - name: configure httpd
       run: |
-        sudo echo '<Location "/provisioning">' >> /etc/apache2/conf.d/tancredi.conf
-        sudo echo '    ProxyPass "/usr/share/tancredi/public/provisioning.php"' >> /etc/apache2/conf.d/tancredi.conf
-        sudo echo '</Location>' >> /etc/apache2/conf.d/tancredi.conf
-        sudo echo '<Location "/tancredi/api/v1">' >> /etc/apache2/conf.d/tancredi.conf
-        sudo echo '    ProxyPass "/usr/share/tancredi/public/api-v1.php"' >> /etc/apache2/conf.d/tancredi.conf
-        sudo echo '</Location>' >> /etc/apache2/conf.d/tancredi.conf
-        sudo echo 'XSendFile on' >> /etc/apache2/conf.d/tancredi.conf
-        sudo echo 'XSendFilePath /var/lib/tancredi/data/firmware' >> /etc/apache2/conf.d/tancredi.conf
+        echo '<Location "/provisioning">' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
+        echo '    ProxyPass "/usr/share/tancredi/public/provisioning.php"' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
+        echo '</Location>' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
+        echo '<Location "/tancredi/api/v1">' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
+        echo '    ProxyPass "/usr/share/tancredi/public/api-v1.php"' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
+        echo '</Location>' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
+        echo 'XSendFile on' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
+        echo 'XSendFilePath /var/lib/tancredi/data/firmware' | sudo tee -a /etc/apache2/conf.d/tancredi.conf
         sudo service apache2 reload
 
     - name: run bats
