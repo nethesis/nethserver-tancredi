@@ -59,6 +59,5 @@ if [[ ! -f ${dst_file} ]]; then
     echo 'userpw = "'$(head /dev/urandom | tr -dc a-z | head -c 6)'"' >> ${dst_file}
 fi
 
-# Launch upgrades
-/usr/bin/scl enable rh-php56 -- php /usr/share/tancredi/scripts/upgrade.php
-/usr/bin/scl enable rh-php56 -- su - apache -c "php /usr/share/tancredi/scripts/upgrade.php"
+# Launch upgrade script as apache to preserve filesystem permissions
+su -s /bin/bash -c "/usr/bin/scl enable rh-php56 -- php /usr/share/tancredi/scripts/upgrade.php" - apache
