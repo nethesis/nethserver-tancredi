@@ -12,12 +12,13 @@ jobs:
     steps:
     # Checks-out your under $GITHUB_WORKSPACE
     - uses: actions/checkout@v2
-      
-     
+
+
     # Install packages needed on runner
     - name: Install required packages
       run: sudo apt-get install -y apache2 libapache2-mod-xsendfile php-fpm bats
-      
+
+
     # download and explode tancredi tarball
     - name: explode Tancredi
       run: |
@@ -69,6 +70,8 @@ jobs:
         sudo systemctl restart apache2
 
     - name: run bats
-      run: ./run.sh
+      run: |
+        cd test
+        sudo ./run.sh
 
 
