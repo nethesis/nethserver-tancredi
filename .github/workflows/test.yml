@@ -66,7 +66,7 @@ jobs:
         echo 'XSendFilePath /var/lib/tancredi/data/firmware' | sudo tee -a /etc/apache2/sites-available/tancredi.conf
         sudo a2ensite tancredi.conf
         sudo a2dissite 000-default.conf
-        sudo a2enmod proxy
+        sudo a2enmod proxy_fcgi
         sudo systemctl restart apache2
 
     - name: run bats
