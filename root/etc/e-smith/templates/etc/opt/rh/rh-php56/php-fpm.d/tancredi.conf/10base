@@ -26,7 +26,7 @@ php_admin_value[error_log] = /var/opt/rh/rh-php56/log/php-fpm/tancredi.log
 php_admin_flag[log_errors] = on
 
 php_value[upload_max_filesize] = 500M
-php_value[post_max_size] = 2M
+php_value[post_max_size] = 500M
 
 php_admin_flag[expose_php] = off
 
