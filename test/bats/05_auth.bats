@@ -25,6 +25,10 @@ setup () {
 }
 
 @test "Authenticated GET /models" {
+    if [[ ! -d /var/lib/nethserver ]] ; then
+        # Not NethServer, skip authentication test
+        skip
+    fi
     local secret tancrediDBPass User fpbxPasswordHash SecretKey
     secret=$(perl -mNethServer::Password -e "print NethServer::Password::store('nethvoice')")
     tancrediDBPass=$(perl -mNethServer::Password -e "print NethServer::Password::store('TancrediDBPass')")
@@ -39,12 +43,20 @@ setup () {
 }
 
 @test "Authenticated GET /models (failed/forbidden1)" {
+    if [[ ! -d /var/lib/nethserver ]] ; then
+        # Not NethServer, skip authentication test
+        skip
+    fi
     run GET -H "User: expect-fail" -H "Secretkey: expect-fail" /tancredi/api/v1/models
     assert_http_code "403"
     assert_http_body "problems#forbidden"
 }
 
 @test "Authenticated GET /models (failed/forbidden2)" {
+    if [[ ! -d /var/lib/nethserver ]] ; then
+        # Not NethServer, skip authentication test
+        skip
+    fi
     run GET -H "User: expect-fail" -H "SecretKey: expect-fail" /tancredi/api/v1/models
     assert_http_code "403"
     assert_http_body "problems#forbidden"
