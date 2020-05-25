@@ -32,6 +32,7 @@ jobs:
         sudo cp -a {public,scripts,src,vendor}/ /usr/share/tancredi/
         sudo cp -a data/{templates,patterns.d,scopes} /usr/share/tancredi/data/
         sudo mkdir -p /var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens,firmware}
+        sudo chown -R www-data:www-data /var/lib/tancredi
         echo 'rw_dir = "/var/lib/tancredi/data/"' | sudo tee -a /etc/tancredi.conf
         echo 'ro_dir = "/usr/share/tancredi/data/"' | sudo tee -a /etc/tancredi.conf
         echo 'provisioning_url_path = "/provisioning/"' | sudo tee -a /etc/tancredi.conf
