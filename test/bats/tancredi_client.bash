@@ -59,7 +59,7 @@ PATCH () {
 }
 
 assert_http_code () {
-    if ! grep -q -F "HTTP/1.1 $1" <<<"${lines[0]}"; then
+    if ! grep -q -F "HTTP/1.1 $1" <<<"${lines[@]}"; then
         echo "$output" 1>&2
         return 1
     fi

@@ -50,8 +50,3 @@ setup () {
     assert_http_body "problems#forbidden"
 }
 
-@test "Bypass authentication from now on..." {
-    # Disable authentication class for subsequent steps
-    sed -i 's/^auth_class/;auth_class/' /etc/tancredi.conf
-    skip
-}
