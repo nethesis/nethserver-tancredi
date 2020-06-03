@@ -46,7 +46,7 @@ perl createlinks
 )
 install NethVoiceAuth.php %{buildroot}/usr/share/tancredi/src/Entity/
 install AsteriskRuntimeFilter.php %{buildroot}/usr/share/tancredi/src/Entity/
-mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens,firmware}
+mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens,backgrounds,firmware,ringtones,screensavers}
 
 %{genfilelist} %{buildroot} \
     --file /etc/tancredi.conf 'attr(0644,root,root) %config(noreplace)' \
@@ -54,7 +54,10 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
     --dir /var/lib/tancredi/data/scopes 'attr(0770,root,apache)' \
     --dir /var/lib/tancredi/data/templates-custom 'attr(0770,root,apache)' \
     --dir /var/lib/tancredi/data/tokens 'attr(0770,root,apache)' \
+    --dir /var/lib/tancredi/data/backgrounds 'attr(0775,root,apache)' \
     --dir /var/lib/tancredi/data/firmware 'attr(0775,root,apache)' \
+    --dir /var/lib/tancredi/data/ringtones 'attr(0775,root,apache)' \
+    --dir /var/lib/tancredi/data/screensavers 'attr(0775,root,apache)' \
     --dir /var/log/tancredi 'attr(0750,apache,apache)' \
     > filelist
 
