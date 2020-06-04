@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.2.2
+Version: 1.3.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -71,6 +71,11 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
 
 
 %changelog
+* Thu Jun 04 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.3.0-1
+- Add Tancredi to NethServer backup - nethesis/dev#5820
+- Firmware management in models and single phone - nethesis/dev#5800
+- Add backend for backgrounds, ringtones and screensavers - nethesis/dev#5819
+
 * Thu May 28 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.2.2-1
 - Bind Fanvil LDAP phonebook to SIP1
 - Grab client IP address for logs
