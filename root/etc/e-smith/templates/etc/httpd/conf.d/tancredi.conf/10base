@@ -25,4 +25,7 @@
 </Location>
 
 XSendFile on
+XSendFilePath /var/lib/tancredi/data/backgrounds
 XSendFilePath /var/lib/tancredi/data/firmware
+XSendFilePath /var/lib/tancredi/data/ringtones
+XSendFilePath /var/lib/tancredi/data/screensavers
