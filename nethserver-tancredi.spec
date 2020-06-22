@@ -13,6 +13,7 @@ Requires: nethserver-rh-php56-php-fpm
 Requires: nethserver-httpd
 Requires: nethserver-freepbx
 Requires: mod_xsendfile
+Requires: jq
 
 %description
 Tancredi provisioning engine packaging and configuration
