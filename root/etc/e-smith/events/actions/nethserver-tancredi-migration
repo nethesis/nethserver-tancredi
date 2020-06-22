@@ -41,7 +41,7 @@ fpbxPasswordHash=$(fpbx_query "SELECT password_sha1 FROM ampusers WHERE username
 SecretKey=$(echo -n "${User}${fpbxPasswordHash}${secret}" | sha1sum | awk '{print $1}')
 
 # Get all models available in Tancredi
-TANCREDI_MODELS=($(curl -s 'http://localhost/tancredi/api/v1/models' -H "User: ${User}" -H "Secretkey: ${SecretKey}" | jq -r '.[].name | @sh'))
+TANCREDI_MODELS=($(/usr/bin/curl -s 'http://localhost/tancredi/api/v1/models' -H "User: ${User}" -H "Secretkey: ${SecretKey}" | jq -r '.[].name | @sh'))
 
 # Cicle through all brands known by Tancredi
 for MAC in $(fpbx_query "SELECT mac FROM endpointman_mac_list WHERE mac LIKE '0C383E%' OR mac LIKE '7C2F80%' OR mac LIKE '589EC6%' OR mac LIKE '005058%' OR mac LIKE '000413%' OR mac LIKE '001565%' OR mac LIKE '805E0C%' OR mac LIKE '805EC0%' OR mac LIKE '9C7514%'"); do
@@ -113,13 +113,13 @@ for MAC in $(fpbx_query "SELECT mac FROM endpointman_mac_list WHERE mac LIKE '0C
 
     # Insert mac into Tancredi
     echo -n "Migrating $MAC $BRAND $MODEL -> $TANCREDI_MAC $TANCREDI_MODEL $TANCREDI_DISPLAY_NAME ..."
-    PHONE_POST_RES=$(curl -s 'http://localhost/tancredi/api/v1/phones' \
+    PHONE_POST_RES=$(/usr/bin/curl -s 'http://localhost/tancredi/api/v1/phones' \
 	    -H "User: ${User}" \
 	    -H "Secretkey: ${SecretKey}" \
 	    -H 'Content-Type: application/json;charset=utf-8' \
 	    --data $CURLDATA \
 	    -X POST)
-    # Check Add phone into tancredi curl output
+    # Check Add phone into tancredi /usr/bin/curl output
     if [[ $? == 0 ]]; then
         echo 'Succes!'
 
@@ -127,7 +127,7 @@ for MAC in $(fpbx_query "SELECT mac FROM endpointman_mac_list WHERE mac LIKE '0C
 	if [[ $BRAND != 'Sangoma' ]]; then 
             FALCONIERI_URL=$(echo $PHONE_POST_RES | jq -r '.provisioning_url1')
 	    FALCONIERI_CURL_DATA="{\"url\":\"${FALCONIERI_URL}\"}"
-	    curl -ks "https://localhost/freepbx/rest/phones/rps/${TANCREDI_MAC}" \
+	    /usr/bin/curl -ks "https://localhost/freepbx/rest/phones/rps/${TANCREDI_MAC}" \
 		    -H "User: ${User}" \
 		    -H "Secretkey: ${SecretKey}" \
 		    -H 'Content-Type: application/json;charset=utf-8' \
