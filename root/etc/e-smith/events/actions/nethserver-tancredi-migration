@@ -20,10 +20,11 @@
 # along with NethServer.  If not, see COPYING.
 #
 
-if [[ $(/sbin/e-smith/config getprop nethvoice ProvisioningEngine) != 'tancredi' ]]; then
-    echo "Provisioning engine is not tancredi. Don't migrate."
-    exit
+if [[ $(/sbin/e-smith/config getprop nethvoice ProvisioningEngine) == 'tancredi' ]]; then
+    echo "Provisioning engine is already Tancredi. Nothing to do."
+    exit 0
 fi
+/sbin/e-smith/config setprop nethvoice ProvisioningEngine tancredi
 
 mysql_password=$(perl -mNethServer::Password -e "print NethServer::Password::store('mysql')")
 
