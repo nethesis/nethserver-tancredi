@@ -54,7 +54,7 @@ for MAC in $(fpbx_query "SELECT mac FROM endpointman_mac_list WHERE mac LIKE '0C
     MODEL=$(fpbx_query "SELECT endpointman_model_list.model FROM endpointman_model_list JOIN endpointman_mac_list ON endpointman_model_list.id = endpointman_mac_list.model WHERE endpointman_mac_list.mac = '$MAC'")
 
     # Translate MAC Address from old format to new format
-    TANCREDI_MAC=$(echo $MAC | sed 's/\([A-F0-9][A-F0-9]\)\([A-F0-9][A-F0-9]\)\([A-F0-9][A-F0-9]\)\([A-F0-9][A-F0-9]\)\([A-F0-9][A-F0-9]\)\([A-F0-9][A-F0-9]\)/\1-\2-\3-\4-\5-\6/')
+    TANCREDI_MAC=$(sed 's/\([A-F0-9][A-F0-9]\)\([A-F0-9][A-F0-9]\)\([A-F0-9][A-F0-9]\)\([A-F0-9][A-F0-9]\)\([A-F0-9][A-F0-9]\)\([A-F0-9][A-F0-9]\)/\1-\2-\3-\4-\5-\6/' <<<"$MAC")
     # Set Tancredi displayname
     TANCREDI_DISPLAY_NAME=$BRAND
     TANCREDI_MODEL=""
