@@ -131,8 +131,7 @@ foreach ($res as $phone) {
     \Tancredi\Entity\TokenManager::createToken(uniqid($prefix = rand(), $more_entropy = TRUE), $phone['mac'] , TRUE); // create first time access token
     \Tancredi\Entity\TokenManager::createToken(uniqid($prefix = rand(), $more_entropy = TRUE), $phone['mac'] , FALSE); // create token
     $phone_scope = \Tancredi\Entity\Scope::getPhoneScope($phone['mac'], $storage, $logger);
-
+    $logger->info("Added {$phone['brand']} model {$model} ({$phone['mac']}) from model {$phone['oldmodel']}.");
     # Configure RPS with Falconieri
     setFalconieriRPS($phone['mac'], $phone_scope['provisioning_url1'], $lk, $secret);
 }
-
