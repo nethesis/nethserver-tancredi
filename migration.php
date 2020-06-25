@@ -60,11 +60,11 @@ $secret = $argv[2];
 
 $storage = new \Tancredi\Entity\FileStorage($logger,$config);
 
-$logger->debug("Test migration");
+$logger->info("Migrating phones from old provisioning");
 
 # Get all Tancredi supported models
-$tancredi_models = $storage->listScopes('model'); # TODO maybe remove
-$logger->debug(json_encode($tancredi_models));
+$tancredi_models = $storage->listScopes('model');
+
 # Get old phones
 $sql = "SELECT 
         CONCAT(SUBSTRING(mac,1,2),'-',SUBSTRING(mac,3,2),'-',SUBSTRING(mac,5,2),'-',SUBSTRING(mac,7,2),'-',SUBSTRING(mac,9,2),'-',SUBSTRING(mac,11,2)) as mac,
@@ -85,27 +85,10 @@ foreach ($res as $phone) {
     # Old model - Tancredi model map
     $model_map = array(
         'fanvil-X3S' => 'fanvil-X3SG',
-        'fanvil-X4' => 'fanvil-X4',
         'fanvil-X5S' => 'fanvil-X5',
-        'fanvil-X6' => 'fanvil-X6',
         'gigaset-Maxwell-2' => 'gigaset-Maxwell2',
         'gigaset-Maxwell-3' => 'gigaset-Maxwell3',
         'gigaset-Maxwell-Basic' => 'gigaset-MaxwellBasic',
-        'sangoma-S205' => 'sangoma-S205',
-        'sangoma-S206' => 'sangoma-S206',
-        'sangoma-S300' => 'sangoma-S300',
-        'sangoma-S305' => 'sangoma-S305',
-        'sangoma-S400' => 'sangoma-S400',
-        'sangoma-S405' => 'sangoma-S405',
-        'sangoma-S406' => 'sangoma-S406',
-        'sangoma-S500' => 'sangoma-S500',
-        'sangoma-S505' => 'sangoma-S505',
-        'sangoma-S700' => 'sangoma-S700',
-        'sangoma-S705' => 'sangoma-S705',
-        'snom-D710' => 'snom-D710',
-        'snom-D715' => 'snom-D715',
-        'snom-D725' => 'snom-D725',
-        'yealink-T19' => 'yealink-T19',
         'yealink-T19P_E2' => 'yealink-T19',
         'yealink-T21P' => 'yealink-T21',
         'yealink-T21P_E' => 'yealink-T21',
@@ -125,19 +108,18 @@ foreach ($res as $phone) {
         'yealink-T48S' => 'yealink-T48',
         'yealink-T49G' => 'yealink-T49',
         'yealink-T52S' => 'yealink-T52',
-        'yealink-T53' => 'yealink-T53',
         'yealink-T53W' => 'yealink-T53',
         'yealink-T54S' => 'yealink-T54',
         'yealink-T54W' => 'yealink-T54',
         'yealink-T56A' => 'yealink-T56',
-        'yealink-T57' => 'yealink-T57',
         'yealink-T57W' => 'yealink-T57',
-        'yealink-T58A' => 'yealink-T58',
-        'yealink-VP59' => 'yealink-VP59'
+        'yealink-T58A' => 'yealink-T58'
     );
 
     if (isset($model_map['oldmodel'])) {
         $model = $model_map['oldmodel'];
+    } elseif (isset($tancredi_models['oldmodel']) {
+        $model = $tancredi_models['oldmodel'];
     }
 
     # Add phones to tancredi
@@ -153,16 +135,4 @@ foreach ($res as $phone) {
     # Configure RPS with Falconieri
     setFalconieriRPS($phone['mac'], $phone_scope['provisioning_url1'], $lk, $secret);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
