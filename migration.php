@@ -117,7 +117,7 @@ foreach ($res as $phone) {
 
     if (isset($model_map['oldmodel'])) {
         $model = $model_map['oldmodel'];
-    } elseif (isset($tancredi_models['oldmodel']) {
+    } elseif (isset($tancredi_models['oldmodel'])) {
         $model = $tancredi_models['oldmodel'];
     }
 
