@@ -115,10 +115,10 @@ foreach ($res as $phone) {
         'yealink-T58A' => 'yealink-T58'
     );
 
-    if (isset($model_map['oldmodel'])) {
-        $model = $model_map['oldmodel'];
-    } elseif (isset($tancredi_models['oldmodel'])) {
-        $model = $tancredi_models['oldmodel'];
+    if (isset($model_map[$phone['oldmodel']])) {
+        $model = $model_map[$phone['oldmodel']];
+    } elseif (array_search($phone['oldmodel'],$tancredi_models)) {
+        $model = $phone['oldmodel'];
     }
 
     # Add phones to tancredi
@@ -130,7 +130,7 @@ foreach ($res as $phone) {
     \Tancredi\Entity\TokenManager::createToken(uniqid($prefix = rand(), $more_entropy = TRUE), $phone['mac'] , TRUE); // create first time access token
     \Tancredi\Entity\TokenManager::createToken(uniqid($prefix = rand(), $more_entropy = TRUE), $phone['mac'] , FALSE); // create token
     $phone_scope = \Tancredi\Entity\Scope::getPhoneScope($phone['mac'], $storage, $logger);
-    $logger->info("Added {$phone['brand']} model {$model} ({$phone['mac']}) from model {$phone['oldmodel']}.");
+    @$logger->info("Added {$phone['brand']} model {$model} ({$phone['mac']}) from model {$phone['oldmodel']}.");
     # Configure RPS with Falconieri
     setFalconieriRPS($phone['mac'], $phone_scope['provisioning_url1'], $lk, $secret);
 }
