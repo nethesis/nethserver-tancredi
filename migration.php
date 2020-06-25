@@ -49,17 +49,26 @@ if($config['loglevel'] == 'ERROR') {
 $logger->pushHandler($handler);
 \Monolog\ErrorHandler::register($logger);
 
+if ($argc != 3) {
+    $logger->error("Wrong argument count $argc. ({$argv[0]} <LK> <secret> expected)");
+    echo "Usage: {$argv[0]} <LK> <secret>\n";
+    exit(1);
+}
+
+$lk = $argv[1];
+$secret = $argv[2];
+
 $storage = new \Tancredi\Entity\FileStorage($logger,$config);
 
 $logger->debug("Test migration");
 
 # Get all Tancredi supported models
 $tancredi_models = $storage->listScopes('model'); # TODO maybe remove
-
+$logger->debug(json_encode($tancredi_models));
 # Get old phones
 $sql = "SELECT 
-        CONCAT(SUBSTRING(mac,1,2),'-',SUBSTRING(mac,3,2),'-',SUBSTRING(mac,5,2),'-',SUBSTRING(mac,7,2),'-',SUBSTRING(mac,9,2)) as mac,
-        CONCAT(LOWER(REPLACE(endpointman_brand_list.name, 'Yealink/Dreamwave', 'Yealink')),'-',endpointman_model_list.model) as model,
+        CONCAT(SUBSTRING(mac,1,2),'-',SUBSTRING(mac,3,2),'-',SUBSTRING(mac,5,2),'-',SUBSTRING(mac,7,2),'-',SUBSTRING(mac,9,2),'-',SUBSTRING(mac,11,2)) as mac,
+        CONCAT(LOWER(REPLACE(endpointman_brand_list.name, 'Yealink/Dreamwave', 'Yealink')),'-',endpointman_model_list.model) as oldmodel,
         REPLACE(endpointman_brand_list.name, 'Yealink/Dreamwave', 'Yealink') as brand
         FROM endpointman_mac_list JOIN endpointman_model_list ON endpointman_model_list.id = endpointman_mac_list.model
         JOIN endpointman_brand_list ON endpointman_brand_list.id = endpointman_model_list.brand
@@ -127,23 +136,22 @@ foreach ($res as $phone) {
         'yealink-VP59' => 'yealink-VP59'
     );
 
-    if (isset($model_map['oldmodel'])){
+    if (isset($model_map['oldmodel'])) {
         $model = $model_map['oldmodel'];
     }
 
     # Add phones to tancredi
-    $scope = new \Tancredi\Entity\Scope($mac, $storage, $logger);
-    $scope->metadata['displayName'] = $brand;
-    $scope->metadata['inheritFrom'] = $model;
+    $scope = new \Tancredi\Entity\Scope($phone['mac'], $storage, $logger);
+    $scope->metadata['displayName'] = $phone['brand'];
+    $scope->metadata['inheritFrom'] = isset($model) ? $model : null ;
     $scope->metadata['scopeType'] = 'phone';
-    $scope->setVariables($variables);
-    \Tancredi\Entity\TokenManager::createToken(uniqid($prefix = rand(), $more_entropy = TRUE), $mac , TRUE); // create first time access token
-    \Tancredi\Entity\TokenManager::createToken(uniqid($prefix = rand(), $more_entropy = TRUE), $mac , FALSE); // create token
-    $phone_scope = \Tancredi\Entity\Scope::getPhoneScope($mac, $storage, $logger);
+    $scope->setVariables();
+    \Tancredi\Entity\TokenManager::createToken(uniqid($prefix = rand(), $more_entropy = TRUE), $phone['mac'] , TRUE); // create first time access token
+    \Tancredi\Entity\TokenManager::createToken(uniqid($prefix = rand(), $more_entropy = TRUE), $phone['mac'] , FALSE); // create token
+    $phone_scope = \Tancredi\Entity\Scope::getPhoneScope($phone['mac'], $storage, $logger);
 
     # Configure RPS with Falconieri
-    setFalconieriRPS($mac, $phone_scope['provisioning_url1']);
-
+    setFalconieriRPS($phone['mac'], $phone_scope['provisioning_url1'], $lk, $secret);
 }
 
 

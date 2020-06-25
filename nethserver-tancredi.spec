@@ -47,10 +47,13 @@ perl createlinks
 )
 install NethVoiceAuth.php %{buildroot}/usr/share/tancredi/src/Entity/
 install AsteriskRuntimeFilter.php %{buildroot}/usr/share/tancredi/src/Entity/
+install migration.php  %{buildroot}/usr/share/tancredi/scripts/
+install tancredi_migration_helper.sh  %{buildroot}/usr/sbin/
 mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens,backgrounds,firmware,ringtones,screensavers}
 
 %{genfilelist} %{buildroot} \
     --file /etc/tancredi.conf 'attr(0644,root,root) %config(noreplace)' \
+    --file /usr/sbin/tancredi_migration_helper.sh 'attr(0750,root,root)' \
     --dir /var/lib/tancredi/data/first_access_tokens 'attr(0770,root,apache)' \
     --dir /var/lib/tancredi/data/scopes 'attr(0770,root,apache)' \
     --dir /var/lib/tancredi/data/templates-custom 'attr(0770,root,apache)' \
