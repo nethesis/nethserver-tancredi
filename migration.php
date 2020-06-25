@@ -80,7 +80,6 @@ $logger->debug(json_encode($res));
 
 # Cycle through old phones
 foreach ($res as $phone) {
-    $logger->debug("Migrating {$phone['brand']} {$phone['oldmodel']} {$phone['mac']}");
 
     # Old model - Tancredi model map
     $model_map = array(
