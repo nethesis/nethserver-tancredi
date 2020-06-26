@@ -68,7 +68,7 @@ install tancredi_migration_helper  %{buildroot}/usr/sbin/
 
 %files -f filelist
 %defattr(-,root,root)
-%file /usr/sbin/tancredi-migration-helper attr(0750,root,root)
+%attr(0750,root,root) /usr/sbin/tancredi-migration-helper
 %dir %{_nseventsdir}/%{name}-update
 %doc tancredi-*/docs
 %doc test
