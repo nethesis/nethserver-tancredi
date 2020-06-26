@@ -64,7 +64,7 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
     > filelist
 
 mkdir -p %{buildroot}/usr/sbin
-install tancredi_migration_helper  %{buildroot}/usr/sbin/
+install tancredi-migration-helper  %{buildroot}/usr/sbin/
 
 %files -f filelist
 %defattr(-,root,root)
