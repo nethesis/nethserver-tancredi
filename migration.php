@@ -29,25 +29,20 @@ $logger->pushProcessor(new \Monolog\Processor\PsrLogMessageProcessor());
 if( ! empty($config['logfile'])) {
     $handler = new \Monolog\Handler\StreamHandler($config['logfile']);
     $formatter = new \Monolog\Formatter\LineFormatter("[%datetime%] %channel%.%level_name%: %message%\n");
+    ini_set('error_log',$config['logfile']);
 } else {
-     $handler = new \Monolog\Handler\ErrorLogHandler();
-     // We assume the error_log already adds a time stamp to log messages:
-     $formatter = new \Monolog\Formatter\LineFormatter("%channel%.%level_name%: %message%");
+    $handler = new \Monolog\Handler\ErrorLogHandler();
+    // We assume the error_log already adds a time stamp to log messages:
+    $formatter = new \Monolog\Formatter\LineFormatter("%channel%.%level_name%: %message%");
 }
+
 $handler->setFormatter($formatter);
-
-if($config['loglevel'] == 'ERROR') {
-    $handler->setLevel($logger::ERROR);
-} elseif ($config['loglevel'] == 'WARNING') {
-    $handler->setLevel($logger::WARNING);
-} elseif ($config['loglevel'] == 'INFO') {
-    $handler->setLevel($logger::INFO);
-} else {
-    $handler->setLevel($logger::DEBUG);
-}
-
+$handler->setLevel($logger::INFO);
 $logger->pushHandler($handler);
+$logger->pushHandler(new \Monolog\Handler\StreamHandler("php://stdout",$logger::INFO));
+
 \Monolog\ErrorHandler::register($logger);
+
 
 if ($argc != 3) {
     $logger->error("Wrong argument count $argc. ({$argv[0]} <LK> <secret> expected)");
@@ -80,7 +75,6 @@ $logger->debug(json_encode($res));
 
 # Cycle through old phones
 foreach ($res as $phone) {
-
     # Old model - Tancredi model map
     $model_map = array(
         'fanvil-X3S' => 'fanvil-X3SG',
@@ -132,5 +126,8 @@ foreach ($res as $phone) {
     $phone_scope = \Tancredi\Entity\Scope::getPhoneScope($phone['mac'], $storage, $logger);
     @$logger->info("Added {$phone['brand']} model {$model} ({$phone['mac']}) from model {$phone['oldmodel']}.");
     # Configure RPS with Falconieri
-    setFalconieriRPS($phone['mac'], $phone_scope['provisioning_url1'], $lk, $secret);
+    $falconieri_result = setFalconieriRPS($phone['mac'], $phone_scope['provisioning_url1'], $lk, $secret);
+    if ($falconieri_result['httpCode'] != 200) {
+        $logger->error("Error adding {$phone['mac']} phone to RPS. See logs for details.");
+    }
 }
