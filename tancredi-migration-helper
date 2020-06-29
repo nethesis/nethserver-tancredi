@@ -45,11 +45,13 @@ elif [[ $1 == '-d' ]] ; then
     /sbin/e-smith/signal-event nethserver-dnsmasq-update
     echo "[NOTICE] The provisioning engine is now FreePBX End Point Manager."
 elif [[ $1 == '-h' ]] ; then
-    echo "Usage: $0 [OPTION]"
-    echo -e "Migrate provisioning engine and configured devices to Tancredi\n"
-    echo -e "With no option, migration is launched only once\n"
-    echo -e "-f\t force migration even if tancredi is already the provisioning engine"
-    echo -e "-d\t restore freepbx provisioning engine End Point Manager"
+    echo "Usage: $0 [-h|-f|-d]"
+    echo "Import known devices in the Tancredi database, "
+    echo "then disable the TFTP service for FreePBX provisoning"
+    echo "With no option, the procedure runs once. Accepted options"
+    echo -e "  -h\t This help"
+    echo -e "  -f\t Drop the Tancredi DB and import known devices from FreePBX again"
+    echo -e "  -d\t Restore TFTP configuration for FreePBX provisioning"
 else
     echo "[NOTICE] Provisionong engine is already Tancredi. Nothing to do."
     exit 0
