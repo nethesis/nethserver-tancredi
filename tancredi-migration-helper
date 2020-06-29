@@ -29,10 +29,10 @@ function migrate {
 ENGINE=$(/sbin/e-smith/config getprop nethvoice ProvisioningEngine)
 
 if [[ $ENGINE != 'tancredi' ]] ; then
-    echo "[NOTICE] Migrating provisioning engine to Tancredi"
     /sbin/e-smith/config setprop nethvoice ProvisioningEngine tancredi
     migrate
     /sbin/e-smith/signal-event nethserver-dnsmasq-update
+    echo "[NOTICE] Migration completed. The provisioning service is now Tancredi."
 elif [[ $1 == '-f' ]] ; then
     echo "[NOTICE] Forcing migration engine to Tancredi"
     find /var/lib/tancredi/data/{scopes,first_access_tokens,tokens} -type f -delete
