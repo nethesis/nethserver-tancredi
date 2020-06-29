@@ -38,12 +38,11 @@ if [[ $ENGINE == 'tancredi' ]] ; then
         /sbin/e-smith/config setprop nethvoice ProvisioningEngine freepbx
         /sbin/e-smith/signal-event nethserver-dnsmasq-update
     else
-        echo "Provisionong engine is already Tancredi"
-        exit 1
+        echo "[NOTICE] Provisionong engine is already Tancredi. Nothing to do."
+        exit 0
     fi
 else
     /sbin/e-smith/config setprop nethvoice ProvisioningEngine tancredi
     migrate
     /sbin/e-smith/signal-event nethserver-dnsmasq-update
 fi
-
