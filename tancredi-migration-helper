@@ -28,21 +28,28 @@ function migrate {
 
 ENGINE=$(/sbin/e-smith/config getprop nethvoice ProvisioningEngine)
 
-if [[ $ENGINE == 'tancredi' ]] ; then
-    if [[ $@ =~ -f ]] ; then
-        find /var/lib/tancredi/data/{scopes,first_access_tokens,tokens} -type f -delete
-        migrate
-        /sbin/e-smith/signal-event nethserver-dnsmasq-update
-    elif [[ $@ =~ -d ]] ; then
-        find /var/lib/tancredi/data/{scopes,first_access_tokens,tokens} -type f -delete
-        /sbin/e-smith/config setprop nethvoice ProvisioningEngine freepbx
-        /sbin/e-smith/signal-event nethserver-dnsmasq-update
-    else
-        echo "[NOTICE] Provisionong engine is already Tancredi. Nothing to do."
-        exit 0
-    fi
-else
+if [[ $ENGINE != 'tancredi' ]] ; then
+    echo "[NOTICE] Migrating provisioning engine to Tancredi"
     /sbin/e-smith/config setprop nethvoice ProvisioningEngine tancredi
     migrate
     /sbin/e-smith/signal-event nethserver-dnsmasq-update
+elif [[ $1 == '-f' ]] ; then
+    echo "[NOTICE] Forcing migration engine to Tancredi"
+    find /var/lib/tancredi/data/{scopes,first_access_tokens,tokens} -type f -delete
+    migrate
+    /sbin/e-smith/signal-event nethserver-dnsmasq-update
+elif [[ $1 == '-d' ]] ; then
+    echo "[NOTICE] restoriingg freepbx provisioning engine End Point Manager"
+    find /var/lib/tancredi/data/{scopes,first_access_tokens,tokens} -type f -delete
+    /sbin/e-smith/config setprop nethvoice ProvisioningEngine freepbx
+    /sbin/e-smith/signal-event nethserver-dnsmasq-update
+elif [[ $1 == '-h' ]] ; then
+    echo "Usage: $0 [OPTION]"
+    echo -e "Migrate provisioning engine and configured devices to Tancredi\n"
+    echo -e "With no option, migration is launched only once\n"
+    echo -e "-f\t force migration even if tancredi is already the provisioning engine"
+    echo -e "-d\t restore freepbx provisioning engine End Point Manager"
+else
+    echo "[NOTICE] Provisionong engine is already Tancredi. Nothing to do."
+    exit 0
 fi
