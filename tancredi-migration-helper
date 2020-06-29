@@ -39,10 +39,10 @@ elif [[ $1 == '-f' ]] ; then
     migrate
     /sbin/e-smith/signal-event nethserver-dnsmasq-update
 elif [[ $1 == '-d' ]] ; then
-    echo "[NOTICE] restoriingg freepbx provisioning engine End Point Manager"
     find /var/lib/tancredi/data/{scopes,first_access_tokens,tokens} -type f -delete
     /sbin/e-smith/config setprop nethvoice ProvisioningEngine freepbx
     /sbin/e-smith/signal-event nethserver-dnsmasq-update
+    echo "[NOTICE] The provisioning engine is now FreePBX End Point Manager."
 elif [[ $1 == '-h' ]] ; then
     echo "Usage: $0 [OPTION]"
     echo -e "Migrate provisioning engine and configured devices to Tancredi\n"
