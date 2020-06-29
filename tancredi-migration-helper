@@ -23,7 +23,7 @@
 function migrate {
     LK=$(/sbin/e-smith/config getprop subscription SystemId)
     SECRET=$(/usr/bin/sudo /sbin/e-smith/config getprop subscription Secret)
-    su -s /bin/bash -c "/usr/bin/scl enable rh-php56 -- php /usr/share/tancredi/scripts/migration.php $LK $SECRET" - apache
+    runuser -s /bin/bash -c "/usr/bin/scl enable rh-php56 -- php /usr/share/tancredi/scripts/migration.php $LK $SECRET" - apache
 }
 
 ENGINE=$(/sbin/e-smith/config getprop nethvoice ProvisioningEngine)
