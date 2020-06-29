@@ -34,10 +34,11 @@ if [[ $ENGINE != 'tancredi' ]] ; then
     /sbin/e-smith/signal-event nethserver-dnsmasq-update
     echo "[NOTICE] Migration completed. The provisioning service is now Tancredi."
 elif [[ $1 == '-f' ]] ; then
-    echo "[NOTICE] Forcing migration engine to Tancredi"
+    echo "[NOTICE] Discarding any existing data in Tancredi database"
     find /var/lib/tancredi/data/{scopes,first_access_tokens,tokens} -type f -delete
     migrate
     /sbin/e-smith/signal-event nethserver-dnsmasq-update
+    echo "[NOTICE] Migration completed in force (-f) mode. The provisioning service is still Tancredi."
 elif [[ $1 == '-d' ]] ; then
     find /var/lib/tancredi/data/{scopes,first_access_tokens,tokens} -type f -delete
     /sbin/e-smith/config setprop nethvoice ProvisioningEngine freepbx
