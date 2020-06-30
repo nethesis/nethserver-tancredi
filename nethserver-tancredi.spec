@@ -13,6 +13,7 @@ Requires: nethserver-rh-php56-php-fpm
 Requires: nethserver-httpd
 Requires: nethserver-freepbx
 Requires: mod_xsendfile
+Requires: jq
 
 %description
 Tancredi provisioning engine packaging and configuration
@@ -46,6 +47,7 @@ perl createlinks
 )
 install NethVoiceAuth.php %{buildroot}/usr/share/tancredi/src/Entity/
 install AsteriskRuntimeFilter.php %{buildroot}/usr/share/tancredi/src/Entity/
+install migration.php  %{buildroot}/usr/share/tancredi/scripts/
 mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens,backgrounds,firmware,ringtones,screensavers}
 
 %{genfilelist} %{buildroot} \
@@ -61,14 +63,17 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
     --dir /var/log/tancredi 'attr(0750,apache,apache)' \
     > filelist
 
+mkdir -p %{buildroot}/usr/sbin
+install tancredi-migration-helper  %{buildroot}/usr/sbin/
+
 %files -f filelist
 %defattr(-,root,root)
+%attr(0755,root,root) /usr/sbin/tancredi-migration-helper
 %dir %{_nseventsdir}/%{name}-update
 %doc tancredi-*/docs
 %doc test
 %doc README.rst
 %license LICENSE
-
 
 %changelog
 * Wed Jun 17 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.4.0-1
@@ -124,4 +129,3 @@ mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,template
 
 * Wed Apr 01 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.0.0-1
 - Beta1 release
-
