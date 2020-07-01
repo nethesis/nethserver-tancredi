@@ -83,6 +83,8 @@ class NethVoiceAuth
                 $response = $response->withHeader('Content-Type', 'application/problem+json');
                 $response = $response->withHeader('Content-Language', 'en');
             }
+        } elseif ($request->getUri()->getPath() === 'macvendors') {
+            $response = $next($request, $response);
         } else {
             $results = array(
                 'type' => 'https://nethesis.github.io/tancredi/problems#forbidden',
