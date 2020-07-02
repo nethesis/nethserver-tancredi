@@ -149,6 +149,7 @@ if ($check !== false && $check['is_reachable'] && $check['valid_certificate']) {
     $logger->error("Hostname and SSL settings cannot be set automatically!");
 }
 
+$logger->notice('Review the Default settings in the NethVoice administrative interface');
 $scope = new \Tancredi\Entity\Scope('defaults', $storage, $logger);
 foreach ($patch_data as $patch_key => $patch_value) {
     if (is_null($patch_value)) {
