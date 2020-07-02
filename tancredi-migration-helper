@@ -47,7 +47,7 @@ elif [[ $1 == '-f' ]] ; then
     find /var/lib/tancredi/data/{scopes,first_access_tokens,tokens} -type f -delete
     /sbin/e-smith/signal-event nethserver-tancredi-update
     migrate
-    /sbin/e-smith/signal-event nethserver-dnsmasq-update
+    /sbin/e-smith/signal-event nethserver-dnsmasq-save
     echo "[NOTICE] Migration completed in force (-f) mode. The provisioning service is still Tancredi."
 elif [[ $1 == '-d' ]] ; then
     find /var/lib/tancredi/data/{scopes,first_access_tokens,tokens} -type f -delete
