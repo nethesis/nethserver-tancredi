@@ -84,7 +84,7 @@ foreach ($res as $phone) {
         'gigaset-Maxwell-Basic' => 'gigaset-MaxwellBasic',
         'yealink-T19P_E2' => 'yealink-T19',
         'yealink-T21P' => 'yealink-T21',
-        'yealink-T21P_E' => 'yealink-T21',
+        'yealink-T21P_E2' => 'yealink-T21',
         'yealink-T23P_G' => 'yealink-T23',
         'yealink-T27G' => 'yealink-T27',
         'yealink-T27P' => 'yealink-T27',
@@ -109,6 +109,7 @@ foreach ($res as $phone) {
         'yealink-T58A' => 'yealink-T58'
     );
 
+    unset($model);
     if (isset($model_map[$phone['oldmodel']])) {
         $model = $model_map[$phone['oldmodel']];
     } elseif (array_search($phone['oldmodel'],$tancredi_models)) {
