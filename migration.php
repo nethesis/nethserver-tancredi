@@ -142,7 +142,7 @@ if ($check !== false && $check['is_reachable'] && $check['valid_certificate']) {
     $logger->notice("A valid SSL certificate for HTTPS was found. Encryption is enabled.");
 } elseif ($check !== false && $check['is_reachable']) {
     $patch_data['provisioning_url_scheme'] = 'http';
-    $logger->notice("Hostname configured but HTTPS can't be enabled. Check default settings on NethVoice interface");
+    $logger->warning("Cannot find a valid SSL certificate. Encryption is disabled.");
 } else {
     $patch_data['provisioning_url_scheme'] = 'http';
     unset($patch_data['hostname']);
