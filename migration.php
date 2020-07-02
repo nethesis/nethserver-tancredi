@@ -131,3 +131,29 @@ foreach ($res as $phone) {
         $logger->error("Error adding {$phone['mac']} phone to RPS. See logs for details.");
     }
 }
+
+# Set default hostname and scheme
+$patch_data['hostname'] = gethostname();
+$check = connectivitycheck($patch_data['hostname'],'https');
+
+if ($check !== false && $check['is_reachable'] && $check['valid_certificate']) {
+    $patch_data['provisioning_url_scheme'] = 'https';
+    $logger->notice("A valid SSL certificate for HTTPS was found. Encryption is enabled.");
+} elseif ($check !== false && $check['is_reachable']) {
+    $patch_data['provisioning_url_scheme'] = 'http';
+    $logger->warning("Cannot find a valid SSL certificate. Encryption is disabled.");
+} else {
+    $patch_data['provisioning_url_scheme'] = 'http';
+    unset($patch_data['hostname']);
+    $logger->error("Hostname and SSL settings cannot be set automatically!");
+}
+
+$logger->notice('Review the Default settings in the NethVoice administrative interface');
+$scope = new \Tancredi\Entity\Scope('defaults', $storage, $logger);
+foreach ($patch_data as $patch_key => $patch_value) {
+    if (is_null($patch_value)) {
+        unset($scope->data[$patch_key]);
+        unset($patch_data[$patch_key]);
+    }
+}
+$scope->setVariables($patch_data);
