@@ -109,6 +109,7 @@ foreach ($res as $phone) {
         'yealink-T58A' => 'yealink-T58'
     );
 
+    unset($model);
     if (isset($model_map[$phone['oldmodel']])) {
         $model = $model_map[$phone['oldmodel']];
     } elseif (array_search($phone['oldmodel'],$tancredi_models)) {
