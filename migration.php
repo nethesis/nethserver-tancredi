@@ -131,3 +131,29 @@ foreach ($res as $phone) {
         $logger->error("Error adding {$phone['mac']} phone to RPS. See logs for details.");
     }
 }
+
+# Set default hostname and scheme
+$provisioning_url_scheme = 'http';
+$patch_data['hostname'] = gethostname();
+$check = connectivitycheck($patch_data['hostname'],'https');
+
+if ($check !== false && $check['is_reachable'] && $check['valid_certificate']) {
+    $patch_data['provisioning_url_scheme'] = 'https';
+    $logger->notice("Hostname configured and HTTPS enabled. Check default settings on NethVoice interface");
+} elseif ($check !== false && $check['is_reachable']) {
+    $patch_data['provisioning_url_scheme'] = 'http';
+    $logger->notice("Hostname configured but HTTPS can't be enabled. Check default settings on NethVoice interface");
+} else {
+    $patch_data['provisioning_url_scheme'] = 'http';
+    unset($patch_data['hostname']);
+    $logger->error("Unable to configure default hostname and scheme, make sure to set default settings on NethVoice interface");
+}
+
+$scope = new \Tancredi\Entity\Scope('defaults', $storage, $logger);
+foreach ($patch_data as $patch_key => $patch_value) {
+    if (is_null($patch_value)) {
+        unset($scope->data[$patch_key]);
+        unset($patch_data[$patch_key]);
+    }
+}
+$scope->setVariables($patch_data);
