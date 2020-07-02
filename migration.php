@@ -146,7 +146,7 @@ if ($check !== false && $check['is_reachable'] && $check['valid_certificate']) {
 } else {
     $patch_data['provisioning_url_scheme'] = 'http';
     unset($patch_data['hostname']);
-    $logger->error("Unable to configure default hostname and scheme, make sure to set default settings on NethVoice interface");
+    $logger->error("Hostname and SSL settings cannot be set automatically!");
 }
 
 $scope = new \Tancredi\Entity\Scope('defaults', $storage, $logger);
