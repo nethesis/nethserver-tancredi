@@ -133,7 +133,6 @@ foreach ($res as $phone) {
 }
 
 # Set default hostname and scheme
-$provisioning_url_scheme = 'http';
 $patch_data['hostname'] = gethostname();
 $check = connectivitycheck($patch_data['hostname'],'https');
 
