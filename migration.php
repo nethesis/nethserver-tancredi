@@ -139,7 +139,7 @@ $check = connectivitycheck($patch_data['hostname'],'https');
 
 if ($check !== false && $check['is_reachable'] && $check['valid_certificate']) {
     $patch_data['provisioning_url_scheme'] = 'https';
-    $logger->notice("Hostname configured and HTTPS enabled. Check default settings on NethVoice interface");
+    $logger->notice("A valid SSL certificate for HTTPS was found. Encryption is enabled.");
 } elseif ($check !== false && $check['is_reachable']) {
     $patch_data['provisioning_url_scheme'] = 'http';
     $logger->notice("Hostname configured but HTTPS can't be enabled. Check default settings on NethVoice interface");
