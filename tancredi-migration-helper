@@ -40,7 +40,7 @@ if [[ $1 == '-h' ]] ; then
 elif [[ $ENGINE != 'tancredi' ]] ; then
     /sbin/e-smith/config setprop nethvoice ProvisioningEngine tancredi
     migrate
-    /sbin/e-smith/signal-event nethserver-dnsmasq-update
+    /sbin/e-smith/signal-event nethserver-dnsmasq-save
     echo "[NOTICE] Migration completed. The provisioning service is now Tancredi."
 elif [[ $1 == '-f' ]] ; then
     echo "[NOTICE] Discarding any existing data in Tancredi database"
