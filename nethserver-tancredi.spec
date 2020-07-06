@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.4.0
+Version: 1.4.1
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -76,6 +76,14 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Mon Jul 06 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.4.1-1
+- Provisioning engine migration procedure - nethesis/dev#5832
+- Configure and extend the phone vendors set - nethesis/dev#5834
+- Fanvil U series support - nethesis/dev#5831
+- Add Fanvil X210 - nethesis/dev#5831
+- Add sip chiper for T23G (#172)
+- Fix ldap number attribute string (#173)
+
 * Wed Jun 17 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.4.0-1
 - Configure phone display and ringtone settings - nethesis/dev#5812
 
