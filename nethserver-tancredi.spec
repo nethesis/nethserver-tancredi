@@ -1,10 +1,10 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.4.1
+Version: 1.4.2
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
-Source1: https://github.com/nethsis/tancredi/archive/61d63e808876011f0edd9eb07afcba5733584ea9/tancredi.tar.gz
+Source1: https://github.com/nethesis/tancredi/archive/61d63e808876011f0edd9eb07afcba5733584ea9/tancredi.tar.gz
 BuildArch: noarch
 
 BuildRequires: nethserver-devtools
@@ -76,6 +76,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Mon Jul 06 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.4.2-1
+- Fix Fanvil pcport vlan tag default
+
 * Mon Jul 06 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.4.1-1
 - Provisioning engine migration procedure - nethesis/dev#5832
 - Configure and extend the phone vendors set - nethesis/dev#5834
