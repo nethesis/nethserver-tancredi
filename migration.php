@@ -131,6 +131,11 @@ foreach ($res as $phone) {
     if ($falconieri_result['httpCode'] != 200) {
         $logger->error("Error adding {$phone['mac']} phone to RPS. See logs for details.");
     }
+
+    // Update model into rest_devices_phones
+    $sql = "UPDATE rest_devices_phones SET model = ? WHERE mac = ?";
+    $sth = $db->prepare($sql);
+    $sth->execute(array($model,preg_replace('/-/',':',$phone['mac'])));
 }
 
 # Set default hostname and scheme
