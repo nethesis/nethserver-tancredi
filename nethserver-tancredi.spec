@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.4.2
+Version: 1.5.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -76,6 +76,17 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Fri Jul 17 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.5.0-1
+- Support to Fanvil U series
+- New configuration parameter to mask unwanted vendors
+- New configuration parameter pointing to a MAC-prefix/vendor DB file (see man get-oui)
+- New API /vendors returning the MAC-prefix/vendor mapping - nethesis/dev#5840
+- Add capability to inherit to Tancredi API GET /phones/{mac} - nethesis/dev#5845
+- Extend Yealink TLS 1.2 fix #98 to T21P_E2, T58 and T27P (#181) (#183)
+- Transfer two calls by placing the handset onhook for Snom (#182)
+- Fix default for VLAN pc port Fanvil
+- Fix tancredi migration script - nethesis/dev#5850
+
 * Mon Jul 06 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.4.2-1
 - Fix Fanvil pcport vlan tag default
 
