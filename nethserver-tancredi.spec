@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.5.0
+Version: 1.5.1
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -76,6 +76,16 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Fri Sep 18 2020 Davide Principi <davide.principi@nethesis.it> - 1.5.1-1
+- Add Yealink T30, T31 and T33 to Tancredi - nethesis/dev#5862 
+- Add Yealink T30 T31 T33 - nethesis/tancredi#188
+- Yealink: add reason call fail - nethesis/tancredi#187 
+- Various Gigaset Phones fixes - nethesis/tancredi#189
+- Impossible to transfer an incoming call with Gigaset Maxwell - nethesis/tancredi#190
+- Skip Yealink expansion module settings - nethesis/tancredi#184
+- Always set programmable keys to some value - nethesis/tancredi#185
+- Ignore DHCP options 66 and 114 in Gigaset - nethesis/tancredi#186
+
 * Fri Jul 17 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.5.0-1
 - Support to Fanvil U series
 - New configuration parameter to mask unwanted vendors
