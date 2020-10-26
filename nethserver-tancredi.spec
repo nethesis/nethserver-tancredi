@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.5.2
+Version: 1.5.3
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -76,6 +76,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Mon Oct 26 2020 Davide Principi <davide.principi@nethesis.it> - 1.5.3-1
+- Fix cap_linekey_count for Fanvil U series - nethesis/tancredi#193
+
 * Mon Oct 05 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.5.2-1
 - Add Fanvil X1S to Tancredi - nethesis/dev#5881
 
