@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.5.4
+Version: 1.5.5
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -76,6 +76,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Mon Feb 01 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.5.5-1
+- Tancredi expansion key modules support - nethesis/dev#5917
+
 * Mon Nov 16 2020 Stefano Fancello <stefano.fancello@nethesis.it> - 1.5.4-1
 - Add vlan_port_tagging if pc vlan id is present #194
 - Sangoma fixes: LDAP soft key and Pickup, LDAP phonebook #195 
