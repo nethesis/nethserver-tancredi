@@ -4,7 +4,7 @@ Version: 1.5.5
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
-Source1: https://github.com/nethesis/tancredi/archive/c2d220e93aa2d239945d80f0b186bed144c29b0a/tancredi.tar.gz
+Source1: https://github.com/nethesis/tancredi/archive/de4af86b5257bdcb42567a9b4ad3f9de99a5cbc2/tancredi.tar.gz
 BuildArch: noarch
 
 BuildRequires: nethserver-devtools
