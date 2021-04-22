@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.5.6
+Version: 1.6.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -76,6 +76,16 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Thu Apr 22 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.6.0-1
+- Add NethPhone to NethVoice provisioning - nethesis/dev#5956
+- Add Fanvil X7C to Tancredi - nethesis/dev#5959
+- Add pickup direct on blf key for Snom phones - nethesis/tancredi#214
+- Add Yealink T53C and T58W - nethesis/tancredi#215
+- Add Yealink T46S in TLS cipher exclude list - nethesis/tancredi#216
+- DND and CF status not syncronized from NethCTI to phones - Bug nethesis/dev#5960
+- Sync DND and CF status to server value - nethesis/tancredi#207
+- Add Yealink T40G in TLS cipher exclude list - nethesis/tancredi#213
+
 * Fri Feb 12 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.5.6-1
 - Add Fanvil X7C to Tancredi - nethesis/dev#5959
 
