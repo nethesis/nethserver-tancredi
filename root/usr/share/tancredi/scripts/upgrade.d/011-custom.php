@@ -1,4 +1,4 @@
-<?php namespace upgrade9;
+<?php namespace upgrade11;
 
 /*
  * Copyright (C) 2021 Nethesis S.r.l.
@@ -21,15 +21,14 @@
  */
 
 //
-// Add Fanvil sidekey pages and update Fanvil line key number and pages
+// Fix for https://github.com/nethesis/dev/issues/6007
 //
-$fixes = [
-    'fanvil-X210' => ['fanvil_sidepages_count' => '1'],
-    'fanvil-X3U' => ['fanvil_sidepages_count' => '1'],
-    'fanvil-X4U' => ['fanvil_sidepages_count' => '1'],
-    'fanvil-X5U' => ['fanvil_sidepages_count' => '1'],
-    'fanvil-X6U' => ['fanvil_sidepages_count' => '1'],
-];
+
+$fixes = array(
+    'fanvil-X3U' => [
+        'fanvil_lkpages_count' => '0',
+    ],
+);
 
 // Get al custom scopes derived from scopes that needs to be fixed
 $scopes = $container['storage']->listScopes();
@@ -44,10 +43,10 @@ foreach ($fixes as $fix_key => $fix_value) {
 
 foreach ($custom_fixes as $model_id => $variables) {
     $scope = new \Tancredi\Entity\Scope($model_id, $container['storage'], $container['logger']);
-    if(isset($scope->metadata['version']) && $scope->metadata['version'] >= 9) {
+    if(isset($scope->metadata['version']) && $scope->metadata['version'] >= 11) {
         continue;
     }
-    $scope->metadata['version'] = 9;
+    $scope->metadata['version'] = 11;
     $scope->setVariables($variables);
     $container['logger']->info("Fix ".basename(__FILE__)." applied to scope $model_id");
 }
