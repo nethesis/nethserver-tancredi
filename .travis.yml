@@ -33,7 +33,7 @@ env:
         "
 
 install:
-  - bash prep-sources
+  - bash prep-sources.sh
 
 script: >
     echo "%github_token ${GITHUB_TOKEN:-%{nil\}}" >> $PWD/.rpmmacros
