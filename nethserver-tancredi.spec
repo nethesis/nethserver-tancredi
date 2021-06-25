@@ -4,7 +4,8 @@ Version: 1.6.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
-Source1: https://github.com/nethesis/tancredi/archive/dbb03acf014d253e76439269d9037b91d993062a/tancredi.tar.gz
+Source1: https://github.com/nethesis/tancredi/archive/775af8f6f796d9a34c147679a116474cb3a1d4bc/tancredi.tar.gz
+Source2: firmware.tar.gz
 BuildArch: noarch
 
 BuildRequires: nethserver-devtools
@@ -37,7 +38,6 @@ perl createlinks
 )
 
 %install
-(cd root; find . -depth -print | cpio -dump %{buildroot})
 (
     cd tancredi-*
     rm -v src/Entity/SampleFilter.php
@@ -45,10 +45,8 @@ perl createlinks
     cp -a {public,scripts,src,vendor}/ %{buildroot}/usr/share/tancredi/
     cp -a data/{templates,patterns.d,scopes} %{buildroot}/usr/share/tancredi/data/
 )
-install NethVoiceAuth.php %{buildroot}/usr/share/tancredi/src/Entity/
-install AsteriskRuntimeFilter.php %{buildroot}/usr/share/tancredi/src/Entity/
-install migration.php  %{buildroot}/usr/share/tancredi/scripts/
-mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens,backgrounds,firmware,ringtones,screensavers}
+(cd root; find . -depth -print | cpio -dump %{buildroot})
+tar xvf %{SOURCE2} -C %{buildroot}/var/lib/tancredi/data/firmware --strip-components=1
 
 %{genfilelist} %{buildroot} \
     --file /etc/tancredi.conf 'attr(0644,root,root) %config(noreplace)' \

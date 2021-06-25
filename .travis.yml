@@ -32,6 +32,8 @@ env:
         -e ENDPOINTS_PACK
         "
 
+install:
+  - bash prep-sources.sh
 
 script: >
     echo "%github_token ${GITHUB_TOKEN:-%{nil\}}" >> $PWD/.rpmmacros
