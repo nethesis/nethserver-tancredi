@@ -7,7 +7,7 @@
     {%- set f_version = '2.4.2' -%}
     {%- set f_buildtime = '2021.05.17 14:53' -%}
 {%- endif -%}
-{%- if f_file | firmware_exists and f_file != "" -%}
+{%- if f_file | firmware_exists -%}
 Version={{ f_version }}
 Firmware=firmware/{{ f_file }}
 BuildTime={{ f_buildtime }}
