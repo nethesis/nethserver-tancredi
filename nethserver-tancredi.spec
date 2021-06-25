@@ -38,19 +38,14 @@ perl createlinks
 )
 
 %install
-(cd root; find . -depth -print | cpio -dump %{buildroot})
 (
     cd tancredi-*
     rm -v src/Entity/SampleFilter.php
-    rm -v data/templates/nethesis-firmware.tmpl
     mkdir -p %{buildroot}/usr/share/tancredi/data/
     cp -a {public,scripts,src,vendor}/ %{buildroot}/usr/share/tancredi/
     cp -a data/{templates,patterns.d,scopes} %{buildroot}/usr/share/tancredi/data/
 )
-install NethVoiceAuth.php %{buildroot}/usr/share/tancredi/src/Entity/
-install AsteriskRuntimeFilter.php %{buildroot}/usr/share/tancredi/src/Entity/
-install migration.php  %{buildroot}/usr/share/tancredi/scripts/
-mkdir -p %{buildroot}/var/lib/tancredi/data/{first_access_tokens,scopes,templates-custom,tokens,backgrounds,firmware,ringtones,screensavers}
+(cd root; find . -depth -print | cpio -dump %{buildroot})
 tar xvf %{SOURCE2} -C %{buildroot}/var/lib/tancredi/data/firmware --strip-components=1
 
 %{genfilelist} %{buildroot} \
