@@ -1,0 +1,15 @@
+{%- if provisioning_user_agent matches '/Nethesis NP-X5/' -%}
+    {%- set f_file = 'x3sg-5913-RECOVERY-P0.18.23.1.23-2.4.6.5-1159T2021-06-11-10.42.13.z' -%}
+    {%- set f_version = '2.4.6' -%}
+    {%- set f_buildtime = '2021.06.11 10:42' -%}
+{%- elseif provisioning_user_agent matches '/Nethesis NP-X3/' -%}
+    {%- set f_file = 'x5u-6906-P0.18.23.58-2.4.2.1-3572T2021-05-17-14.53.22.z' -%}
+    {%- set f_version = '2.4.2' -%}
+    {%- set f_buildtime = '2021.05.17 14:53' -%}
+{%- endif -%}
+{%- if f_file | firmware_exists and f_file != "" -%}
+Version={{ f_version }}
+Firmware=firmware/{{ f_file }}
+BuildTime={{ f_buildtime }}
+Info=TXT|XML
+{% endif %}
