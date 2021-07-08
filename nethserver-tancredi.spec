@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.6.0
+Version: 1.7.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,17 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Thu Jul 08 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.7.0-1
+- Automatic firmware update for Nethphones - nethesis/dev#6011
+- Add automatic firmware updates for Nethesis phones - nethesis/tancredi#229
+- Wrong alertinfo string - Bug nethesis/dev#6036
+- Tancredi update scripts don't change more than one variable - Bug nethesis/dev#6007
+- Change switch key for EXP 20 - nethesis/tancredi#218
+- Fix variables that upgrade 009 and 010 didn't fixed - nethesis/tancredi#224
+- Remove bugous update fixed in 011 - nethesis/tancredi#225
+- Bump nokogiri from 1.10.9 to 1.11.5 in /docs - nethesis/tancredi#226
+- Change Exp43 Yealink from 40 to 60 total keys - nethesis/tancredi#227
+
 * Thu Apr 22 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.6.0-1
 - Add NethPhone to NethVoice provisioning - nethesis/dev#5956
 - Add Fanvil X7C to Tancredi - nethesis/dev#5959
