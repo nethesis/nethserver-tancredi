@@ -67,7 +67,7 @@ $sql = "SELECT
         REPLACE(endpointman_brand_list.name, 'Yealink/Dreamwave', 'Yealink') as brand
         FROM endpointman_mac_list JOIN endpointman_model_list ON endpointman_model_list.id = endpointman_mac_list.model
         JOIN endpointman_brand_list ON endpointman_brand_list.id = endpointman_model_list.brand
-        WHERE SUBSTRING(endpointman_mac_list.mac,1,6) IN ('0C383E','7C2F80','589EC6','005058','000413','001565','805E0C','805EC0','9C7514')";
+        WHERE SUBSTRING(endpointman_mac_list.mac,1,6) IN ('00A859','0C383E','7C2F80','589EC6','005058','000413','001565','805E0C','805EC0','9C7514')";
 $sth = $db->prepare($sql);
 $sth->execute(array());
 $res = $sth->fetchAll(\PDO::FETCH_ASSOC);
