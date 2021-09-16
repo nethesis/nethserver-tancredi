@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.8.0
+Version: 1.8.1
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Thu Sep 16 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.8.1-1
+Add direct pickup code to enable direct pickup on line key on Gigaset
+
 * Thu Sep 16 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.8.0-1
 - Add 00:A8:59 Mac to Tancredi as Fanvil phones  - nethesis/dev#6043
 
