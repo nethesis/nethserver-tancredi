@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.8.1
+Version: 1.9.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,10 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Mon Oct 04 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.9.0-1
+- Snom phones: LDAP search is exact and not by initial - Bug nethesis/dev#6058
+- Update Nethphone X3 firmware (#104)
+
 * Thu Sep 16 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.8.1-1
 Add direct pickup code to enable direct pickup on line key on Gigaset
 
