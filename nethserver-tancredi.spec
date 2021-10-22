@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.9.0
+Version: 1.9.1
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,10 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Fri Oct 22 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.9.1-1
+- Add g729 to enabled code list for Sangoma phones (#239)
+-  Enable https access on default configuration for Yealink phones (#240)
+
 * Mon Oct 04 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.9.0-1
 - Snom phones: LDAP search is exact and not by initial - Bug nethesis/dev#6058
 - Update Nethphone X3 firmware (#104)
