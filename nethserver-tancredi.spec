@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.9.1
+Version: 1.9.2
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,12 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Tue Jan 11 2022 Stefano Fancello <stefano.fancello@nethesis.it> - 1.9.2-1
+- Enable YMCS Yealink service for all phones - nethesis/tancredi#241
+- Remove codec g722 for Gigaset Phones - nethesis/tancredi#242
+- Disabled features.show_action_uri_option for Yealink phone - nethesis/tancredi#243
+- Add Yealink T19E_2 T41S T42S T48S to TLS cipher list - nethesis/tancredi#244
+
 * Fri Oct 22 2021 Stefano Fancello <stefano.fancello@nethesis.it> - 1.9.1-1
 - Add g729 to enabled code list for Sangoma phones (#239)
 -  Enable https access on default configuration for Yealink phones (#240)
