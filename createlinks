@@ -7,6 +7,7 @@ event_templates($event, qw(
     /etc/tancredi.conf
     /etc/httpd/conf.d/tancredi.conf
     /etc/opt/rh/rh-php73/php-fpm.d/tancredi.conf
+    /etc/opt/rh/rh-php56/php-fpm.d/tancredi.conf
 ));
 
 event_actions($event, qw(
@@ -16,6 +17,7 @@ event_actions($event, qw(
 
 event_services($event ,qw(
     httpd reload
+    rh-php56-php-fpm restart
     rh-php73-php-fpm restart
 ));
 
