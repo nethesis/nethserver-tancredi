@@ -80,4 +80,4 @@ if [[ ! -f ${dst_file} ]]; then
 fi
 
 # Launch upgrade script as apache to preserve filesystem permissions
-runuser -s /bin/bash -c "/usr/bin/scl enable rh-php56 -- php /usr/share/tancredi/scripts/upgrade.php" - apache
+runuser -s /bin/bash -c "/usr/bin/scl enable rh-php73 -- php /usr/share/tancredi/scripts/upgrade.php" - apache

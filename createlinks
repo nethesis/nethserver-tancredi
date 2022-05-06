@@ -6,6 +6,7 @@ my $event = 'nethserver-tancredi-update';
 event_templates($event, qw(
     /etc/tancredi.conf
     /etc/httpd/conf.d/tancredi.conf
+    /etc/opt/rh/rh-php73/php-fpm.d/tancredi.conf
     /etc/opt/rh/rh-php56/php-fpm.d/tancredi.conf
 ));
 
@@ -17,6 +18,7 @@ event_actions($event, qw(
 event_services($event ,qw(
     httpd reload
     rh-php56-php-fpm restart
+    rh-php73-php-fpm restart
 ));
 
 # expand tancredi httpd template on nethserver-freepbx-httpd-save
@@ -42,10 +44,10 @@ event_services($event, qw(
 # nethserver-php-update event -- catch timezone changes
 #
 event_templates('nethserver-php-update', qw(
-    /etc/opt/rh/rh-php56/php-fpm.d/tancredi.conf
+    /etc/opt/rh/rh-php73/php-fpm.d/tancredi.conf
 ));
 
 event_services('nethserver-php-update', qw(
-    rh-php56-php-fpm reload
+    rh-php73-php-fpm reload
 ));
 

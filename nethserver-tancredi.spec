@@ -9,8 +9,8 @@ Source2: firmware.tar.gz
 BuildArch: noarch
 
 BuildRequires: nethserver-devtools
-BuildRequires: rh-php56-php-cli, rh-php56-php-mbstring, rh-php56-php-xml, composer
-Requires: nethserver-rh-php56-php-fpm
+BuildRequires: rh-php73-php-cli, rh-php73-php-mbstring, rh-php73-php-xml, composer
+Requires: nethserver-rh-php73-php-fpm
 Requires: nethserver-httpd
 Requires: nethserver-freepbx
 Requires: mod_xsendfile
@@ -28,13 +28,13 @@ perl createlinks
 (
     cd tancredi-*
     if [[ -n "%{?github_token}" ]]; then
-        scl enable rh-php56 -- /usr/bin/composer config github-oauth.github.com "%{github_token}"
+        scl enable rh-php73 -- /usr/bin/composer config github-oauth.github.com "%{github_token}"
     fi
     if [[ -n "%{?composer_cachedir}" ]]; then
-        scl enable rh-php56 -- /usr/bin/composer config cache-dir "%{composer_cachedir}"
+        scl enable rh-php73 -- /usr/bin/composer config cache-dir "%{composer_cachedir}"
     fi
-    scl enable rh-php56 -- /usr/bin/composer diagnose || :
-    scl enable rh-php56 -- /usr/bin/composer install --no-dev
+    scl enable rh-php73 -- /usr/bin/composer diagnose || :
+    scl enable rh-php73 -- /usr/bin/composer install --no-dev
 )
 
 %install
