@@ -4,7 +4,7 @@ Version: 1.9.2
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
-Source1: https://github.com/nethesis/tancredi/archive/fef4295f4e1a30b78efe9890919e1406d7446186/tancredi.tar.gz
+Source1: https://github.com/nethesis/tancredi/archive/bc89b117a2c55a49e5fc1e5c12f709c958f33f57/tancredi.tar.gz
 Source2: firmware.tar.gz
 BuildArch: noarch
 
