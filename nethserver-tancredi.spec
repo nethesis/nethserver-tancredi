@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.9.2
+Version: 1.10.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,10 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Thu May 26 2022 Stefano Fancello <stefano.fancello@nethesis.it> - 1.10.0-1
+- Tancredi: add Snom D713 - nethesis/dev#6152
+- Use PHP 7.3 instead of 5.6 - Bug nethesis/dev#6133
+
 * Tue Jan 11 2022 Stefano Fancello <stefano.fancello@nethesis.it> - 1.9.2-1
 - Enable YMCS Yealink service for all phones - nethesis/tancredi#241
 - Remove codec g722 for Gigaset Phones - nethesis/tancredi#242
