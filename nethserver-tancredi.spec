@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.10.0
+Version: 1.10.1
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Fri May 27 2022 Stefano Fancello <stefano.fancello@nethesis.it> - 1.10.1-1
+- Fix conflict with nethserver-httpd-virtualhosts (#114)
+
 * Thu May 26 2022 Stefano Fancello <stefano.fancello@nethesis.it> - 1.10.0-1
 - Tancredi: add Snom D713 - nethesis/dev#6152
 - Use PHP 7.3 instead of 5.6 - Bug nethesis/dev#6133
