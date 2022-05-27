@@ -48,6 +48,6 @@ event_templates('nethserver-php-update', qw(
 ));
 
 event_services('nethserver-php-update', qw(
-    rh-php73-php-fpm reload
+    rh-php73-php-fpm restart
 ));
 
