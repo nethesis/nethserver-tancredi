@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.10.2
+Version: 1.10.3
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,10 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Thu Jun 23 2022 Stefano Fancello <stefano.fancello@nethesis.it> - 1.10.3-1
+- Snom phones Asterisk 18 no audio after hold - Bug nethesis/dev#6167
+- fix linekey_type_map function parameters - (#257)
+
 * Mon May 30 2022 Stefano Fancello <stefano.fancello@nethesis.it> - 1.10.2-1
 - Allow more than 10 characters on linekey title for Fanvil and Nethesis phones - nethesis/tancredi#256
 
