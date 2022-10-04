@@ -60,8 +60,8 @@ class NethVoiceAuth
             }
         } elseif ($request->hasHeader('Secretkey') && $request->hasHeader('User')) {
             $dbh = new \PDO(
-                'mysql:dbname=asterisk;host='.(isset($this->config['auth_nethvoice_dbhost']) ? $this->config['auth_nethvoice_dbhost'] : 'localhost'),
-                (isset($this->config['auth_nethvoice_dbuser']) ? $this->config['auth_nethvoice_dbuser'] : 'tancredi'),
+                'mysql:dbname=asterisk;host=' . ($this->config['auth_nethvoice_dbhost'] ?? 'localhost'),
+                ($this->config['auth_nethvoice_dbuser'] ?? 'tancredi'),
                 $this->config['auth_nethvoice_dbpass']
             );
             $stmt = $dbh->prepare("SELECT * FROM ampusers WHERE sections LIKE '%*%' AND username = ?");
