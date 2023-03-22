@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.11.0
+Version: 1.12.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Wed Mar 22 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.12.0-1
+- Add new Yealink MAC address nethesis/tancredi#272
+
 * Tue Mar 07 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.11.0-1
 - Add Akuvox phone to tancredi - nethesis/dev#6198
 - NethVoice. add NethPhone X-210 and new firmware version for other NethPhone - nethesis/dev#6199
