@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.12.0
+Version: 1.12.1
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,10 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Thu Apr 06 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.12.1-1
+- Change log level for Fanvil and Nethesis phones for a delay on the RTP communication
+- Minor fixes to default configuration
+
 * Wed Mar 22 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.12.0-1
 - Add new Yealink MAC address nethesis/tancredi#272
 
