@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.12.1
+Version: 1.12.2
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Wed May 17 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.12.2-1
+- Fix Akuvox soft keys
+
 * Thu Apr 06 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.12.1-1
 - Change log level for Fanvil and Nethesis phones for a delay on the RTP communication
 - Minor fixes to default configuration
