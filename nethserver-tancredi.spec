@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.13.1
+Version: 1.14.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Wed Jul 26 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.14.0-1
+- NethVoice: Add new Snom models (D86X D1XX) - nethesis/dev#6215
+
 * Wed Jul 05 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.13.1-1
 - New Fanvil firmware doesn't support token in RPS URL - Bug nethesis/dev#6210
 
