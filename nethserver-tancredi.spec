@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.14.0
+Version: 1.15.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Tue Oct 10 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.15.0-1
+Add Yealink T31W, T34W and Fanvil V63 and W610W - nethesis/dev#6217
+
 * Wed Jul 26 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.14.0-1
 - NethVoice: Add new Snom models (D86X D1XX) - nethesis/dev#6215
 
