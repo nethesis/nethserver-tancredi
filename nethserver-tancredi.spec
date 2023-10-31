@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.15.0
+Version: 1.15.1
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,67 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Tue Oct 31 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.15.1-1
+- NethVoice: Add new Snom models (D86X D1XX) - nethesis/dev#6215
+- New Fanvil firmware doesn't support token in RPS URL - Bug nethesis/dev#6210
+- Add new Fanvil models in Tancredi - nethesis/dev#6207
+- Add Akuvox phone to tancredi - nethesis/dev#6198
+- NethVoice. add NethPhone X-210 and new firmware version for other NethPhone - nethesis/dev#6199
+- Tancredi update scripts don't change more than one variable - Bug nethesis/dev#6007 !! INCOMPLETE
+- Add missing softkey functionality for Snom phones - nethesis/tancredi#260 !! INCOMPLETE
+- Bump nokogiri from 1.13.6 to 1.13.9 in /docs - nethesis/tancredi#261 !! INCOMPLETE
+- Bump nokogiri from 1.13.9 to 1.13.10 in /docs - nethesis/tancredi#262 !! INCOMPLETE
+- Cosmetic fix: update nethesis/dev#6007 always created custom scopes - nethesis/tancredi#264 !! INCOMPLETE
+- Bump activesupport from 6.0.6 to 6.0.6.1 in /docs - nethesis/tancredi#265 !! INCOMPLETE
+- Add Akuvox phone - nethesis/tancredi#266 !! INCOMPLETE
+- Snom phones Asterisk 18 no audio after hold - Bug nethesis/dev#6167
+- Tancredi: add Snom D713 - nethesis/dev#6152
+- Tancredi PHP version no more supported by composer - Bug nethesis/dev#6133
+- Enable YMCS Yealink service for all phones - nethesis/tancredi#241 !! INCOMPLETE
+- Remove codec g722 for Gigaset Phones - nethesis/tancredi#242 !! INCOMPLETE
+- Disabled features.show_action_uri_option for Yealink phone - nethesis/tancredi#243 !! INCOMPLETE
+- Add Yealink T19E_2 T41S T42S T48S to TLS cipher list - nethesis/tancredi#244 !! INCOMPLETE
+- Snom phones: LDAP search is exact and not by initial - Bug nethesis/dev#6058
+- Add 00:A8:59 Mac to Tancredi as Fanvil phones  - nethesis/dev#6043
+- Automatic firmware update for Nethphones - nethesis/dev#6011
+- Add automatic firmware updates for Nethesis phones - nethesis/tancredi#229 !! INCOMPLETE
+- Wrong alertinfo string - Bug nethesis/dev#6036
+- Change switch key for EXP 20 - nethesis/tancredi#218 !! INCOMPLETE
+- Fix variables that upgrade 009 and 010 didn't fixed - nethesis/tancredi#224 !! INCOMPLETE
+- Remove bugous update fixed in 011 - nethesis/tancredi#225 !! INCOMPLETE
+- Bump nokogiri from 1.10.9 to 1.11.5 in /docs - nethesis/tancredi#226 !! INCOMPLETE
+- Change Exp43 Yealink from 40 to 60 total keys - nethesis/tancredi#227 !! INCOMPLETE
+- Add NethPhone to NethVoice provisioning - nethesis/dev#5956 !! INCOMPLETE
+- Add Fanvil X7C to Tancredi - nethesis/dev#5959
+- Add pickup direct on blf key for Snom phones - nethesis/tancredi#214 !! INCOMPLETE
+- Add Yealink T53C and T58W - nethesis/tancredi#215 !! INCOMPLETE
+- Add Yealink T46S in TLS cipher exclude list - nethesis/tancredi#216 !! INCOMPLETE
+- DND and CF status not syncronized from NethCTI to phones - Bug nethesis/dev#5960
+- Sync DND and CF status to server value - nethesis/tancredi#207 !! INCOMPLETE
+- Add Yealink T40G in TLS cipher exclude list - nethesis/tancredi#213 !! INCOMPLETE
+- Tancredi expansion key modules support - nethesis/dev#5917
+- Fix cap_linekey_count for Fanvil U series - nethesis/tancredi#193 !! INCOMPLETE
+- Add Fanvil X1S to Tancredi - nethesis/dev#5881
+- Add Yealink T30, T31 and T33 to Tancredi - nethesis/dev#5862
+- Yealink: add reason call fail - nethesis/tancredi#187 !! INCOMPLETE
+- Add Yealink T30 T31 T33 - nethesis/tancredi#188 !! INCOMPLETE
+- Various Gigaset Phones fixes - nethesis/tancredi#189 !! INCOMPLETE
+- Impossible to transfer an incoming call with Gigaset Maxwell - nethesis/tancredi#190 !! INCOMPLETE
+- Skip Yealink expansion module settings - nethesis/tancredi#184 !! INCOMPLETE
+- Always set programmable keys to some value - nethesis/tancredi#185 !! INCOMPLETE
+- Ignore DHCP options 66 and 114 in Gigaset - nethesis/tancredi#186 !! INCOMPLETE
+- Extend Yealink TLS 1.2 fix #98 to T21P_E2 - nethesis/tancredi#183 !! INCOMPLETE
+- Fix Yealink T23P TLS error 218910881 - nethesis/tancredi#98 !! INCOMPLETE
+- Tancredi migrated models aren't correctly configured  - Bug nethesis/dev#5850
+- Filter models API results list using configuration macvendors  - nethesis/dev#5840
+- Add capability to inherit to Tancredi API GET /phones/{mac} - Bug nethesis/dev#5845
+- Shows only mac address in tancredi configuration - nethesis/tancredi#177 !! INCOMPLETE
+- Add GET /macvendors API doc - nethesis/tancredi#179 !! INCOMPLETE
+- Allow to call GET /phones/{mac} with inherit=1 - nethesis/tancredi#180 !! INCOMPLETE
+- Add T58 and T27P in sip tls cipher list - nethesis/tancredi#181 !! INCOMPLETE
+- Transfer two calls by placing the handset onhook for Snom - nethesis/tancredi#182 !! INCOMPLETE
+- Provisioning engine migration procedure - nethesis/dev#5832
+
 * Tue Oct 10 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.15.0-1
 Add Yealink T31W, T34W and Fanvil V63 and W610W - nethesis/dev#6217
 
