@@ -25,5 +25,5 @@ set -e
 
 mkdir firmware
 trap 'rm -fr firmware' EXIT
-wget -P firmware https://github.com/nethesis/nethserver-tancredi/releases/download/1.10.3/x3sg-5913-RECOVERY-P0.18.23.1.23-2.4.12.1.1-1194T2023-02-14-01.50.11.z https://github.com/nethesis/nethserver-tancredi/releases/download/1.10.3/x5u-6906-P0.18.23.89-2.4.6.0.11-3610T2023-01-13-17.35.24.z
+wget -P firmware https://github.com/nethesis/nethserver-tancredi/releases/download/1.16.0/x3sg-5913-RECOVERY-P0.18.23.1.75-2.4.18.2-1217T2024-03-20-03.28.47.z https://github.com/nethesis/nethserver-tancredi/releases/download/1.16.0/x5u-6906-P0.18.23.89-2.4.6.0.11-3610T2023-01-13-17.35.24.z
 tar czpfv firmware.tar.gz firmware
