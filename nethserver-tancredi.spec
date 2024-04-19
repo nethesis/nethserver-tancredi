@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.15.0
+Version: 1.16.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Fri Apr 19 2024 Stefano Fancello <gentoo.stefano@gmail.com> - 1.16.0-1
+- NethVoice: add to Tancredi Yealink T44U/W - nethesis/dev#6224
+
 * Tue Oct 10 2023 Stefano Fancello <stefano.fancello@nethesis.it> - 1.15.0-1
 Add Yealink T31W, T34W and Fanvil V63 and W610W - nethesis/dev#6217
 
