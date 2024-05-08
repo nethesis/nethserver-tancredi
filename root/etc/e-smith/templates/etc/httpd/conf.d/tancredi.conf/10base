@@ -20,7 +20,7 @@
 </Location>
 
 <Location "/tancredi/api/v1">
-    Require ip {$localAccess} {$validFrom}
+    Require ip {$localAccess} ::1 {$validFrom}
     ProxyPass "fcgi://127.0.0.1:9605/usr/share/tancredi/public/api-v1.php"
 </Location>
 
