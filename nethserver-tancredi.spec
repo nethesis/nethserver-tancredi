@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.16.1
+Version: 1.17.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,9 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Thu Jun 06 2024 Stefano Fancello <gentoo.stefano@gmail.com> - 1.17.0-1
+- Bump tancredi version (#140)
+
 * Thu May 09 2024 Stefano Fancello <gentoo.stefano@gmail.com> - 1.16.1-1
 - Tancredi extension account details not saved when machine has ipv6 localhost - Bug nethesis/dev#6228
 
