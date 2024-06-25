@@ -4,7 +4,7 @@ Version: 1.17.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
-Source1: https://github.com/nethesis/tancredi/archive/91179ce023e16c7c99fd2913d1899290c40a9bfd/tancredi.tar.gz
+Source1: https://github.com/nethesis/tancredi/archive/2a12dbbf33f22696b18e9666ba204cee3c6368f6/tancredi.tar.gz
 Source2: firmware.tar.gz
 BuildArch: noarch
 
