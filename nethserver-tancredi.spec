@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.17.0
+Version: 1.18.0
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -74,6 +74,10 @@ install tancredi-migration-helper  %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Thu Oct 10 2024 Stefano Fancello <gentoo.stefano@gmail.com> - 1.18.0-1
+- Tancredi: Snom expansion module are not configured well - Bug NethServer/dev#7044
+- nethserver-tancredi dependencies updated - Bug nethesis/dev#6231
+
 * Thu Jun 06 2024 Stefano Fancello <gentoo.stefano@gmail.com> - 1.17.0-1
 - Bump tancredi version (#140)
 
