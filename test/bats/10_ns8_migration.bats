@@ -46,6 +46,11 @@ teardown() {
     rm -rf "$test_root"
 }
 
+@test "the installed wrapper uses the NS7 runuser path" {
+    grep -q '^exec /sbin/runuser ' "$BATS_TEST_DIRNAME/../../tancredi-ns8-migration"
+    ! grep -q '/usr/bin/runuser' "$BATS_TEST_DIRNAME/../../tancredi-ns8-migration"
+}
+
 run_helper() {
     helper=${TANCREDI_NS8_MIGRATION_HELPER:-/usr/share/tancredi/scripts/ns8-migration.php}
     if [[ -x /usr/bin/scl ]]; then
