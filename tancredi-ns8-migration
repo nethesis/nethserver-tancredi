@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#
+# Copyright (C) 2026 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+set -e
+
+if [[ $# -lt 1 ]]; then
+    echo "Usage: $0 prepare-tokens | set-host <new-nethvoice-host>" >&2
+    exit 2
+fi
+
+exec /sbin/runuser -u apache -- \
+    /usr/bin/scl enable rh-php73 -- \
+    php /usr/share/tancredi/scripts/ns8-migration.php "$@"
