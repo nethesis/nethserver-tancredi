@@ -62,11 +62,12 @@ tar xvf %{SOURCE2} -C %{buildroot}/var/lib/tancredi/data/firmware --strip-compon
     > filelist
 
 mkdir -p %{buildroot}/usr/sbin
-install tancredi-migration-helper  %{buildroot}/usr/sbin/
+install tancredi-migration-helper tancredi-ns8-migration %{buildroot}/usr/sbin/
 
 %files -f filelist
 %defattr(-,root,root)
 %attr(0755,root,root) /usr/sbin/tancredi-migration-helper
+%attr(0755,root,root) /usr/sbin/tancredi-ns8-migration
 %dir %{_nseventsdir}/%{name}-update
 %doc tancredi-*/docs
 %doc test
