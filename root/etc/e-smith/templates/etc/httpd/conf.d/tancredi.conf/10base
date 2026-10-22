@@ -16,10 +16,18 @@
 </LocationMatch>
 
 <Location "/provisioning">
+    # Reject multipart requests before PHP parses the request body.
+    RewriteEngine On
+    RewriteCond %\{HTTP:Content-Type\} "^[[:space:]]*multipart/" [NC]
+    RewriteRule ^ - [F,L]
     ProxyPass "fcgi://127.0.0.1:9605/usr/share/tancredi/public/provisioning.php"
 </Location>
 
 <Location "/tancredi/api/v1">
+    # Reject multipart requests before PHP parses the request body.
+    RewriteEngine On
+    RewriteCond %\{HTTP:Content-Type\} "^[[:space:]]*multipart/" [NC]
+    RewriteRule ^ - [F,L]
     Require ip {$localAccess} ::1 {$validFrom}
     ProxyPass "fcgi://127.0.0.1:9605/usr/share/tancredi/public/api-v1.php"
 </Location>

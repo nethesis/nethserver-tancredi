@@ -25,6 +25,10 @@ request_slowlog_timeout = 5s
 php_admin_value[error_log] = /var/opt/rh/rh-php73/log/php-fpm/tancredi.log
 php_admin_flag[log_errors] = on
 
+; Disable upload progress and file uploads on the legacy PHP runtime.
+php_admin_flag[session.upload_progress.enabled] = off
+php_admin_flag[file_uploads] = off
+
 php_value[upload_max_filesize] = 500M
 php_value[post_max_size] = 500M
 
