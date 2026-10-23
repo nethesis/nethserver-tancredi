@@ -1,6 +1,6 @@
 Summary: Tancredi provisioning engine packaging and configuration
 Name: nethserver-tancredi
-Version: 1.18.0
+Version: 1.18.2
 Release: 1%{?dist}
 License: GPLv3
 Source: %{name}-%{version}.tar.gz
@@ -75,6 +75,12 @@ install tancredi-migration-helper tancredi-ns8-migration %{buildroot}/usr/sbin/
 %license LICENSE
 
 %changelog
+* Fri Oct 23 2026 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.18.2-1
+- PHP critical RCE vulnerabilities (CVE-2026-109618 / CVE-2026-109619) - NethServer/dev#8256
+- NethVoice: new migration mode to preserve phone provisioning without manual device reset - NethServer/dev#8008
+- NethVoice Tancredi: update firmware for NP-X5 v1 - NethServer/dev#7216
+- Bump tancredi version
+
 * Thu Oct 10 2024 Stefano Fancello <gentoo.stefano@gmail.com> - 1.18.0-1
 - Tancredi: Snom expansion module are not configured well - Bug NethServer/dev#7044
 - nethserver-tancredi dependencies updated - Bug nethesis/dev#6231
