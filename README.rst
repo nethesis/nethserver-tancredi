@@ -17,6 +17,17 @@ under the package documentation directory and run the test suite: ::
     cd /usr/share/doc/nethserver-tancredi-*/test
     bash run.sh
 
+Token-required provisioning
+---------------------------
+
+Requests to ``/provisioning/<filename>`` without a token return HTTP 403,
+including requests from local networks. This prevents DHCP provisioning URLs
+from replacing a phone's working configuration with blank account settings.
+Phones must use ``/provisioning/<token>/<filename>`` for provisioning.
+
+After installing the updated RPM, run ``signal-event nethserver-tancredi-update``
+to regenerate the Apache configuration.
+
 PHP upload mitigation
 ---------------------
 

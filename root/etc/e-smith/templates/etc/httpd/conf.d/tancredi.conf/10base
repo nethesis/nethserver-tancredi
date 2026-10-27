@@ -11,8 +11,9 @@
     $OUT = "";
 }
 
-<LocationMatch "/provisioning/[a-zA-Z0-9\.\-_]+$">
-    Require ip {$localAccess} {$validFrom}
+<LocationMatch "^/provisioning/[^/]+$">
+    # A tokenless configuration would clear the phone's working accounts.
+    Require all denied
 </LocationMatch>
 
 <Location "/provisioning">
