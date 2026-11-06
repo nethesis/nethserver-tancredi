@@ -50,7 +50,6 @@ tar xvf %{SOURCE2} -C %{buildroot}/var/lib/tancredi/data/firmware --strip-compon
 
 %{genfilelist} %{buildroot} \
     --file /etc/tancredi.conf 'attr(0644,root,root) %config(noreplace)' \
-    --dir /var/lib/tancredi/data 'attr(0770,root,apache)' \
     --dir /var/lib/tancredi/data/first_access_tokens 'attr(0770,root,apache)' \
     --dir /var/lib/tancredi/data/scopes 'attr(0770,root,apache)' \
     --dir /var/lib/tancredi/data/templates-custom 'attr(0770,root,apache)' \
