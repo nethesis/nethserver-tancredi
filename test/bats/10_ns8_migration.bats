@@ -11,7 +11,8 @@ setup() {
         "$test_root/ro/scopes" \
         "$test_root/rw/scopes" \
         "$test_root/rw/first_access_tokens" \
-        "$test_root/rw/tokens"
+        "$test_root/rw/tokens" \
+        "$test_root/log"
 
     cat > "$test_root/tancredi.conf" <<EOF
 [config]
@@ -40,6 +41,15 @@ EOF
 
     printf 'AA-BB-CC-DD-EE-FF' > "$test_root/rw/tokens/migrated-token"
     printf 'AA-BB-CC-DD-EE-FF' > "$test_root/rw/first_access_tokens/old-token"
+
+    # Match the installed data permissions while keeping the fixtures isolated.
+    chmod 0755 "$test_root"
+    chown -R root:apache "$test_root/rw"
+    chmod -R g+rwX "$test_root/rw"
+    chown root:root "$test_root/rw"
+    chmod 0755 "$test_root/rw"
+    chown apache:apache "$test_root/log"
+    chmod 0750 "$test_root/log"
 }
 
 teardown() {
@@ -47,19 +57,42 @@ teardown() {
 }
 
 @test "the installed wrapper uses the NS7 runuser path" {
-    grep -q '^exec /sbin/runuser ' "$BATS_TEST_DIRNAME/../../tancredi-ns8-migration"
-    ! grep -q '/usr/bin/runuser' "$BATS_TEST_DIRNAME/../../tancredi-ns8-migration"
+    grep -q '^exec /sbin/runuser ' /usr/sbin/tancredi-ns8-migration
+    ! grep -q '/usr/bin/runuser' /usr/sbin/tancredi-ns8-migration
+}
+
+@test "prepare tokens without write access to the data root" {
+    [ "$(stat -c '%U:%G:%a' "$test_root/rw")" = "root:root:755" ]
+    run run_helper prepare-tokens
+    [ "$status" -eq 0 ]
+    [ "$(stat -c '%U:%a' "$test_root/log/.ns8-migration-tokens.json")" = "apache:600" ]
 }
 
 run_helper() {
-    helper=${TANCREDI_NS8_MIGRATION_HELPER:-/usr/share/tancredi/scripts/ns8-migration.php}
-    if [[ -x /usr/bin/scl ]]; then
-        env tancredi_conf="$test_root/tancredi.conf" \
-            /usr/bin/scl enable rh-php73 -- \
-            php "$helper" "$@"
-    else
-        env tancredi_conf="$test_root/tancredi.conf" php "$helper" "$@"
-    fi
+    # Isolate the fixed journal path without changing the host's log directory.
+    unshare --mount -- bash -c '
+        mount --make-rprivate /
+        mount --bind "$1" /var/log/tancredi
+        export tancredi_conf="$2"
+        shift 2
+        exec /usr/sbin/tancredi-ns8-migration "$@"
+    ' bash "$test_root/log" "$test_root/tancredi.conf" "$@"
+}
+
+@test "prepare an empty phone set and retry as apache" {
+    rm "$test_root/rw/scopes/AA-BB-CC-DD-EE-FF.ini"
+    rm "$test_root/rw/tokens/migrated-token" "$test_root/rw/first_access_tokens/old-token"
+
+    run run_helper prepare-tokens
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"prepared for 0 phone(s)"* ]]
+    [ "$(stat -c '%U:%a' "$test_root/log/.ns8-migration-tokens.json")" = "apache:600" ]
+    journal_before=$(cat "$test_root/log/.ns8-migration-tokens.json")
+
+    run run_helper prepare-tokens
+    [ "$status" -eq 0 ]
+    [ "$(cat "$test_root/log/.ns8-migration-tokens.json")" = "$journal_before" ]
+    [ "$(find "$test_root/rw/tokens" "$test_root/rw/first_access_tokens" -type f | wc -l)" -eq 0 ]
 }
 
 @test "prepare a new tok2 and reuse the migrated tok2 as tok1" {
@@ -71,7 +104,22 @@ run_helper() {
     [ "$(cat "$test_root/rw/first_access_tokens/migrated-token")" = "AA-BB-CC-DD-EE-FF" ]
     [ ! -e "$test_root/rw/tokens/migrated-token" ]
     [ "$(find "$test_root/rw/tokens" -type f | wc -l)" -eq 1 ]
-    [ "$(stat -c '%a' "$test_root/rw/.ns8-migration-tokens.json")" = "600" ]
+    [ "$(stat -c '%U:%a' "$test_root/log/.ns8-migration-tokens.json")" = "apache:600" ]
+}
+
+@test "an unwritable journal directory fails before changing tokens" {
+    chown root:root "$test_root/log"
+
+    run run_helper prepare-tokens
+
+    [ "$status" -eq 1 ]
+    [[ "$output" == *"Cannot write the NS8 token migration journal"* ]]
+    [ ! -e "$test_root/log/.ns8-migration-tokens.json" ]
+    [ "$(find "$test_root/log" -name '.ns8-migration-tokens.*' | wc -l)" -eq 0 ]
+    [ "$(cat "$test_root/rw/tokens/migrated-token")" = "AA-BB-CC-DD-EE-FF" ]
+    [ "$(cat "$test_root/rw/first_access_tokens/old-token")" = "AA-BB-CC-DD-EE-FF" ]
+    [ "$(find "$test_root/rw/tokens" "$test_root/rw/first_access_tokens" -type f | wc -l)" -eq 2 ]
+    grep -q '^hostname = "old.example.org"$' "$test_root/rw/scopes/defaults.ini"
 }
 
 @test "token preparation is idempotent" {
@@ -119,5 +167,5 @@ run_helper() {
     [ "$status" -eq 1 ]
     grep -q '^hostname = "old.example.org"$' "$test_root/rw/scopes/defaults.ini"
     [ -e "$test_root/rw/first_access_tokens/old-token" ]
-    [ ! -e "$test_root/rw/.ns8-migration-tokens.json" ]
+    [ ! -e "$test_root/log/.ns8-migration-tokens.json" ]
 }

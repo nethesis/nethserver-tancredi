@@ -51,7 +51,7 @@ if ($action === 'set-host') {
 
 $phones = $storage->listScopes('phone');
 sort($phones, SORT_STRING);
-$journalPath = rtrim($config['rw_dir'], '/').'/.ns8-migration-tokens.json';
+$journalPath = '/var/log/tancredi/.ns8-migration-tokens.json';
 $tokenPlan = array();
 
 if (file_exists($journalPath)) {
@@ -116,7 +116,7 @@ if (file_exists($journalPath)) {
         fwrite(STDERR, "Cannot encode the NS8 token migration journal\n");
         exit(1);
     }
-    $journalTmp = tempnam($config['rw_dir'], '.ns8-migration-tokens.');
+    $journalTmp = tempnam(dirname($journalPath), '.ns8-migration-tokens.');
     if ($journalTmp === false
         || file_put_contents($journalTmp, $journal."\n", LOCK_EX) === false
         || !chmod($journalTmp, 0600)
